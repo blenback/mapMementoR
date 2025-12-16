@@ -1,0 +1,12 @@
+format:
+  html:
+    toc: true
+    toc-depth: 3
+    code-fold: false
+    theme: cosmo
+filters:
+  - preview-colour
+extensions:
+  preview-colour:
+    code: true
+    text: true

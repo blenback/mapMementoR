@@ -1,0 +1,5 @@
+- Refactor caode into a package 'map memories'
+- seperate code for osm date creation into it's own function
+- add error handling for missing files
+- add functionality to calculate and include a shaded terrain layer using approach from thesis presentation maps with elevatR
+- add potential for cropping map to shape
