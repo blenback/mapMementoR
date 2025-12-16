@@ -1,14 +1,6 @@
 ---
-title: "mapMememtoR: Create Beautiful Race Route Maps with R"
+title: "mapMementoR: Create Beautiful Race Route Maps with R"
 author: "Ben Black"
-listing:
-  id: listing-gallery
-  template: gallery.ejs
-  contents:
-    - gallery/*.jpg
-  sort-ui: false
-  filter-ui: false
-  categories: false
 lightbox: true
 ---
 
@@ -16,10 +8,19 @@ lightbox: true
 
 This guide will help you create stunning, printable maps of your race routes using GPX data. The code lets you generate beautiful visualizations with customizable color schemes, elevation profiles, and multiple race times for the same location.
 
-::: {#listing-gallery}
-:::
+::: {layout-ncol=3}
+![Example race map with Dark theme](gallery/Chicago-Alex_Black.png){fig-alt="Example race map with Dark theme" group="my-gallery"}
 
-![Example race map with dark theme](example-map.png)
+![Example race map with Emerald theme](gallery/Edinburgh-Alex_Black.png){fig-alt="Example race map with Emerald theme" group="my-gallery"}
+
+![Example race map with Ghost theme](gallery/Copenhagen-Alex_Black.png){fig-alt="Example race map with Ghost theme" group="my-gallery"}
+
+![Example race map with Zen theme](gallery/Great%20North%20Run-Alex_Black.png){fig-alt="Example race map with Zen theme" group="my-gallery"}
+
+![Example race map with Obsidian theme](gallery/Liverpool-Alex_Black.png){fig-alt="Example race map with Obsidian theme" group="my-gallery"}
+
+![Example race map with Nautical theme](gallery/London-Alex_Black.png){fig-alt="Example race map with Nautical theme" group="my-gallery"}
+:::
 
 ## Getting Started
 

@@ -1,4 +1,4 @@
-# mapMememtoR: Create Beautiful Race Route Maps with R
+# mapMementoR: Create Beautiful Race Route Maps with R
 ## Introduction
 
 This guide will help you create stunning, printable maps of your race routes using GPX data. The code lets you generate beautiful visualizations with customizable color schemes, elevation profiles, and multiple race times for the same location.

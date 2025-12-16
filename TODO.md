@@ -3,3 +3,4 @@
 - add error handling for missing files
 - add functionality to calculate and include a shaded terrain layer using approach from thesis presentation maps with elevatR
 - add potential for cropping map to shape
+- create package logo based on existing map
