@@ -1,5 +1,5 @@
 ---
-title: "Creating Beautiful Race Route Maps with R"
+title: "mapMememtoR: Create Beautiful Race Route Maps with R"
 author: "Ben Black"
 listing:
   id: listing-gallery
