@@ -1,0 +1,30 @@
+
+Package: mapMementoR
+Title: Create Aesthetic Race Route or Hiking Maps from GPX Tracks and performance data
+Version: 0.0.0.9000
+Authors@R: 
+    person("Ben", "Black", email = "ben.black812@gmail.com", role = c("aut", "cre"))
+Description: Tools for parsing GPX files, extracting race route data, and generating aesthetic maps with OpenStreetMap backgrounds, elevation charts, and customizable styles. Includes batch processing and Powerof10 integration for athlete data.
+License: MIT + file LICENSE
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.3.2
+Imports:
+    sf,
+    ggplot2,
+    dplyr,
+    xml2,
+    grid,
+    osmdata,
+    gfonts,
+    extrafont,
+    showtext,
+    yaml,
+    lwgeom,
+    geosphere,
+    patchwork,
+    poweRof10,
+    utils
+Suggests: 
+    testthat (>= 3.0.0)
+Config/testthat/edition: 3

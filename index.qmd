@@ -2,7 +2,20 @@
 title: "mapMementoR: Create Beautiful Race Route Maps with R"
 author: "Ben Black"
 lightbox: true
+output: github_document
 ---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/README-",
+  out.width = "100%"
+)
+```
+
+<!-- badges: start -->
+<!-- badges: end -->
 
 ## Introduction
 
@@ -34,15 +47,11 @@ You'll need:
 
 ### Installation
 
-```r
-# Install required packages
-install.packages(c(
-  "sf", "ggplot2", "dplyr", "xml2", "grid", 
-  "osmdata", "yaml", "lwgeom", "geosphere", "patchwork"
-))
+You can install the development version of mapMementoR from [GitHub](https://github.com/) with:
 
-# Install powerof10 package for automatic race data fetching
-remotes::install_github("hfshr/poweRof10")
+``` r
+# install.packages("pak")
+pak::pak("blenback/mapMementoR")
 ```
 
 ## Basic Usage

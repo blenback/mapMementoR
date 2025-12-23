@@ -1,18 +1,75 @@
-# mapMementoR: Create Beautiful Race Route Maps with R
+mapMementoR: Create Beautiful Race Route Maps with R
+================
+Ben Black
+
+<!-- badges: start -->
+
+<!-- badges: end -->
+
 ## Introduction
 
-This guide will help you create stunning, printable maps of your race routes using GPX data. The code lets you generate beautiful visualizations with customizable color schemes, elevation profiles, and multiple race times for the same location.
+This guide will help you create stunning, printable maps of your race
+routes using GPX data. The code lets you generate beautiful
+visualizations with customizable color schemes, elevation profiles, and
+multiple race times for the same location.
 
-::: {#listing-gallery}
-:::
+<div layout-ncol="3">
 
-![Example race map with dark theme](example-map.png)
+<figure>
+<img src="gallery/Chicago-Alex_Black.png"
+data-fig-alt="Example race map with Dark theme" data-group="my-gallery"
+alt="Example race map with Dark theme" />
+<figcaption aria-hidden="true">Example race map with Dark
+theme</figcaption>
+</figure>
+
+<figure>
+<img src="gallery/Edinburgh-Alex_Black.png"
+data-fig-alt="Example race map with Emerald theme"
+data-group="my-gallery" alt="Example race map with Emerald theme" />
+<figcaption aria-hidden="true">Example race map with Emerald
+theme</figcaption>
+</figure>
+
+<figure>
+<img src="gallery/Copenhagen-Alex_Black.png"
+data-fig-alt="Example race map with Ghost theme" data-group="my-gallery"
+alt="Example race map with Ghost theme" />
+<figcaption aria-hidden="true">Example race map with Ghost
+theme</figcaption>
+</figure>
+
+<figure>
+<img src="gallery/Great%20North%20Run-Alex_Black.png"
+data-fig-alt="Example race map with Zen theme" data-group="my-gallery"
+alt="Example race map with Zen theme" />
+<figcaption aria-hidden="true">Example race map with Zen
+theme</figcaption>
+</figure>
+
+<figure>
+<img src="gallery/Liverpool-Alex_Black.png"
+data-fig-alt="Example race map with Obsidian theme"
+data-group="my-gallery" alt="Example race map with Obsidian theme" />
+<figcaption aria-hidden="true">Example race map with Obsidian
+theme</figcaption>
+</figure>
+
+<figure>
+<img src="gallery/London-Alex_Black.png"
+data-fig-alt="Example race map with Nautical theme"
+data-group="my-gallery" alt="Example race map with Nautical theme" />
+<figcaption aria-hidden="true">Example race map with Nautical
+theme</figcaption>
+</figure>
+
+</div>
 
 ## Getting Started
 
 ### Prerequisites
 
-You'll need:
+You’ll need:
 
 - R (version 4.0+)
 - GPX files from your races (from Garmin, Strava, etc.)
@@ -20,22 +77,19 @@ You'll need:
 
 ### Installation
 
-```r
-# Install required packages
-install.packages(c(
-  "sf", "ggplot2", "dplyr", "xml2", "grid", 
-  "osmdata", "yaml", "lwgeom", "geosphere", "patchwork"
-))
+You can install the development version of mapMementoR from
+[GitHub](https://github.com/) with:
 
-# Install powerof10 package for automatic race data fetching
-remotes::install_github("hfshr/poweRof10")
+``` r
+# install.packages("pak")
+pak::pak("blenback/mapMementoR")
 ```
 
 ## Basic Usage
 
 The simplest way to create maps is:
 
-```r
+``` r
 source("create_maps.R")
 
 create_race_series(
@@ -61,7 +115,7 @@ This file contains your race information. Each race needs:
 
 #### Example Structure
 
-```yaml
+``` yaml
 races:
   - gpx_file: "data/london.gpx"
     competitor_name: "Alex Black"
@@ -88,10 +142,10 @@ races:
 
 To add a new race:
 
-1. Save your GPX file to the `data/` directory
-2. Add a new entry to your `*_races.yaml` file:
+1.  Save your GPX file to the `data/` directory
+2.  Add a new entry to your `*_races.yaml` file:
 
-```yaml
+``` yaml
   - gpx_file: "data/new_race.gpx"
     competitor_name: "Your Name"
     event: "HM"
@@ -101,13 +155,14 @@ To add a new race:
         race_time: "1:25:30"
 ```
 
-3. Run `create_race_series()` again
+3.  Run `create_race_series()` again
 
 #### Automatic Data Import from Power of 10
 
-If your races are listed on Power of 10, you can automatically generate the YAML structure:
+If your races are listed on Power of 10, you can automatically generate
+the YAML structure:
 
-```r
+``` r
 save_powerof10_to_yaml(
   first_name = "Alex",
   surname = "Black",
@@ -117,15 +172,17 @@ save_powerof10_to_yaml(
 )
 ```
 
-This creates a YAML file with all your race entries. You'll need to manually add the GPX file paths.
+This creates a YAML file with all your race entries. You’ll need to
+manually add the GPX file paths.
 
 ### Styles File (`styles.yaml`)
 
-This file defines the visual appearance of your maps. You can create multiple styles to see which you prefer.
+This file defines the visual appearance of your maps. You can create
+multiple styles to see which you prefer.
 
 #### Anatomy of a Style
 
-```yaml
+``` yaml
 styling:
   - name: "Dark"              # Style name (used for folder naming)
     route_color: "#d1af82"    # Color of your route line
@@ -150,14 +207,16 @@ Colors are specified in **hexadecimal format** (`#RRGGBB`):
 
 **Finding Colors:**
 
-- Use online tools like [Coolors.co](https://coolors.co/) or [HTML Color Codes](https://htmlcolorcodes.com/)
+- Use online tools like [Coolors.co](https://coolors.co/) or [HTML Color
+  Codes](https://htmlcolorcodes.com/)
 - Pick colors from images using browser color pickers
 - Use color palette generators for harmonious combinations
 
 #### Pre-defined Style Examples
 
 **Dark Theme** (default)
-```yaml
+
+``` yaml
 - name: "Dark"
   route_color: "#d1af82"    # Warm gold
   bg_color: "#0a0e27"       # Deep navy
@@ -167,7 +226,8 @@ Colors are specified in **hexadecimal format** (`#RRGGBB`):
 ```
 
 **Light/Zen Theme**
-```yaml
+
+``` yaml
 - name: "Zen"
   route_color: "#2d2d2d"    # Charcoal
   bg_color: "#fafafa"       # Off-white
@@ -177,7 +237,8 @@ Colors are specified in **hexadecimal format** (`#RRGGBB`):
 ```
 
 **Bold/Obsidian Theme**
-```yaml
+
+``` yaml
 - name: "Obsidian"
   route_color: "#ffd60a"    # Bright gold
   bg_color: "#000814"       # Pure black
@@ -188,10 +249,10 @@ Colors are specified in **hexadecimal format** (`#RRGGBB`):
 
 #### Creating Your Own Style
 
-1. Copy an existing style block
-2. Change the `name` to something unique
-3. Modify colors to your preference
-4. Test with a single race first
+1.  Copy an existing style block
+2.  Change the `name` to something unique
+3.  Modify colors to your preference
+4.  Test with a single race first
 
 **Tips for good color combinations:**
 
@@ -203,21 +264,24 @@ Colors are specified in **hexadecimal format** (`#RRGGBB`):
 #### Color Scheme Ideas
 
 **Warm & Earthy**
-```yaml
+
+``` yaml
 route_color: "#d4a574"  # Tan
 bg_color: "#2d3142"     # Slate
 water_color: "#4f5d75"  # Blue-grey
 ```
 
 **Cool & Fresh**
-```yaml
+
+``` yaml
 route_color: "#06ffa5"  # Mint green
 bg_color: "#0d1321"     # Deep navy
 water_color: "#1d2d44"  # Navy blue
 ```
 
 **Sunset Vibes**
-```yaml
+
+``` yaml
 route_color: "#ff6b35"  # Coral
 bg_color: "#004e89"     # Deep blue
 water_color: "#1a659e"  # Ocean blue
@@ -227,9 +291,10 @@ water_color: "#1a659e"  # Ocean blue
 
 ### Multi-Day/Stage Races
 
-For races with multiple stages or days (like ultra-marathons or cycling tours), use the `create_multiday_map()` function:
+For races with multiple stages or days (like ultra-marathons or cycling
+tours), use the `create_multiday_map()` function:
 
-```r
+``` r
 create_multiday_map(
   segments = list(
     list(gpx_file = "data/stage1.gpx", segment_name = "Stage 1: Mountains"),
@@ -247,7 +312,8 @@ create_multiday_map(
 
 ### Elevation Profiles
 
-Elevation profiles are automatically included when `with_elevation: true` in your style. They show:
+Elevation profiles are automatically included when
+`with_elevation: true` in your style. They show:
 
 - Total elevation gain/loss
 - Elevation changes throughout the route
@@ -264,70 +330,68 @@ Choose your output size based on intended use:
 - **A3** (297 × 420mm): Large prints, posters
 - **A2/A1/A0**: Very large format printing
 
-Higher DPI values (300-600) are recommended for printing, while 150-200 DPI works for screen viewing.
+Higher DPI values (300-600) are recommended for printing, while 150-200
+DPI works for screen viewing.
 
 ## File Organization
 
 Recommended folder structure:
 
-```
-project/
-├── data/
-│   ├── london.gpx
-│   ├── chicago.gpx
-│   └── *.rds (cached OSM data)
-├── output/
-│   ├── Dark/
-│   │   ├── A5/
-│   │   └── A3/
-│   └── Zen/
-│       └── A4/
-├── alex_black_races.yaml
-├── styles.yaml
-└── create_maps.R
-```
+    project/
+    ├── data/
+    │   ├── london.gpx
+    │   ├── chicago.gpx
+    │   └── *.rds (cached OSM data)
+    ├── output/
+    │   ├── Dark/
+    │   │   ├── A5/
+    │   │   └── A3/
+    │   └── Zen/
+    │       └── A4/
+    ├── alex_black_races.yaml
+    ├── styles.yaml
+    └── create_maps.R
 
 ## Troubleshooting
 
 ### GPX File Issues
 
-**Problem**: "No coordinates found"
-- Ensure your GPX file contains track points (`<trkpt>`)
-- Check file isn't corrupted
-- Try re-exporting from your GPS device/app
+**Problem**: “No coordinates found” - Ensure your GPX file contains
+track points (`<trkpt>`) - Check file isn’t corrupted - Try re-exporting
+from your GPS device/app
 
 ### Missing Map Features
 
-**Problem**: Some streets/water aren't showing
-- The script caches OpenStreetMap data in `data/*.rds` files
-- Delete these files to re-fetch fresh data
-- Ensure you have internet connection when first running
+**Problem**: Some streets/water aren’t showing - The script caches
+OpenStreetMap data in `data/*.rds` files - Delete these files to
+re-fetch fresh data - Ensure you have internet connection when first
+running
 
 ### Color Not Appearing
 
-**Problem**: Route color looks wrong
-- Check hex code format (`#` followed by 6 characters)
-- Ensure code is in quotes: `"#d1af82"`
-- Try increasing contrast with background
+**Problem**: Route color looks wrong - Check hex code format (`#`
+followed by 6 characters) - Ensure code is in quotes: `"#d1af82"` - Try
+increasing contrast with background
 
 ### Font Issues
 
-**Problem**: Text not appearing or wrong font
-- The default font is "Outfit-VariableFont_wght"
-- Ensure font files are in your `fonts/` directory
-- Or change `font_family` to a system font like "Arial" or "Helvetica"
+**Problem**: Text not appearing or wrong font - The default font is
+“Outfit-VariableFont_wght” - Ensure font files are in your `fonts/`
+directory - Or change `font_family` to a system font like “Arial” or
+“Helvetica”
 
 ## Tips for Best Results
 
-1. **GPX Quality**: Use tracks with good GPS signal for smooth routes
-2. **Test Styles**: Try 2-3 color schemes to see what works best
-3. **Print Tests**: Print at small size first to check colors
-4. **Location Names**: Use clear, short names for better layout
-5. **Multiple Entries**: The map beautifully shows progression over multiple years
+1.  **GPX Quality**: Use tracks with good GPS signal for smooth routes
+2.  **Test Styles**: Try 2-3 color schemes to see what works best
+3.  **Print Tests**: Print at small size first to check colors
+4.  **Location Names**: Use clear, short names for better layout
+5.  **Multiple Entries**: The map beautifully shows progression over
+    multiple years
 
 ## Example Workflow
 
-```r
+``` r
 # 1. Get your race data
 save_powerof10_to_yaml(
   first_name = "Your",
@@ -356,6 +420,7 @@ create_race_series(
 - Create multi-day maps for ultra races
 - Share your creations!
 
----
+------------------------------------------------------------------------
 
-*For questions or issues, please refer to the source code comments in `create_maps.R`*
+*For questions or issues, please refer to the source code comments in
+`create_maps.R`*

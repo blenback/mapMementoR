@@ -1,0 +1,11 @@
+utils::globalVariables(c(
+  "dist",
+  "ele",
+  "lon",
+  "lat",
+  "xmin",
+  "xmax",
+  "ymin",
+  "ymax",
+  "cache_data"
+))
