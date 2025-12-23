@@ -1,2 +1,5 @@
 /outputs
 /.quarto/
+.Rproj.user
+/data_cache_tmp
+/data
