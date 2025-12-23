@@ -3,3 +3,9 @@
 .Rproj.user
 /data_cache_tmp
 /data
+create_maps.R
+create_multiday_map.R
+_quarto.yaml
+TODO.md
+index.html
+index.qmd
