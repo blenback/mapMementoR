@@ -77,3 +77,25 @@ Saves the map to the specified output directory (PNG file)
 \description{
 This function generates a publication-quality map of a race route from a GPX file, with OpenStreetMap features, elevation chart, and customizable appearance. All theme and style arguments are handled directly in the function (no external theme required).
 }
+\examples{
+create_race_map(
+gpx_file = "data/sample_race.gpx",
+competitor_name = "John Doe",
+entries = list(
+ list(race_year = "2021", race_time = "3:15:30"),
+list(race_year = "2022", race_time = "3:10:45")
+),
+location = "Sample Marathon",
+route_color = "#d1af82",
+bg_color = "#0a0e27",
+output_dir = "maps",
+with_elevation = TRUE,
+dpi = 300,
+page_size = "A3",
+orientation = "portrait",
+base_size = 12,
+with_OSM = TRUE,
+cache_data = TRUE,
+with_hillshade = FALSE
+)
+}

@@ -26,6 +26,27 @@
 ##' @return Saves the map to the specified output directory (PNG file)
 ##' @import ggplot2 sf dplyr xml2 grid osmdata gfonts extrafont showtext yaml lwgeom geosphere patchwork poweRof10
 ##' @export
+#' @examples
+#' create_race_map(
+#' gpx_file = "data/sample_race.gpx",
+#' competitor_name = "John Doe",
+#' entries = list(
+#'  list(race_year = "2021", race_time = "3:15:30"),
+#' list(race_year = "2022", race_time = "3:10:45")
+#' ),
+#' location = "Sample Marathon",
+#' route_color = "#d1af82",
+#' bg_color = "#0a0e27",
+#' output_dir = "maps",
+#' with_elevation = TRUE,
+#' dpi = 300,
+#' page_size = "A3",
+#' orientation = "portrait",
+#' base_size = 12,
+#' with_OSM = TRUE,
+#' cache_data = TRUE,
+#' with_hillshade = FALSE
+#' )
 create_race_map <- function(
   gpx_file,
   competitor_name,
@@ -409,5 +430,3 @@ create_race_map <- function(
     dpi = dpi
   )
 }
-
-
