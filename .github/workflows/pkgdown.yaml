@@ -1,0 +1,26 @@
+name: pkgdown
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  build-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: r-lib/actions/setup-r@v2
+      - uses: r-lib/actions/setup-pandoc@v2
+      - name: Install dependencies
+        run: |
+          install.packages('pkgdown')
+          install.packages('remotes')
+          remotes::install_deps(dependencies = TRUE)
+        shell: Rscript {0}
+      - name: Build site
+        run: Rscript -e 'pkgdown::build_site()'
+      - name: Deploy to GitHub Pages
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          branch: gh-pages
+          folder: docs
