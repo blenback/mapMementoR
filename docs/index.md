@@ -55,7 +55,7 @@ The simplest way to create maps is:
 
 ``` r
 source("create_maps.R")
-create_race_series(
+memento_map_series(
   races_path = "your_races.yaml",
   styles_path = "styles.yaml",
   output_dir = "my_maps"
@@ -124,7 +124,7 @@ To add a new race:
 ```
 
 3.  Run
-    [`create_race_series()`](blenback.github.io/mapMementoR/reference/create_race_series.md)
+    [`memento_map_series()`](blenback.github.io/mapMementoR/reference/memento_map_series.md)
     again
 
 #### Automatic Data Import from Power of 10
@@ -379,7 +379,7 @@ save_powerof10_to_yaml(
 # 3. Edit the generated YAML to add gpx_file paths
 
 # 4. Create maps with all styles
-create_race_series(
+memento_map_series(
   races_path = "your_name_races.yaml",
   styles_path = "styles.yaml",
   output_dir = "my_maps"

@@ -5,7 +5,7 @@ Loop over multiple races and styles to create maps
 ## Usage
 
 ``` r
-create_race_series(
+memento_map_series(
   output_dir = "maps",
   styles = c("Dark"),
   custom_styles = NULL,
@@ -31,7 +31,7 @@ create_race_series(
   Character vector of style names to use (built-in or custom) see
   `.mapMementoR_builtin_styles` in R/styles.R for built-in styles
 
-- custom_styles:
+- custom_styles :
 
   Optional named list of custom styles, each a list of color settings
   (route_color, bg_color, street_color, highway_color, water_color)
@@ -75,7 +75,7 @@ Saves maps for all races and styles
 ## Examples
 
 ``` r
-create_race_series(
+memento_map_series(
   output_dir = "maps",
   styles = c("Dark", "Emerald"),
   custom_styles = list(MyStyle = list(route_color = "#123456", ...)),

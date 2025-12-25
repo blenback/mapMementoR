@@ -26,7 +26,8 @@ Imports:
     poweRof10,
     utils,
     data.table,
-    quarto
+    quarto,
+    scales
 Suggests: 
     testthat (>= 3.0.0)
 Config/testthat/edition: 3

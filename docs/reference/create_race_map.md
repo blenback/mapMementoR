@@ -8,7 +8,7 @@ function (no external theme required).
 ## Usage
 
 ``` r
-create_race_map(
+create_memento_map(
   gpx_file,
   competitor_name,
   entries,
@@ -64,11 +64,11 @@ create_race_map(
 
   Background color for the map
 
-- street_color:
+- street_color :
 
   Color for streets
 
-- highway_color:
+- highway_color :
 
   Color for highways
 
@@ -128,7 +128,7 @@ Saves the map to the specified output directory (PNG file)
 ## Examples
 
 ``` r
-create_race_map(
+create_memento_map(
 gpx_file = "data/sample_race.gpx",
 competitor_name = "John Doe",
 entries = list(

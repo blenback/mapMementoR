@@ -86,7 +86,7 @@ The simplest way to create maps is:
 
 ``` r
 source("create_maps.R")
-create_race_series(
+memento_map_series(
   races_path = "your_races.yaml",
   styles_path = "styles.yaml",
   output_dir = "my_maps"
@@ -152,7 +152,7 @@ To add a new race:
         race_time: "1:25:30"
 ```
 
-3.  Run `create_race_series()` again
+3.  Run `memento_map_series()` again
 
 #### Automatic Data Import from Power of 10
 
@@ -403,7 +403,7 @@ create_maps.R
     # 3. Edit the generated YAML to add gpx_file paths
 
     # 4. Create maps with all styles
-    create_race_series(
+    memento_map_series(
       races_path = "your_name_races.yaml",
       styles_path = "styles.yaml",
       output_dir = "my_maps"
