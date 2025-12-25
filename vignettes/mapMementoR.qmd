@@ -4,4 +4,3 @@ description: >
   Learn how to get started with the basics of mapMementoR.
 ---
 
-![Example race map with Zen theme](gallery/Great%20North%20Run-Alex_Black.png){fig-alt="Example race map with Zen theme"}

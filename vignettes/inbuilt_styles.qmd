@@ -9,6 +9,20 @@ lightbox: true
 
 The package includes several built-in map styles. Each style defines colors for the route, background, streets, highways, and water bodies.
 
+::: {layout-ncol=3}
+![Example race map with Dark theme](../reference/figures/chicago.png){fig-alt="Example race map with Dark theme" group="my-gallery"}
+
+![Example race map with Emerald theme](../reference/figures/edinburgh.png){fig-alt="Example race map with Emerald theme" group="my-gallery"}
+
+![Example race map with Ghost theme](../reference/figures/copenhagen.png){fig-alt="Example race map with Ghost theme" group="my-gallery"}
+
+![Example race map with Zen theme](../reference/figures/great_north_run.png){fig-alt="Example race map with Zen theme" group="my-gallery"}
+
+![Example race map with Obsidian theme](../reference/figures/liverpool.png){fig-alt="Example race map with Obsidian theme" group="my-gallery"}
+
+![Example race map with Nautical theme](../reference/figures/london.png){fig-alt="Example race map with Nautical theme" group="my-gallery"}
+:::
+
 ```{r}
 # List built-in styles
 styles <- list(
@@ -66,18 +80,4 @@ knitr::kable(
 )
 ```
 
-## gallery
 
-::: {layout-ncol="3"}
-![Example race map with Dark theme](../gallery/Chicago-Alex_Black.png){fig-alt="Example race map with Dark theme" group="my-gallery"}
-
-![Example race map with Emerald theme](../gallery/Edinburgh-Alex_Black.png){fig-alt="Example race map with Emerald theme" group="my-gallery"}
-
-![Example race map with Ghost theme](../gallery/Copenhagen-Alex_Black.png){fig-alt="Example race map with Ghost theme" group="my-gallery"}
-
-![Example race map with Zen theme](../gallery/Great%20North%20Run-Alex_Black.png){fig-alt="Example race map with Zen theme" group="my-inst/gallery"}
-
-![Example race map with Obsidian theme](../gallery/Liverpool-Alex_Black.png){fig-alt="Example race map with Obsidian theme" group="my-gallery"}
-
-![Example race map with Nautical theme](../gallery/London-Alex_Black.png){fig-alt="Example race map with Nautical theme" group="my-gallery"}
-:::

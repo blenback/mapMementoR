@@ -16,7 +16,7 @@ multiple race times for the same location.
 <div layout-ncol="3">
 
 <figure>
-<img src="gallery/Chicago-Alex_Black.png"
+<img src="man/figures/chicago.png"
 data-fig-alt="Example race map with Dark theme" data-group="my-gallery"
 alt="Example race map with Dark theme" />
 <figcaption aria-hidden="true">Example race map with Dark
@@ -24,7 +24,7 @@ theme</figcaption>
 </figure>
 
 <figure>
-<img src="gallery/Edinburgh-Alex_Black.png"
+<img src="man/figures/edinburgh.png"
 data-fig-alt="Example race map with Emerald theme"
 data-group="my-gallery" alt="Example race map with Emerald theme" />
 <figcaption aria-hidden="true">Example race map with Emerald
@@ -32,7 +32,7 @@ theme</figcaption>
 </figure>
 
 <figure>
-<img src="gallery/Copenhagen-Alex_Black.png"
+<img src="man/figures/copenhagen.png"
 data-fig-alt="Example race map with Ghost theme" data-group="my-gallery"
 alt="Example race map with Ghost theme" />
 <figcaption aria-hidden="true">Example race map with Ghost
@@ -40,7 +40,7 @@ theme</figcaption>
 </figure>
 
 <figure>
-<img src="gallery/Great%20North%20Run-Alex_Black.png"
+<img src="man/figures/great_north_run.png"
 data-fig-alt="Example race map with Zen theme" data-group="my-gallery"
 alt="Example race map with Zen theme" />
 <figcaption aria-hidden="true">Example race map with Zen
@@ -48,7 +48,7 @@ theme</figcaption>
 </figure>
 
 <figure>
-<img src="gallery/Liverpool-Alex_Black.png"
+<img src="man/figures/liverpool.png"
 data-fig-alt="Example race map with Obsidian theme"
 data-group="my-gallery" alt="Example race map with Obsidian theme" />
 <figcaption aria-hidden="true">Example race map with Obsidian
@@ -56,7 +56,7 @@ theme</figcaption>
 </figure>
 
 <figure>
-<img src="gallery/London-Alex_Black.png"
+<img src="man/figures/london.png"
 data-fig-alt="Example race map with Nautical theme"
 data-group="my-gallery" alt="Example race map with Nautical theme" />
 <figcaption aria-hidden="true">Example race map with Nautical
