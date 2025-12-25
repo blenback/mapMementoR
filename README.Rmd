@@ -1,5 +1,4 @@
 ---
-title: "mapMementoR: Create Beautiful Race Route Maps with R"
 author: "Ben Black"
 lightbox: true
 output: github_document
@@ -13,6 +12,8 @@ knitr::opts_chunk$set(
   out.width = "100%"
 )
 ```
+
+# mapMementoR <a href="https://pkgdown.r-lib.org"><img src="man/figures/logo.png" align="right" height="138" alt="mapMementoR website" /></a>
 
 <!-- badges: start -->
 <!-- badges: end -->

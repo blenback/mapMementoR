@@ -1,4 +1,4 @@
-# mapMementoR: Create Beautiful Race Route Maps with R
+# mapMementoR
 
 Ben Black
 
@@ -125,7 +125,9 @@ To add a new race:
         race_time: "1:25:30"
 ```
 
-3.  Run [`create_race_series()`](reference/create_race_series.md) again
+3.  Run
+    [`create_race_series()`](blenback.github.io/mapMementoR/reference/create_race_series.md)
+    again
 
 #### Automatic Data Import from Power of 10
 

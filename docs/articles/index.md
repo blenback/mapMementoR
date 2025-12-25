@@ -2,4 +2,5 @@
 
 ### All vignettes
 
-- [Using built-in Styles](inbuilt_styles.md):
+- [Using built-in
+  Styles](blenback.github.io/mapMementoR/articles/inbuilt_styles.md):

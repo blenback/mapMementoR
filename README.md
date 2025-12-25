@@ -1,6 +1,6 @@
-mapMementoR: Create Beautiful Race Route Maps with R
-================
 Ben Black
+
+# mapMementoR <a href="https://pkgdown.r-lib.org"><img src="man/figures/logo.png" align="right" height="138" alt="mapMementoR website" /></a>
 
 <!-- badges: start -->
 

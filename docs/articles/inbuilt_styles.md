@@ -76,31 +76,31 @@ Built-in map styles
 ## gallery
 
 [![Example race map with Dark
-theme](../gallery/Chicago-Alex_Black.png)](../gallery/Chicago-Alex_Black.png "Example race map with Dark theme")
+theme](../gallery/Chicago-Alex_Black.png)](blenback.github.io/mapMementoR/gallery/Chicago-Alex_Black.png "Example race map with Dark theme")
 
 Example race map with Dark theme
 
 [![Example race map with Emerald
-theme](../gallery/Edinburgh-Alex_Black.png)](../gallery/Edinburgh-Alex_Black.png "Example race map with Emerald theme")
+theme](../gallery/Edinburgh-Alex_Black.png)](blenback.github.io/mapMementoR/gallery/Edinburgh-Alex_Black.png "Example race map with Emerald theme")
 
 Example race map with Emerald theme
 
 [![Example race map with Ghost
-theme](../gallery/Copenhagen-Alex_Black.png)](../gallery/Copenhagen-Alex_Black.png "Example race map with Ghost theme")
+theme](../gallery/Copenhagen-Alex_Black.png)](blenback.github.io/mapMementoR/gallery/Copenhagen-Alex_Black.png "Example race map with Ghost theme")
 
 Example race map with Ghost theme
 
 [![Example race map with Zen
-theme](../gallery/Great%20North%20Run-Alex_Black.png)](../gallery/Great%20North%20Run-Alex_Black.png "Example race map with Zen theme")
+theme](../gallery/Great%20North%20Run-Alex_Black.png)](blenback.github.io/mapMementoR/gallery/Great%20North%20Run-Alex_Black.png "Example race map with Zen theme")
 
 Example race map with Zen theme
 
 [![Example race map with Obsidian
-theme](../gallery/Liverpool-Alex_Black.png)](../gallery/Liverpool-Alex_Black.png "Example race map with Obsidian theme")
+theme](../gallery/Liverpool-Alex_Black.png)](blenback.github.io/mapMementoR/gallery/Liverpool-Alex_Black.png "Example race map with Obsidian theme")
 
 Example race map with Obsidian theme
 
 [![Example race map with Nautical
-theme](../gallery/London-Alex_Black.png)](../gallery/London-Alex_Black.png "Example race map with Nautical theme")
+theme](../gallery/London-Alex_Black.png)](blenback.github.io/mapMementoR/gallery/London-Alex_Black.png "Example race map with Nautical theme")
 
 Example race map with Nautical theme

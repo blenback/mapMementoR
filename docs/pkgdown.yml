@@ -3,4 +3,7 @@ pkgdown: 2.2.0
 pkgdown_sha: ~
 articles:
   inbuilt_styles: inbuilt_styles.html
-last_built: 2025-12-24T10:29Z
+last_built: 2025-12-25T09:23Z
+urls:
+  reference: blenback.github.io/mapMementoR/reference
+  article: blenback.github.io/mapMementoR/articles
