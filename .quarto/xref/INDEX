@@ -4,5 +4,8 @@
   },
   "index.qmd": {
     "index.html": "54ad6ab4"
+  },
+  "vignettes/mapMementoR.qmd": {
+    "mapMementoR.html": "27879a28"
   }
 }
