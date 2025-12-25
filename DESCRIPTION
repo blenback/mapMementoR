@@ -1,4 +1,3 @@
-
 Package: mapMementoR
 Title: Create Aesthetic Race Route or Hiking Maps from GPX Tracks and performance data
 Version: 0.0.0.9000
@@ -25,7 +24,8 @@ Imports:
     geosphere,
     patchwork,
     poweRof10,
-    utils
+    utils,
+    data.table
 Suggests: 
     testthat (>= 3.0.0)
 Config/testthat/edition: 3
