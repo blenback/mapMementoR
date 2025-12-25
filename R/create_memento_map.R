@@ -383,7 +383,7 @@ create_memento_map <- function(
       color = text_color,
       family = font_family,
       vjust = 1,
-      lineheight = 0.7
+      lineheight = 0.2
     ) +
     ggplot2::labs(title = NULL, subtitle = NULL) +
     ggplot2::coord_sf(
