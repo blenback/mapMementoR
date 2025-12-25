@@ -197,8 +197,7 @@ create_memento_map <- function(
   n_subtitle_lines <- base::length(entries)
   subtitle_y <- bbox[2] + (y_range * (0.09 + 0.035 * (n_subtitle_lines - 1)))
 
-  # Font sizes in coord space units
-  # Shrink title size if multiple words
+  # Font sizes for annotations: scale with page_height for output-size proportional text
   title_text <- if (base::is.null(location)) {
     competitor_name
   } else {
@@ -206,8 +205,11 @@ create_memento_map <- function(
   }
   n_title_words <- base::length(base::strsplit(title_text, "[[:space:]]+")[[1]])
   title_scale <- base::max(0.7, 1 - 0.1 * (n_title_words - 1))
-  title_size <- page_height * 0.07 * title_scale # 7% of page height, scaled
-  subtitle_size <- page_height * 0.035 # 3.5% of page height
+  title_size_mm <- page_height * 0.10 * title_scale # 10% of page height
+  subtitle_size_mm <- page_height * 0.045 # 4.5% of page height
+  # Convert mm to points for annotate()
+  title_size <- title_size_mm * 2.83465
+  subtitle_size <- subtitle_size_mm * 2.83465
 
   # adjust route size based on page size
   route_size <- page_width * 0.004 # 0.4% of page width (adjust as needed)

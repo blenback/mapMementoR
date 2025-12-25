@@ -6,6 +6,7 @@
 #' @param cache_data Whether to cache OSM and hillshade data
 #' @param dpi Image resolution in dots per inch
 #' @param page_size Page size (e.g., "A5", "A4")
+#' @param base_size Base font size for map text
 #' @param orientation Page orientation (e.g., "portrait", "landscape")
 #' @param with_elevation Boolean to include elevation chart
 #' @param with_OSM Boolean to include OSM background features
@@ -20,6 +21,7 @@
 #'   races_path = "data/races.yaml",
 #'   dpi = 300,
 #'   page_size = "A5",
+#'   base_size = 18,
 #'   orientation = "portrait",
 #'   with_elevation = TRUE,
 #'   with_OSM = TRUE,
@@ -34,6 +36,7 @@ memento_map_series <- function(
   cache_data = TRUE,
   dpi = 300,
   page_size = "A5",
+  base_size,
   orientation = "portrait",
   with_elevation = TRUE,
   with_OSM = TRUE,
@@ -56,11 +59,13 @@ memento_map_series <- function(
   # Select only requested styles
   selected_styles <- all_styles[styles]
 
-  for (style in selected_styles) {
-    cat("Processing style:", style$name %||% names(style), "\n")
+  for (i in seq_along(selected_styles)) {
+    style <- selected_styles[[i]]
+    style_name <- names(selected_styles)[[i]]
+    cat("Processing style:", style_name, "\n")
     style_dir <- file.path(
       output_dir,
-      style$name %||% names(style),
+      style_name,
       page_size
     )
     if (!dir.exists(style_dir)) {
@@ -83,6 +88,7 @@ memento_map_series <- function(
         with_elevation = with_elevation,
         dpi = dpi,
         page_size = page_size,
+        base_size = base_size,
         orientation = orientation,
         with_OSM = with_OSM,
         with_hillshade = with_hillshade,
