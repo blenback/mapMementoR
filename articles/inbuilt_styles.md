@@ -5,6 +5,36 @@
 The package includes several built-in map styles. Each style defines
 colors for the route, background, streets, highways, and water bodies.
 
+[![Example race map with Dark
+theme](../reference/figures/chicago.png)](blenback.github.io/mapMementoR/reference/figures/chicago.png "Example race map with Dark theme")
+
+Example race map with Dark theme
+
+[![Example race map with Emerald
+theme](../reference/figures/edinburgh.png)](blenback.github.io/mapMementoR/reference/figures/edinburgh.png "Example race map with Emerald theme")
+
+Example race map with Emerald theme
+
+[![Example race map with Ghost
+theme](../reference/figures/copenhagen.png)](blenback.github.io/mapMementoR/reference/figures/copenhagen.png "Example race map with Ghost theme")
+
+Example race map with Ghost theme
+
+[![Example race map with Zen
+theme](../reference/figures/great_north_run.png)](blenback.github.io/mapMementoR/reference/figures/great_north_run.png "Example race map with Zen theme")
+
+Example race map with Zen theme
+
+[![Example race map with Obsidian
+theme](../reference/figures/liverpool.png)](blenback.github.io/mapMementoR/reference/figures/liverpool.png "Example race map with Obsidian theme")
+
+Example race map with Obsidian theme
+
+[![Example race map with Nautical
+theme](../reference/figures/london.png)](blenback.github.io/mapMementoR/reference/figures/london.png "Example race map with Nautical theme")
+
+Example race map with Nautical theme
+
 ``` r
 # List built-in styles
 styles <- list(
@@ -72,35 +102,3 @@ knitr::kable(
 | Obsidian | \#ffd60a    | \#000814 | \#001d3d     | \#003566      | \#000814    |
 
 Built-in map styles
-
-## gallery
-
-[![Example race map with Dark
-theme](../gallery/Chicago-Alex_Black.png)](blenback.github.io/mapMementoR/gallery/Chicago-Alex_Black.png "Example race map with Dark theme")
-
-Example race map with Dark theme
-
-[![Example race map with Emerald
-theme](../gallery/Edinburgh-Alex_Black.png)](blenback.github.io/mapMementoR/gallery/Edinburgh-Alex_Black.png "Example race map with Emerald theme")
-
-Example race map with Emerald theme
-
-[![Example race map with Ghost
-theme](../gallery/Copenhagen-Alex_Black.png)](blenback.github.io/mapMementoR/gallery/Copenhagen-Alex_Black.png "Example race map with Ghost theme")
-
-Example race map with Ghost theme
-
-[![Example race map with Zen
-theme](../gallery/Great%20North%20Run-Alex_Black.png)](blenback.github.io/mapMementoR/gallery/Great%20North%20Run-Alex_Black.png "Example race map with Zen theme")
-
-Example race map with Zen theme
-
-[![Example race map with Obsidian
-theme](../gallery/Liverpool-Alex_Black.png)](blenback.github.io/mapMementoR/gallery/Liverpool-Alex_Black.png "Example race map with Obsidian theme")
-
-Example race map with Obsidian theme
-
-[![Example race map with Nautical
-theme](../gallery/London-Alex_Black.png)](blenback.github.io/mapMementoR/gallery/London-Alex_Black.png "Example race map with Nautical theme")
-
-Example race map with Nautical theme

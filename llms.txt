@@ -9,29 +9,28 @@ routes using GPX data. The code lets you generate beautiful
 visualizations with customizable color schemes, elevation profiles, and
 multiple race times for the same location.
 
-![Example race map with Dark theme](gallery/Chicago-Alex_Black.png)
+![Example race map with Dark theme](reference/figures/chicago.png)
 
 Example race map with Dark theme
 
-![Example race map with Emerald theme](gallery/Edinburgh-Alex_Black.png)
+![Example race map with Emerald theme](reference/figures/edinburgh.png)
 
 Example race map with Emerald theme
 
-![Example race map with Ghost theme](gallery/Copenhagen-Alex_Black.png)
+![Example race map with Ghost theme](reference/figures/copenhagen.png)
 
 Example race map with Ghost theme
 
 ![Example race map with Zen
-theme](gallery/Great%20North%20Run-Alex_Black.png)
+theme](reference/figures/great_north_run.png)
 
 Example race map with Zen theme
 
-![Example race map with Obsidian
-theme](gallery/Liverpool-Alex_Black.png)
+![Example race map with Obsidian theme](reference/figures/liverpool.png)
 
 Example race map with Obsidian theme
 
-![Example race map with Nautical theme](gallery/London-Alex_Black.png)
+![Example race map with Nautical theme](reference/figures/london.png)
 
 Example race map with Nautical theme
 
