@@ -75,11 +75,6 @@ You’ll need:
 - GPX files from your races (from Garmin, Strava, etc.)
 - The required R packages (see Installation)
 
-### Installation
-
-You can install the development version of mapMementoR from
-[GitHub](https://github.com/) with:
-
 ``` r
 # install.packages("pak")
 pak::pak("blenback/mapMementoR")
@@ -91,52 +86,54 @@ The simplest way to create maps is:
 
 ``` r
 source("create_maps.R")
-
 create_race_series(
-  races_path = "alex_black_races.yaml",
+  races_path = "your_races.yaml",
   styles_path = "styles.yaml",
   output_dir = "my_maps"
 )
 ```
 
-This will process all races in your YAML file with all defined styles.
+For a comprehensive introduction, configuration, and advanced usage, see
+the vignette: [Introduction to mapMementoR](vignettes/mapMementoR.qmd).
+races_path = “alex_black_races.yaml”, styles_path = “styles.yaml”,
+output_dir = “my_maps” )
 
-## Configuration Files
 
-### Race Data File (`*_races.yaml`)
+    This will process all races in your YAML file with all defined styles.
 
-This file contains your race information. Each race needs:
+    ## Configuration Files
 
-- **gpx_file**: Path to your GPX file
-- **competitor_name**: Your name
-- **event**: Race type (HM = half marathon, Mar = marathon, etc.)
-- **location**: Race location name
-- **entries**: List of race times for this location/course
+    ### Race Data File (`*_races.yaml`)
 
-#### Example Structure
+    This file contains your race information. Each race needs:
 
-``` yaml
-races:
-  - gpx_file: "data/london.gpx"
-    competitor_name: "Alex Black"
-    event: "Mar"
-    location: "London"
-    entries:
-      - race_year: "2025"
-        race_time: "2:28:09"
-      - race_year: "2024"
-        race_time: "2:30:45"
-      - race_year: "2023"
-        race_time: "2:35:48"
-  
-  - gpx_file: "data/chicago.gpx"
-    competitor_name: "Alex Black"
-    event: "Mar"
-    location: "Chicago"
-    entries:
-      - race_year: "2024"
-        race_time: "2:31:46"
-```
+    - **gpx_file**: Path to your GPX file
+    - **competitor_name**: Your name
+    - **event**: Race type (HM = half marathon, Mar = marathon, etc.)
+    - **location**: Race location name
+    - **entries**: List of race times for this location/course
+
+    #### Example Structure
+
+    ```yaml
+      - gpx_file: "data/london.gpx"
+        competitor_name: "Alex Black"
+        event: "Mar"
+        entries:
+          - race_year: "2025"
+            race_time: "2:28:09"
+          - race_year: "2024"
+            race_time: "2:30:45"
+          - race_year: "2023"
+            race_time: "2:35:48"
+      
+      - gpx_file: "data/chicago.gpx"
+        competitor_name: "Alex Black"
+        event: "Mar"
+        location: "Chicago"
+        entries:
+          - race_year: "2024"
+            race_time: "2:31:46"
 
 #### Adding New Races
 
@@ -160,40 +157,30 @@ To add a new race:
 #### Automatic Data Import from Power of 10
 
 If your races are listed on Power of 10, you can automatically generate
-the YAML structure:
+the YAML structure: first_name = “Alex”, surname = “Black”, club =
+“North Shields Poly”, event = c(“HM”, “Mar”), \# Filter to half
+marathons and marathons year = c(2023, 2024, 2025) \# Optional: filter
+by year )
 
-``` r
-save_powerof10_to_yaml(
-  first_name = "Alex",
-  surname = "Black",
-  club = "North Shields Poly",
-  event = c("HM", "Mar"),  # Filter to half marathons and marathons
-  year = c(2023, 2024, 2025)  # Optional: filter by year
-)
-```
 
-This creates a YAML file with all your race entries. You’ll need to
-manually add the GPX file paths.
+    This creates a YAML file with all your race entries. You'll need to manually add the GPX file paths.
 
-### Styles File (`styles.yaml`)
+    ### Styles File (`styles.yaml`)
 
-This file defines the visual appearance of your maps. You can create
-multiple styles to see which you prefer.
+    This file defines the visual appearance of your maps. You can create multiple styles to see which you prefer.
 
-#### Anatomy of a Style
-
-``` yaml
-styling:
-  - name: "Dark"              # Style name (used for folder naming)
-    route_color: "#d1af82"    # Color of your route line
-    bg_color: "#0a0e27"       # Background/map color
-    street_color: "#1a1f3a"   # Minor streets color
-    highway_color: "#2d3250"  # Major roads color
-    water_color: "#1a2332"    # Water bodies color
-    with_elevation: true      # Include elevation profile
-    dpi: 300                  # Print quality (300 for high quality)
-    page_size: "A5"           # Output size (A5, A4, A3, A2, A1, A0)
-```
+    #### Anatomy of a Style
+    ```yaml
+    styling:
+      - name: "Dark"              # Style name (used for folder naming)
+        route_color: "#d1af82"    # Color of your route line
+        bg_color: "#0a0e27"       # Background/map color
+        street_color: "#1a1f3a"   # Minor streets color
+        highway_color: "#2d3250"  # Major roads color
+        water_color: "#1a2332"    # Water bodies color
+        with_elevation: true      # Include elevation profile
+        dpi: 300                  # Print quality (300 for high quality)
+        page_size: "A5"           # Output size (A5, A4, A3, A2, A1, A0)
 
 #### Understanding Color Codes
 
@@ -217,11 +204,9 @@ Colors are specified in **hexadecimal format** (`#RRGGBB`):
 **Dark Theme** (default)
 
 ``` yaml
-- name: "Dark"
   route_color: "#d1af82"    # Warm gold
   bg_color: "#0a0e27"       # Deep navy
   street_color: "#1a1f3a"   # Dark blue-grey
-  highway_color: "#2d3250"  # Medium blue-grey
   water_color: "#1a2332"    # Dark teal
 ```
 
@@ -346,72 +331,85 @@ Recommended folder structure:
     │   ├── Dark/
     │   │   ├── A5/
     │   │   └── A3/
-    │   └── Zen/
-    │       └── A4/
-    ├── alex_black_races.yaml
-    ├── styles.yaml
-    └── create_maps.R
+    │   └
 
-## Troubleshooting
+    - **A5** (148 × 210mm): Small prints, phone backgrounds
+    - **A4** (210 × 297mm): Standard paper, framing
+    - **A3** (297 × 420mm): Large prints, posters
+    - **A2/A1/A0**: Very large format printing
 
-### GPX File Issues
+    Higher DPI values (300-600) are recommended for printing, while 150-200 DPI works for screen viewing.
 
-**Problem**: “No coordinates found” - Ensure your GPX file contains
-track points (`<trkpt>`) - Check file isn’t corrupted - Try re-exporting
-from your GPS device/app
+    ## File Organization
 
-### Missing Map Features
+    Recommended folder structure:
 
-**Problem**: Some streets/water aren’t showing - The script caches
-OpenStreetMap data in `data/*.rds` files - Delete these files to
-re-fetch fresh data - Ensure you have internet connection when first
-running
+project/ ├── data/ │ ├── london.gpx │ ├── chicago.gpx │ └── \*.rds
+(cached OSM data) ├── output/ │ ├── Dark/ │ │ ├── A5/ │ │ └── A3/ │ └──
+Zen/ │ └── A4/ ├── alex_black_races.yaml ├── styles.yaml └──
+create_maps.R
 
-### Color Not Appearing
 
-**Problem**: Route color looks wrong - Check hex code format (`#`
-followed by 6 characters) - Ensure code is in quotes: `"#d1af82"` - Try
-increasing contrast with background
+    ## Troubleshooting
 
-### Font Issues
+    ### GPX File Issues
 
-**Problem**: Text not appearing or wrong font - The default font is
-“Outfit-VariableFont_wght” - Ensure font files are in your `fonts/`
-directory - Or change `font_family` to a system font like “Arial” or
-“Helvetica”
+    **Problem**: "No coordinates found"
+    - Ensure your GPX file contains track points (`<trkpt>`)
+    - Check file isn't corrupted
+    - Try re-exporting from your GPS device/app
 
-## Tips for Best Results
+    ### Missing Map Features
 
-1.  **GPX Quality**: Use tracks with good GPS signal for smooth routes
-2.  **Test Styles**: Try 2-3 color schemes to see what works best
-3.  **Print Tests**: Print at small size first to check colors
-4.  **Location Names**: Use clear, short names for better layout
-5.  **Multiple Entries**: The map beautifully shows progression over
-    multiple years
+    **Problem**: Some streets/water aren't showing
+    - The script caches OpenStreetMap data in `data/*.rds` files
+    - Delete these files to re-fetch fresh data
+    - Ensure you have internet connection when first running
 
-## Example Workflow
+    ### Color Not Appearing
 
-``` r
-# 1. Get your race data
-save_powerof10_to_yaml(
-  first_name = "Your",
-  surname = "Name",
-  club = "Your Club",
-  event = c("HM", "Mar")
-)
+    **Problem**: Route color looks wrong
+    - Check hex code format (`#` followed by 6 characters)
+    - Ensure code is in quotes: `"#d1af82"`
+    - Try increasing contrast with background
 
-# 2. Add GPX files to data/ folder
-# 3. Edit the generated YAML to add gpx_file paths
+    ### Font Issues
 
-# 4. Create maps with all styles
-create_race_series(
-  races_path = "your_name_races.yaml",
-  styles_path = "styles.yaml",
-  output_dir = "my_maps"
-)
+    **Problem**: Text not appearing or wrong font
+    - The default font is "Outfit-VariableFont_wght"
+    - Ensure font files are in your `fonts/` directory
+    - Or change `font_family` to a system font like "Arial" or "Helvetica"
 
-# 5. Check output/Dark/A5/ for your maps!
-```
+    ## Tips for Best Results
+
+    1. **GPX Quality**: Use tracks with good GPS signal for smooth routes
+    2. **Test Styles**: Try 2-3 color schemes to see what works best
+    3. **Print Tests**: Print at small size first to check colors
+    4. **Location Names**: Use clear, short names for better layout
+    5. **Multiple Entries**: The map beautifully shows progression over multiple years
+
+    ## Example Workflow
+
+    ```r
+    # 1. Get your race data
+    save_powerof10_to_yaml(
+      first_name = "Your",
+      surname = "Name",
+      club = "Your Club",
+      event = c("HM", "Mar")
+    )
+
+    # 2. Add GPX files to data/ folder
+    # 3. Edit the generated YAML to add gpx_file paths
+
+    # 4. Create maps with all styles
+    create_race_series(
+      races_path = "your_name_races.yaml",
+      styles_path = "styles.yaml",
+      output_dir = "my_maps"
+    )
+
+    # 5. Check output/Dark/A5/ for your maps!
 
 ## Next Steps
 

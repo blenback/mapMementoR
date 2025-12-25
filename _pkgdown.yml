@@ -10,3 +10,5 @@ template:
     heading_font: {google: "Fira Sans"}
     code_font: {google: "Fira Code"}
 last_built: 2025-12-24T10:03Z
+assets:
+  - gallery

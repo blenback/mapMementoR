@@ -6,7 +6,6 @@ output: github_document
 
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
-  collapse = TRUE,
   comment = "#>",
   fig.path = "man/figures/README-",
   out.width = "100%"
@@ -46,9 +45,6 @@ You'll need:
 - GPX files from your races (from Garmin, Strava, etc.)
 - The required R packages (see Installation)
 
-### Installation
-
-You can install the development version of mapMementoR from [GitHub](https://github.com/) with:
 
 ``` r
 # install.packages("pak")
@@ -61,8 +57,14 @@ The simplest way to create maps is:
 
 ```r
 source("create_maps.R")
-
 create_race_series(
+  races_path = "your_races.yaml",
+  styles_path = "styles.yaml",
+  output_dir = "my_maps"
+)
+```
+
+For a comprehensive introduction, configuration, and advanced usage, see the vignette: [Introduction to mapMementoR](vignettes/mapMementoR.qmd).
   races_path = "alex_black_races.yaml",
   styles_path = "styles.yaml",
   output_dir = "my_maps"
@@ -86,11 +88,9 @@ This file contains your race information. Each race needs:
 #### Example Structure
 
 ```yaml
-races:
   - gpx_file: "data/london.gpx"
     competitor_name: "Alex Black"
     event: "Mar"
-    location: "London"
     entries:
       - race_year: "2025"
         race_time: "2:28:09"
@@ -130,9 +130,6 @@ To add a new race:
 #### Automatic Data Import from Power of 10
 
 If your races are listed on Power of 10, you can automatically generate the YAML structure:
-
-```r
-save_powerof10_to_yaml(
   first_name = "Alex",
   surname = "Black",
   club = "North Shields Poly",
@@ -148,7 +145,6 @@ This creates a YAML file with all your race entries. You'll need to manually add
 This file defines the visual appearance of your maps. You can create multiple styles to see which you prefer.
 
 #### Anatomy of a Style
-
 ```yaml
 styling:
   - name: "Dark"              # Style name (used for folder naming)
@@ -182,11 +178,9 @@ Colors are specified in **hexadecimal format** (`#RRGGBB`):
 
 **Dark Theme** (default)
 ```yaml
-- name: "Dark"
   route_color: "#d1af82"    # Warm gold
   bg_color: "#0a0e27"       # Deep navy
   street_color: "#1a1f3a"   # Dark blue-grey
-  highway_color: "#2d3250"  # Medium blue-grey
   water_color: "#1a2332"    # Dark teal
 ```
 
@@ -282,6 +276,29 @@ To disable elevation profiles: `with_elevation: false`
 ### Output Sizes
 
 Choose your output size based on intended use:
+
+- **A5** (148 × 210mm): Small prints, phone backgrounds
+- **A4** (210 × 297mm): Standard paper, framing
+- **A3** (297 × 420mm): Large prints, posters
+- **A2/A1/A0**: Very large format printing
+
+Higher DPI values (300-600) are recommended for printing, while 150-200 DPI works for screen viewing.
+
+## File Organization
+
+Recommended folder structure:
+
+```
+project/
+├── data/
+│   ├── london.gpx
+│   ├── chicago.gpx
+│   └── *.rds (cached OSM data)
+├── output/
+│   ├── Dark/
+│   │   ├── A5/
+│   │   └── A3/
+│   └
 
 - **A5** (148 × 210mm): Small prints, phone backgrounds
 - **A4** (210 × 297mm): Standard paper, framing
