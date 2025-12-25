@@ -45,11 +45,6 @@ You’ll need:
 - GPX files from your races (from Garmin, Strava, etc.)
 - The required R packages (see Installation)
 
-### Installation
-
-You can install the development version of mapMementoR from
-[GitHub](https://github.com/) with:
-
 ``` r
 # install.packages("pak")
 pak::pak("blenback/mapMementoR")
@@ -61,14 +56,20 @@ The simplest way to create maps is:
 
 ``` r
 source("create_maps.R")
-
 create_race_series(
-  races_path = "alex_black_races.yaml",
+  races_path = "your_races.yaml",
   styles_path = "styles.yaml",
   output_dir = "my_maps"
 )
 ```
 
+For a comprehensive introduction, configuration, and advanced usage, see
+the vignette: [Introduction to
+mapMementoR](blenback.github.io/mapMementoR/vignettes/mapMementoR.qmd).
+races_path = “alex_black_races.yaml”, styles_path = “styles.yaml”,
+output_dir = “my_maps” )
+
+``` R
 This will process all races in your YAML file with all defined styles.
 
 ## Configuration Files
@@ -85,12 +86,10 @@ This file contains your race information. Each race needs:
 
 #### Example Structure
 
-``` yaml
-races:
+```yaml
   - gpx_file: "data/london.gpx"
     competitor_name: "Alex Black"
     event: "Mar"
-    location: "London"
     entries:
       - race_year: "2025"
         race_time: "2:28:09"
@@ -132,29 +131,20 @@ To add a new race:
 #### Automatic Data Import from Power of 10
 
 If your races are listed on Power of 10, you can automatically generate
-the YAML structure:
+the YAML structure: first_name = “Alex”, surname = “Black”, club =
+“North Shields Poly”, event = c(“HM”, “Mar”), \# Filter to half
+marathons and marathons year = c(2023, 2024, 2025) \# Optional: filter
+by year )
 
-``` r
-save_powerof10_to_yaml(
-  first_name = "Alex",
-  surname = "Black",
-  club = "North Shields Poly",
-  event = c("HM", "Mar"),  # Filter to half marathons and marathons
-  year = c(2023, 2024, 2025)  # Optional: filter by year
-)
-```
-
-This creates a YAML file with all your race entries. You’ll need to
-manually add the GPX file paths.
+``` R
+This creates a YAML file with all your race entries. You'll need to manually add the GPX file paths.
 
 ### Styles File (`styles.yaml`)
 
-This file defines the visual appearance of your maps. You can create
-multiple styles to see which you prefer.
+This file defines the visual appearance of your maps. You can create multiple styles to see which you prefer.
 
 #### Anatomy of a Style
-
-``` yaml
+```yaml
 styling:
   - name: "Dark"              # Style name (used for folder naming)
     route_color: "#d1af82"    # Color of your route line
@@ -189,11 +179,9 @@ Colors are specified in **hexadecimal format** (`#RRGGBB`):
 **Dark Theme** (default)
 
 ``` yaml
-- name: "Dark"
   route_color: "#d1af82"    # Warm gold
   bg_color: "#0a0e27"       # Deep navy
   street_color: "#1a1f3a"   # Dark blue-grey
-  highway_color: "#2d3250"  # Medium blue-grey
   water_color: "#1a2332"    # Dark teal
 ```
 
@@ -319,53 +307,67 @@ project/
 │   ├── Dark/
 │   │   ├── A5/
 │   │   └── A3/
-│   └── Zen/
-│       └── A4/
-├── alex_black_races.yaml
-├── styles.yaml
-└── create_maps.R
+│   └
+
+- **A5** (148 × 210mm): Small prints, phone backgrounds
+- **A4** (210 × 297mm): Standard paper, framing
+- **A3** (297 × 420mm): Large prints, posters
+- **A2/A1/A0**: Very large format printing
+
+Higher DPI values (300-600) are recommended for printing, while 150-200 DPI works for screen viewing.
+
+## File Organization
+
+Recommended folder structure:
 ```
 
+project/ ├── data/ │ ├── london.gpx │ ├── chicago.gpx │ └── \*.rds
+(cached OSM data) ├── output/ │ ├── Dark/ │ │ ├── A5/ │ │ └── A3/ │ └──
+Zen/ │ └── A4/ ├── alex_black_races.yaml ├── styles.yaml └──
+create_maps.R
+
+``` R
 ## Troubleshooting
 
 ### GPX File Issues
 
-**Problem**: “No coordinates found” - Ensure your GPX file contains
-track points (`<trkpt>`) - Check file isn’t corrupted - Try re-exporting
-from your GPS device/app
+**Problem**: "No coordinates found"
+- Ensure your GPX file contains track points (`<trkpt>`)
+- Check file isn't corrupted
+- Try re-exporting from your GPS device/app
 
 ### Missing Map Features
 
-**Problem**: Some streets/water aren’t showing - The script caches
-OpenStreetMap data in `data/*.rds` files - Delete these files to
-re-fetch fresh data - Ensure you have internet connection when first
-running
+**Problem**: Some streets/water aren't showing
+- The script caches OpenStreetMap data in `data/*.rds` files
+- Delete these files to re-fetch fresh data
+- Ensure you have internet connection when first running
 
 ### Color Not Appearing
 
-**Problem**: Route color looks wrong - Check hex code format (`#`
-followed by 6 characters) - Ensure code is in quotes: `"#d1af82"` - Try
-increasing contrast with background
+**Problem**: Route color looks wrong
+- Check hex code format (`#` followed by 6 characters)
+- Ensure code is in quotes: `"#d1af82"`
+- Try increasing contrast with background
 
 ### Font Issues
 
-**Problem**: Text not appearing or wrong font - The default font is
-“Outfit-VariableFont_wght” - Ensure font files are in your `fonts/`
-directory - Or change `font_family` to a system font like “Arial” or
-“Helvetica”
+**Problem**: Text not appearing or wrong font
+- The default font is "Outfit-VariableFont_wght"
+- Ensure font files are in your `fonts/` directory
+- Or change `font_family` to a system font like "Arial" or "Helvetica"
 
 ## Tips for Best Results
 
-1.  **GPX Quality**: Use tracks with good GPS signal for smooth routes
-2.  **Test Styles**: Try 2-3 color schemes to see what works best
-3.  **Print Tests**: Print at small size first to check colors
-4.  **Location Names**: Use clear, short names for better layout
-5.  **Multiple Entries**: The map beautifully shows progression over
-    multiple years
+1. **GPX Quality**: Use tracks with good GPS signal for smooth routes
+2. **Test Styles**: Try 2-3 color schemes to see what works best
+3. **Print Tests**: Print at small size first to check colors
+4. **Location Names**: Use clear, short names for better layout
+5. **Multiple Entries**: The map beautifully shows progression over multiple years
 
 ## Example Workflow
 
-``` r
+```r
 # 1. Get your race data
 save_powerof10_to_yaml(
   first_name = "Your",
