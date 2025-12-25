@@ -25,7 +25,7 @@ Imports:
     patchwork,
     poweRof10,
     utils,
-    data.table
+    data.table,
     quarto
 Suggests: 
     testthat (>= 3.0.0)
