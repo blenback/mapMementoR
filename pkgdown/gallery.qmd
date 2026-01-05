@@ -8,7 +8,11 @@ lightbox: true
 ::: {layout-ncol=3}
 ![Chicago Marathon](../reference/figures/chicago.png){fig-alt="Chicago Marathon" group="my-gallery"}
 
+<<<<<<< HEAD
 ![Edinburgh Marathon](../reference/figures/edinburgh.png){fig-alt="Edinburgh Marathon" group="my-gallery"}
+=======
+![Edinburgh Marathon](../reference/figures/edinburgh.png){fig-alt="Edinbugh Marathon" group="my-gallery"}
+>>>>>>> f179b89a96256f01e27e6b86cf1d0de2b61cc9de
 
 ![Copenhagen Marathon](../reference/figures/copenhagen.png){fig-alt="Copenhagen Marathon" group="my-gallery"}
 

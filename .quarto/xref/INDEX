@@ -7,5 +7,8 @@
   },
   "vignettes/mapMementoR.qmd": {
     "mapMementoR.html": "27879a28"
+  },
+  "pkgdown/gallery.qmd": {
+    "gallery.html": "f1074075"
   }
 }
