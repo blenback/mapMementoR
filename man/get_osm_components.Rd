@@ -4,7 +4,12 @@
 \alias{get_osm_components}
 \title{Get OSM map components (highways, streets, water, sea) for a bounding box and location}
 \usage{
-get_osm_components(bbox, location, cache_data = TRUE)
+get_osm_components(
+  bbox,
+  location,
+  cache_data = TRUE,
+  components = c("highways", "streets", "water", "coast")
+)
 }
 \arguments{
 \item{bbox}{Numeric vector of length 4: c(min_lon, min_lat, max_lon, max_lat)}
@@ -12,9 +17,11 @@ get_osm_components(bbox, location, cache_data = TRUE)
 \item{location}{String identifier for caching}
 
 \item{cache_data}{Logical, whether to cache OSM data locally}
+
+\item{components}{Character vector specifying which OSM components to include. Any combination of 'highways', 'streets', 'water', 'coast'. Defaults to all.}
 }
 \value{
-List with OSM components
+List with selected OSM components
 }
 \description{
 Get OSM map components (highways, streets, water, sea) for a bounding box and location

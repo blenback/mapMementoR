@@ -3,6 +3,9 @@
 #' @return Data frame with latitude, longitude, elevation, and point order
 #' @export
 parse_gpx <- function(gpx_file) {
+  if (!file.exists(gpx_file)) {
+    stop("GPX file does not exist: ", gpx_file)
+  }
   gpx_data <- xml2::read_xml(gpx_file)
   trkpts <- xml2::xml_find_all(
     gpx_data,

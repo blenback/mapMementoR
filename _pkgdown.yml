@@ -1,6 +1,3 @@
-pandoc: 3.6.4
-pkgdown: 2.2.0
-pkgdown_sha: ~
 url: "blenback.github.io/mapMementoR"
 template:
   bootstrap: 5
@@ -9,4 +6,10 @@ template:
     base_font: {google: "Fira Sans"}
     heading_font: {google: "Fira Sans"}
     code_font: {google: "Fira Code"}
-last_built: 2025-12-24T10:03Z
+navbar:
+  structure:
+    left:  [reference, articles, gallery]
+  components:
+    gallery:
+      text: Gallery
+      href: gallery.html

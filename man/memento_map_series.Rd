@@ -12,10 +12,14 @@ memento_map_series(
   cache_data = TRUE,
   dpi = 300,
   page_size = "A5",
+  base_size,
   orientation = "portrait",
   with_elevation = TRUE,
   with_OSM = TRUE,
-  with_hillshade = FALSE
+  with_hillshade = FALSE,
+  components = c("highways", "streets", "water", "coast"),
+  fade_directions = c("top", "bottom"),
+  crop_shape = NULL
 )
 }
 \arguments{
@@ -33,6 +37,8 @@ memento_map_series(
 
 \item{page_size}{Page size (e.g., "A5", "A4")}
 
+\item{base_size}{Base font size for map text}
+
 \item{orientation}{Page orientation (e.g., "portrait", "landscape")}
 
 \item{with_elevation}{Boolean to include elevation chart}
@@ -41,7 +47,11 @@ memento_map_series(
 
 \item{with_hillshade}{Boolean to include hillshade (elevation relief) background}
 
-\item{base_size}{Base font size for map text}
+\item{components}{Character vector specifying which OSM components to include. Any combination of 'highways', 'streets', 'water', 'coast'. Defaults to all.}
+
+\item{fade_directions}{Character vector specifying which sides to apply fade gradients to. Any combination of 'top', 'bottom', 'left', 'right'. Defaults to c('top', 'bottom').}
+
+\item{crop_shape}{Optional shape to crop map to. Options: "circle", "ellipse". If NULL, no cropping is applied.}
 }
 \value{
 Saves maps for all races and styles
@@ -62,6 +72,7 @@ memento_map_series(
   with_elevation = TRUE,
   with_OSM = TRUE,
   with_hillshade = FALSE,
-  cache_data = TRUE
+  cache_data = TRUE,
+  components = c("highways", "streets", "water", "coast")
 )
 }
