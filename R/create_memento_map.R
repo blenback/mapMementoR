@@ -23,6 +23,8 @@
 ##' @param with_OSM Boolean to include OSM background features
 ##' @param cache_data Boolean; if TRUE, cache OSM data to disk (default), if FALSE always fetch fresh OSM data
 #' @param with_hillshade Boolean to include hillshade (elevation relief) background
+##' @param fade_directions Character vector specifying which sides to apply fade gradients to. Any combination of 'top', 'bottom', 'left', 'right'. Defaults to c('top', 'bottom').
+#' @param crop_shape Shape to crop the map to. Options: NULL (no cropping, default), "circle", "ellipse". Defaults to NULL.
 ##' @return Saves the map to the specified output directory (PNG file)
 ##' @import ggplot2 sf dplyr xml2 grid osmdata gfonts extrafont showtext yaml lwgeom geosphere patchwork poweRof10
 ##' @export
@@ -68,7 +70,10 @@ create_memento_map <- function(
   base_size = 12,
   with_OSM = TRUE,
   cache_data = TRUE,
-  with_hillshade = FALSE
+  with_hillshade = FALSE,
+  components = c("highways", "streets", "water", "coast"),
+  fade_directions = c("top", "bottom"),
+  crop_shape = NULL
 ) {
   # Set text color to route color if not specified
   if (is.null(text_color)) {
@@ -129,7 +134,7 @@ create_memento_map <- function(
       )
   }
 
-  # Calculate bounding box with padding that respects A3 portrait aspect ratio
+  # Calculate bounding box with padding
   lat_range <- base::range(track_data$lat, na.rm = TRUE)
   lon_range <- base::range(track_data$lon, na.rm = TRUE)
 
@@ -165,13 +170,27 @@ create_memento_map <- function(
     lat_range[2] + lat_padding
   )
 
+  # Adjust bbox for crop shape if needed (to maintain true circle on rectangular page)
+  if (!is.null(crop_shape)) {
+    crop_result <- create_crop_mask(bbox, crop_shape, bg_color)
+    crop_mask <- crop_result$mask
+    # Don't adjust bbox - we'll use aspect.ratio = 1 instead
+  } else {
+    crop_mask <- NULL
+  }
+
   # Only get OSM map components if with_OSM is TRUE
   if (with_OSM) {
-    osm <- get_osm_components(bbox, location, cache_data = cache_data)
-    highways <- osm$highways
-    streets <- osm$streets
-    water <- osm$water
-    sea <- osm$sea
+    osm <- get_osm_components(
+      bbox,
+      location,
+      cache_data = cache_data,
+      components = components
+    )
+    highways <- if ("highways" %in% names(osm)) osm$highways else NULL
+    streets <- if ("streets" %in% names(osm)) osm$streets else NULL
+    water <- if ("water" %in% names(osm)) osm$water else NULL
+    sea <- if ("coast" %in% names(osm)) osm$coast else NULL
   } else {
     highways <- NULL
     streets <- NULL
@@ -186,6 +205,9 @@ create_memento_map <- function(
     hillshade <- NULL
   }
 
+  # Decide whether to use circular crop mode
+  use_circular_crop <- !is.null(crop_shape) && crop_shape == "circle"
+
   # Calculate precise positioning in coord space
   x_center <- base::mean(c(bbox[1], bbox[3]))
   y_range <- bbox[4] - bbox[2]
@@ -197,7 +219,8 @@ create_memento_map <- function(
   n_subtitle_lines <- base::length(entries)
   subtitle_y <- bbox[2] + (y_range * (0.09 + 0.035 * (n_subtitle_lines - 1)))
 
-  # Font sizes for annotations: scale with page_height for output-size proportional text
+  # Font sizes for annotations: scale with both base_size and page dimensions
+  # This ensures text is proportional to page size while respecting base_size setting
   title_text <- if (base::is.null(location)) {
     competitor_name
   } else {
@@ -205,43 +228,122 @@ create_memento_map <- function(
   }
   n_title_words <- base::length(base::strsplit(title_text, "[[:space:]]+")[[1]])
   title_scale <- base::max(0.7, 1 - 0.1 * (n_title_words - 1))
-  title_size_mm <- page_height * 0.10 * title_scale # 10% of page height
-  subtitle_size_mm <- page_height * 0.045 # 4.5% of page height
-  # Convert mm to points for annotate()
-  title_size <- title_size_mm * 2.83465
-  subtitle_size <- subtitle_size_mm * 2.83465
+
+  # Scale factor based on page size relative to A4 (210mm width)
+  page_scale <- page_width / 210
+
+  # Combine base_size with page scaling
+  # Using smaller divisor (0.8) to make text larger
+  # If using circular crop, scale up text to compensate for smaller plot area
+  crop_text_scale <- if (use_circular_crop) {
+    # When plot is square, it's smaller than the page, so increase text size
+    if (page_width > page_height) {
+      page_width / page_height # Landscape: compensate for width reduction
+    } else {
+      page_height / page_width # Portrait: compensate for height reduction
+    }
+  } else {
+    1
+  }
+
+  title_size <- (base_size / 0.8) * page_scale * title_scale * crop_text_scale
+  subtitle_size <- (base_size / 0.8) * page_scale * 0.4 * crop_text_scale
 
   # adjust route size based on page size
   route_size <- page_width * 0.004 # 0.4% of page width (adjust as needed)
   point_size <- page_width * 0.01 # 1% of page width
 
-  # Create gradient data for top and bottom fades
-  fade_height <- y_range * 0.20 # 15% fade at top and bottom
+  # Create gradient data for fades on specified sides
+  fade_height <- y_range * 0.20 # 20% fade for top/bottom
+  fade_width <- (bbox[3] - bbox[1]) * 0.20 # 20% fade for left/right
   n_steps <- 75 # Number of gradient steps
 
-  # Top fade - create rectangles with increasing alpha
-  top_fade <- base::data.frame(
-    xmin = bbox[1],
-    xmax = bbox[3],
-    ymin = bbox[4] - fade_height + (0:(n_steps - 1)) * (fade_height / n_steps),
-    ymax = bbox[4] - fade_height + (1:n_steps) * (fade_height / n_steps),
-    alpha = base::seq(0, 0.9, length.out = n_steps)
-  )
-
-  # Bottom fade - create rectangles with decreasing alpha
-  bottom_fade <- base::data.frame(
-    xmin = bbox[1],
-    xmax = bbox[3],
-    ymin = bbox[2] + (0:(n_steps - 1)) * (fade_height / n_steps),
-    ymax = bbox[2] + (1:n_steps) * (fade_height / n_steps),
-    alpha = base::seq(0.9, 0, length.out = n_steps)
-  )
+  fade_data <- list()
+  if ("top" %in% fade_directions) {
+    fade_data$top <- base::data.frame(
+      xmin = bbox[1],
+      xmax = bbox[3],
+      ymin = bbox[4] -
+        fade_height +
+        (0:(n_steps - 1)) * (fade_height / n_steps),
+      ymax = bbox[4] - fade_height + (1:n_steps) * (fade_height / n_steps),
+      alpha = base::seq(0, 0.9, length.out = n_steps)
+    )
+  }
+  if ("bottom" %in% fade_directions) {
+    fade_data$bottom <- base::data.frame(
+      xmin = bbox[1],
+      xmax = bbox[3],
+      ymin = bbox[2] + (0:(n_steps - 1)) * (fade_height / n_steps),
+      ymax = bbox[2] + (1:n_steps) * (fade_height / n_steps),
+      alpha = base::seq(0.9, 0, length.out = n_steps)
+    )
+  }
+  if ("left" %in% fade_directions) {
+    fade_data$left <- base::data.frame(
+      xmin = bbox[1] + (0:(n_steps - 1)) * (fade_width / n_steps),
+      xmax = bbox[1] + (1:n_steps) * (fade_width / n_steps),
+      ymin = bbox[2],
+      ymax = bbox[4],
+      alpha = base::seq(0.9, 0, length.out = n_steps)
+    )
+  }
+  if ("right" %in% fade_directions) {
+    fade_data$right <- base::data.frame(
+      xmin = bbox[3] - fade_width + (0:(n_steps - 1)) * (fade_width / n_steps),
+      xmax = bbox[3] - fade_width + (1:n_steps) * (fade_width / n_steps),
+      ymin = bbox[2],
+      ymax = bbox[4],
+      alpha = base::seq(0, 0.9, length.out = n_steps)
+    )
+  }
 
   # create subtitle text from entries
   subtitle_lines <- base::sapply(entries, function(entry) {
     base::paste(entry$race_year, entry$race_time, sep = " - ")
   })
-  subtitle_text <- base::paste(subtitle_lines, collapse = "\n")
+
+  # If more than 4 entries, format into two columns
+  if (base::length(subtitle_lines) > 4) {
+    n_rows <- base::ceiling(base::length(subtitle_lines) / 2)
+
+    # Split into two columns
+    col1_indices <- 1:n_rows
+    col2_indices <- (n_rows + 1):base::length(subtitle_lines)
+
+    col1 <- subtitle_lines[col1_indices]
+    col2 <- if (
+      base::length(col2_indices) > 0 &&
+        col2_indices[1] <= base::length(subtitle_lines)
+    ) {
+      subtitle_lines[col2_indices]
+    } else {
+      character(0)
+    }
+
+    # Pad col2 with empty strings if needed to match col1 length
+    if (base::length(col2) < base::length(col1)) {
+      col2 <- c(col2, base::rep("", base::length(col1) - base::length(col2)))
+    }
+
+    # Combine columns side by side with spacing
+    combined_lines <- base::sapply(1:n_rows, function(i) {
+      if (col2[i] == "") {
+        col1[i]
+      } else {
+        base::paste(
+          base::format(col1[i], width = base::max(base::nchar(col1))),
+          "    ", # Add spacing between columns
+          col2[i],
+          sep = ""
+        )
+      }
+    })
+
+    subtitle_text <- base::paste(combined_lines, collapse = "\n")
+  } else {
+    subtitle_text <- base::paste(subtitle_lines, collapse = "\n")
+  }
 
   # Build ggplot
   p_map <- ggplot2::ggplot()
@@ -340,51 +442,66 @@ create_memento_map <- function(
       shape = 21,
       fill = route_color,
       stroke = 2
-    ) +
-    # Top fade gradient
-    ggplot2::geom_rect(
-      data = top_fade,
-      ggplot2::aes(xmin = xmin, xmax = xmax, ymin = ymin, ymax = ymax),
-      fill = bg_color,
-      alpha = top_fade$alpha,
-      inherit.aes = FALSE
-    ) +
-    # Bottom fade gradient
-    ggplot2::geom_rect(
-      data = bottom_fade,
-      ggplot2::aes(xmin = xmin, xmax = xmax, ymin = ymin, ymax = ymax),
-      fill = bg_color,
-      alpha = bottom_fade$alpha,
-      inherit.aes = FALSE
-    ) +
-    # Title annotation (using vjust for precise control)
-    ggplot2::annotate(
-      "text",
-      x = x_center,
-      y = title_y,
-      label = if (base::is.null(location)) {
-        competitor_name
-      } else {
-        base::toupper(location)
-      },
-      size = title_size, # Convert mm to ggplot size units
-      fontface = "bold",
-      color = text_color,
-      family = font_family,
-      vjust = 1 # Anchor text at top
-    ) +
-    # Subtitle annotation
-    ggplot2::annotate(
-      "text",
-      x = x_center,
-      y = subtitle_y,
-      label = subtitle_text,
-      size = subtitle_size, # Convert mm to ggplot size units
-      color = text_color,
-      family = font_family,
-      vjust = 1,
-      lineheight = 0.2
-    ) +
+    )
+  # Conditionally add fades for each side
+  for (side in names(fade_data)) {
+    p_map <- p_map +
+      ggplot2::geom_rect(
+        data = fade_data[[side]],
+        ggplot2::aes(xmin = xmin, xmax = xmax, ymin = ymin, ymax = ymax),
+        fill = bg_color,
+        alpha = fade_data[[side]]$alpha,
+        inherit.aes = FALSE
+      )
+  }
+
+  # Add crop mask if it was created
+  if (!is.null(crop_mask)) {
+    p_map <- p_map +
+      ggplot2::geom_sf(
+        data = crop_mask,
+        fill = bg_color,
+        color = NA,
+        alpha = 1,
+        inherit.aes = FALSE
+      )
+  }
+
+  # Only add title/subtitle annotations if NOT using circular crop
+  # (for circular crop, we'll add them as overlays later)
+  if (!use_circular_crop) {
+    p_map <- p_map +
+      # Title annotation (using vjust for precise control)
+      ggplot2::annotate(
+        "text",
+        x = x_center,
+        y = title_y,
+        label = if (base::is.null(location)) {
+          competitor_name
+        } else {
+          base::toupper(location)
+        },
+        size = title_size, # Scaled from base_size
+        fontface = "bold",
+        color = text_color,
+        family = font_family,
+        vjust = 1 # Anchor text at top
+      ) +
+      # Subtitle annotation
+      ggplot2::annotate(
+        "text",
+        x = x_center,
+        y = subtitle_y,
+        label = subtitle_text,
+        size = subtitle_size, # Scaled from base_size
+        color = text_color,
+        family = font_family,
+        vjust = 1,
+        lineheight = 1.2
+      )
+  }
+
+  p_map <- p_map +
     ggplot2::labs(title = NULL, subtitle = NULL) +
     ggplot2::coord_sf(
       xlim = c(bbox[1], bbox[3]),
@@ -397,28 +514,124 @@ create_memento_map <- function(
       panel.background = ggplot2::element_rect(fill = bg_color, color = NA),
       plot.title = ggplot2::element_blank(),
       plot.subtitle = ggplot2::element_blank(),
-      plot.margin = ggplot2::margin(0, 0, 0, 0),
-      aspect.ratio = page_height / page_width
+      plot.margin = if (!is.null(crop_shape) && crop_shape == "circle") {
+        # Calculate margins to center a square plot on rectangular page
+        if (page_width > page_height) {
+          # Landscape: add horizontal margins
+          margin_lr <- (page_width - page_height) / 2
+          ggplot2::margin(0, margin_lr, 0, margin_lr, unit = "mm")
+        } else {
+          # Portrait: add vertical margins
+          margin_tb <- (page_height - page_width) / 2
+          ggplot2::margin(margin_tb, 0, margin_tb, 0, unit = "mm")
+        }
+      } else {
+        ggplot2::margin(0, 0, 0, 0)
+      },
+      aspect.ratio = if (!is.null(crop_shape) && crop_shape == "circle") {
+        1
+      } else {
+        page_height / page_width
+      }
     )
+
+  # Add elevation chart if requested
   if (with_elevation) {
     final_plot <- p_map +
       patchwork::inset_element(
         p_elev,
         left = 0.05, # Start at far left
         bottom = 0.01, # Slightly above bottom
-        right = 0.97, # End at far right
-        top = 0.05, # Small height (15% of total)
+        right = 0.95, # End at far right
+        top = 0.06, # Small height (5% of total)
         align_to = 'full'
       )
-    base::plot(final_plot)
   } else {
     final_plot <- p_map
+  }
+
+  # Add title and subtitle as overlays if using circular crop
+  if (use_circular_crop) {
+    # Create title as a ggplot with transparent background
+    title_plot <- ggplot2::ggplot() +
+      ggplot2::annotate(
+        "text",
+        x = 0.5,
+        y = 0.5,
+        label = if (base::is.null(location)) {
+          competitor_name
+        } else {
+          base::toupper(location)
+        },
+        size = title_size,
+        fontface = "bold",
+        color = text_color,
+        family = font_family
+      ) +
+      ggplot2::theme_void() +
+      ggplot2::theme(
+        plot.background = ggplot2::element_blank(),
+        panel.background = ggplot2::element_blank()
+      ) +
+      ggplot2::coord_cartesian(xlim = c(0, 1), ylim = c(0, 1), expand = FALSE)
+
+    # Create subtitle as a ggplot with transparent background
+    subtitle_plot <- ggplot2::ggplot() +
+      ggplot2::annotate(
+        "text",
+        x = 0.5,
+        y = 0.5,
+        label = subtitle_text,
+        size = subtitle_size,
+        color = text_color,
+        family = font_family,
+        lineheight = 1.2
+      ) +
+      ggplot2::theme_void() +
+      ggplot2::theme(
+        plot.background = ggplot2::element_blank(),
+        panel.background = ggplot2::element_blank(),
+        plot.margin = ggplot2::margin(5, 0, 5, 0, unit = "pt")
+      ) +
+      ggplot2::coord_cartesian(
+        xlim = c(0, 1),
+        ylim = c(0, 1),
+        expand = TRUE,
+        clip = "off"
+      )
+
+    # Add title and subtitle as inset elements on the full page
+    final_plot <- final_plot +
+      patchwork::inset_element(
+        title_plot,
+        left = 0,
+        right = 1,
+        top = 0.98,
+        bottom = 0.92,
+        align_to = 'full',
+        clip = FALSE,
+        on_top = TRUE
+      ) +
+      patchwork::inset_element(
+        subtitle_plot,
+        left = 0,
+        right = 1,
+        top = 0.16,
+        bottom = 0.06,
+        align_to = 'full',
+        clip = FALSE,
+        on_top = TRUE
+      )
+  }
+
+  if (with_elevation || use_circular_crop) {
+    base::plot(final_plot)
   }
 
   save_path <- base::file.path(
     output_dir,
     base::paste0(
-      base::paste(location, base::gsub(" ", "_", competitor_name), sep = "-"),
+      location,
       ".png"
     )
   )

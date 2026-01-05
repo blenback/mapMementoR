@@ -11,6 +11,9 @@
 #' @param with_elevation Boolean to include elevation chart
 #' @param with_OSM Boolean to include OSM background features
 #' @param with_hillshade Boolean to include hillshade (elevation relief) background
+#' @param components Character vector specifying which OSM components to include. Any combination of 'highways', 'streets', 'water', 'coast'. Defaults to all.
+#' @param fade_directions Character vector specifying which sides to apply fade gradients to. Any combination of 'top', 'bottom', 'left', 'right'. Defaults to c('top', 'bottom').
+#' @param crop_shape Optional shape to crop map to. Options: "circle", "ellipse". If NULL, no cropping is applied.
 #' @return Saves maps for all races and styles
 #' @export
 #' @examples
@@ -26,7 +29,8 @@
 #'   with_elevation = TRUE,
 #'   with_OSM = TRUE,
 #'   with_hillshade = FALSE,
-#'   cache_data = TRUE
+#'   cache_data = TRUE,
+#'   components = c("highways", "streets", "water", "coast")
 #' )
 memento_map_series <- function(
   output_dir = "maps",
@@ -40,7 +44,10 @@ memento_map_series <- function(
   orientation = "portrait",
   with_elevation = TRUE,
   with_OSM = TRUE,
-  with_hillshade = FALSE
+  with_hillshade = FALSE,
+  components = c("highways", "streets", "water", "coast"),
+  fade_directions = c("top", "bottom"),
+  crop_shape = NULL
 ) {
   # Ensure output directory exists
   if (!dir.exists(output_dir)) {
@@ -59,6 +66,13 @@ memento_map_series <- function(
   # Select only requested styles
   selected_styles <- all_styles[styles]
 
+  # If crop_shape is NULL then add full_page as a dir
+  if (is.null(crop_shape)) {
+    crop_tag <- "full_page"
+  } else {
+    crop_tag <- crop_shape
+  }
+
   for (i in seq_along(selected_styles)) {
     style <- selected_styles[[i]]
     style_name <- names(selected_styles)[[i]]
@@ -66,7 +80,8 @@ memento_map_series <- function(
     style_dir <- file.path(
       output_dir,
       style_name,
-      page_size
+      page_size,
+      crop_tag
     )
     if (!dir.exists(style_dir)) {
       dir.create(style_dir, recursive = TRUE)
@@ -92,7 +107,10 @@ memento_map_series <- function(
         orientation = orientation,
         with_OSM = with_OSM,
         with_hillshade = with_hillshade,
-        cache_data = cache_data
+        cache_data = cache_data,
+        components = components,
+        fade_directions = fade_directions,
+        crop_shape = crop_shape
       )
     }
   }
