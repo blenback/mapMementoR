@@ -1,0 +1,24 @@
+---
+title: "Gallery of example memento maps"
+author: "Ben Black"
+format: html
+lightbox: true
+---
+
+::: {layout-ncol=3}
+![Chicago Marathon](../reference/figures/chicago.png){fig-alt="Chicago Marathon" group="my-gallery"}
+
+![Edinburgh Marathon](../reference/figures/edinburgh.png){fig-alt="Edinburgh Marathon" group="my-gallery"}
+
+![Copenhagen Marathon](../reference/figures/copenhagen.png){fig-alt="Copenhagen Marathon" group="my-gallery"}
+
+![Great North Run Half Marathon](../reference/figures/great_north_run.png){fig-alt="Great North Run Half Marathon" group="my-gallery"}
+
+![Liverpool Marathon](../reference/figures/liverpool.png){fig-alt="Example race map with Obsidian theme" group="my-gallery"}
+
+![London Marathon](../reference/figures/london.png){fig-alt="London Marathon" group="my-gallery"}
+
+![Madrid Marathon](../reference/figures/madrid.png){fig-alt="Madrid Marathon" group="my-gallery"}
+
+![Brass Monkey Half Marathon](../reference/figures/brass_monkey.png){fig-alt="London Marathon" group="my-gallery"}
+:::
