@@ -29,7 +29,10 @@ create_memento_map(
   base_size = 12,
   with_OSM = TRUE,
   cache_data = TRUE,
-  with_hillshade = FALSE
+  with_hillshade = FALSE,
+  components = c("highways", "streets", "water", "coast"),
+  fade_directions = c("top", "bottom"),
+  crop_shape = NULL
 )
 ```
 
@@ -121,6 +124,17 @@ create_memento_map(
 
   Boolean to include hillshade (elevation relief) background
 
+- fade_directions:
+
+  Character vector specifying which sides to apply fade gradients to.
+  Any combination of 'top', 'bottom', 'left', 'right'. Defaults to
+  c('top', 'bottom').
+
+- crop_shape:
+
+  Shape to crop the map to. Options: NULL (no cropping, default),
+  "circle", "ellipse". Defaults to NULL.
+
 ## Value
 
 Saves the map to the specified output directory (PNG file)
@@ -148,6 +162,5 @@ with_OSM = TRUE,
 cache_data = TRUE,
 with_hillshade = FALSE
 )
-#> Error in path_to_connection(x): data/sample_race.gpx does not exist in current working directory
-#> (/home/runner/work/mapMementoR/mapMementoR/docs/reference).
+#> Error in parse_gpx(gpx_file): GPX file does not exist: data/sample_race.gpx
 ```

@@ -406,6 +406,8 @@ memento_map_series(
 
 - [`choose_relief_colors()`](blenback.github.io/mapMementoR/reference/choose_relief_colors.md)
   : Choose relief colors for hillshade based on map background color
+- [`create_crop_mask()`](blenback.github.io/mapMementoR/reference/create_crop_mask.md)
+  : Create a crop mask for map shapes
 - [`create_memento_map()`](blenback.github.io/mapMementoR/reference/create_memento_map.md)
   : Create a map of a race route with OSM background and elevation chart
 - [`geom_relief()`](blenback.github.io/mapMementoR/reference/geom_relief.md)

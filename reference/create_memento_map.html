@@ -15,12 +15,12 @@
     </button>
 
     <div id="navbar" class="collapse navbar-collapse ms-3">
-      <ul class="navbar-nav me-auto"><li class="nav-item"><a class="nav-link" href="../articles/mapMementoR.html">Get started</a></li>
-<li class="active nav-item"><a class="nav-link" href="../reference/index.html">Reference</a></li>
+      <ul class="navbar-nav me-auto"><li class="active nav-item"><a class="nav-link" href="../reference/index.html">Reference</a></li>
 <li class="nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><a class="dropdown-item" href="../articles/inbuilt_styles.html">Using built-in Styles</a></li>
   </ul></li>
+<li class="nav-item"><a class="nav-link" href="../gallery.html">Gallery</a></li>
       </ul><ul class="navbar-nav"><li class="nav-item"><form class="form-inline" role="search">
  <input class="form-control" type="search" name="search-input" id="search-input" autocomplete="off" aria-label="Search site" placeholder="Search for" data-search-index="../search.json"></form></li>
 <li class="nav-item dropdown">
@@ -68,7 +68,10 @@
 <span>  base_size <span class="op">=</span> <span class="fl">12</span>,</span>
 <span>  with_OSM <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  cache_data <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>  with_hillshade <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span>  with_hillshade <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  components <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"highways"</span>, <span class="st">"streets"</span>, <span class="st">"water"</span>, <span class="st">"coast"</span><span class="op">)</span>,</span>
+<span>  fade_directions <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"top"</span>, <span class="st">"bottom"</span><span class="op">)</span>,</span>
+<span>  crop_shape <span class="op">=</span> <span class="cn">NULL</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -159,6 +162,14 @@
 <dt id="arg-with-hillshade">with_hillshade<a class="anchor" aria-label="anchor" href="#arg-with-hillshade"></a></dt>
 <dd><p>Boolean to include hillshade (elevation relief) background</p></dd>
 
+
+<dt id="arg-fade-directions">fade_directions<a class="anchor" aria-label="anchor" href="#arg-fade-directions"></a></dt>
+<dd><p>Character vector specifying which sides to apply fade gradients to. Any combination of 'top', 'bottom', 'left', 'right'. Defaults to c('top', 'bottom').</p></dd>
+
+
+<dt id="arg-crop-shape">crop_shape<a class="anchor" aria-label="anchor" href="#arg-crop-shape"></a></dt>
+<dd><p>Shape to crop the map to. Options: NULL (no cropping, default), "circle", "ellipse". Defaults to NULL.</p></dd>
+
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
@@ -187,8 +198,7 @@
 <span class="r-in"><span>cache_data <span class="op">=</span> <span class="cn">TRUE</span>,</span></span>
 <span class="r-in"><span>with_hillshade <span class="op">=</span> <span class="cn">FALSE</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in path_to_connection(x):</span> <span style="color: #0000BB;">data/sample_race.gpx</span> does not exist in current working directory</span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> (<span style="color: #0000BB;">/home/runner/work/mapMementoR/mapMementoR/docs/reference</span>).</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in parse_gpx(gpx_file):</span> GPX file does not exist: data/sample_race.gpx</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
