@@ -30,7 +30,7 @@
 ##' @export
 #' @examples
 #' create_memento_map(
-#' gpx_file = "data/sample_race.gpx",
+#' gpx_file = "data-raw/sample_race.gpx",
 #' competitor_name = "John Doe",
 #' entries = list(
 #'  list(race_year = "2021", race_time = "3:15:30"),

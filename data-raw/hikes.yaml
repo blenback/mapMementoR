@@ -1,0 +1,25 @@
+multiday_routes:
+  - competitor_name: "Alex Black"
+    location: "Tour de Mountains"
+    segments:
+      - gpx_file: "data-raw/stage1.gpx"
+        segment_name: "Stage 1: Valley Start"
+      - gpx_file: "data-raw/stage2.gpx"
+        segment_name: "Stage 2: Mountain Pass"
+      - gpx_file: "data-raw/stage3.gpx"
+        segment_name: "Stage 3: Descent"
+    route_colors: ["#d1af82", "#82b4d1", "#d182a8"]
+    
+  - competitor_name: "Alex Black"
+    location: "Coast to Coast"
+    segments:
+      - gpx_file: "data-raw/day1.gpx"
+        segment_name: "Day 1: Pacific Coast"
+      - gpx_file: "data-raw/day2.gpx"
+        segment_name: "Day 2: Desert Crossing"
+      - gpx_file: "data-raw/day3.gpx"
+        segment_name: "Day 3: Mountain Range"
+      - gpx_file: "data-raw/day4.gpx"
+        segment_name: "Day 4: Plains"
+      - gpx_file: "data-raw/day5.gpx"
+        segment_name: "Day 5: Atlantic Finish"

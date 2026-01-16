@@ -129,7 +129,7 @@ Saves the map to the specified output directory (PNG file)
 
 ``` r
 create_memento_map(
-gpx_file = "data/sample_race.gpx",
+gpx_file = "data-raw/sample_race.gpx",
 competitor_name = "John Doe",
 entries = list(
  list(race_year = "2021", race_time = "3:15:30"),
@@ -148,6 +148,6 @@ with_OSM = TRUE,
 cache_data = TRUE,
 with_hillshade = FALSE
 )
-#> Error in path_to_connection(x): data/sample_race.gpx does not exist in current working directory
+#> Error in path_to_connection(x): data-raw/sample_race.gpx does not exist in current working directory
 #> (C:/Users/bblack/switchdrive/Private/git_laptop/mapMementoR/docs/reference).
 ```

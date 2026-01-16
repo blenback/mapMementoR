@@ -1,0 +1,9 @@
+races:
+ - gpx_file: 'data-raw/berlin.gpx'
+   competitor_name: Anna & Nico
+   event: Marathon
+   location: Berlin
+   entries:
+   - race_year: '2024'
+     race_time: '04:49:05'
+

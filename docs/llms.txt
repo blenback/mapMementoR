@@ -86,7 +86,7 @@ This file contains your race information. Each race needs:
 #### Example Structure
 
 ```yaml
-  - gpx_file: "data/london.gpx"
+  - gpx_file: "data-raw/london.gpx"
     competitor_name: "Alex Black"
     event: "Mar"
     entries:
@@ -97,7 +97,7 @@ This file contains your race information. Each race needs:
       - race_year: "2023"
         race_time: "2:35:48"
   
-  - gpx_file: "data/chicago.gpx"
+  - gpx_file: "data-raw/chicago.gpx"
     competitor_name: "Alex Black"
     event: "Mar"
     location: "Chicago"
@@ -110,11 +110,11 @@ This file contains your race information. Each race needs:
 
 To add a new race:
 
-1.  Save your GPX file to the `data/` directory
+1.  Save your GPX file to the `data-raw/` directory
 2.  Add a new entry to your `*_races.yaml` file:
 
 ``` yaml
-  - gpx_file: "data/new_race.gpx"
+  - gpx_file: "data-raw/new_race.gpx"
     competitor_name: "Your Name"
     event: "HM"
     location: "New Location"
@@ -256,9 +256,9 @@ tours), use the `create_multiday_map()` function:
 ``` r
 create_multiday_map(
   segments = list(
-    list(gpx_file = "data/stage1.gpx", segment_name = "Stage 1: Mountains"),
-    list(gpx_file = "data/stage2.gpx", segment_name = "Stage 2: Coast"),
-    list(gpx_file = "data/stage3.gpx", segment_name = "Stage 3: Finish")
+    list(gpx_file = "data-raw/stage1.gpx", segment_name = "Stage 1: Mountains"),
+    list(gpx_file = "data-raw/stage2.gpx", segment_name = "Stage 2: Coast"),
+    list(gpx_file = "data-raw/stage3.gpx", segment_name = "Stage 3: Finish")
   ),
   competitor_name = "Alex Black",
   location = "Three Day Challenge",
@@ -298,7 +298,7 @@ Recommended folder structure:
 
 ``` R
 project/
-├── data/
+├── data-raw/
 │   ├── london.gpx
 │   ├── chicago.gpx
 │   └── *.rds (cached OSM data)
@@ -320,7 +320,7 @@ Higher DPI values (300-600) are recommended for printing, while 150-200 DPI work
 Recommended folder structure:
 ```
 
-project/ ├── data/ │ ├── london.gpx │ ├── chicago.gpx │ └── \*.rds
+project/ ├── data-raw/ │ ├── london.gpx │ ├── chicago.gpx │ └── \*.rds
 (cached OSM data) ├── output/ │ ├── Dark/ │ │ ├── A5/ │ │ └── A3/ │ └──
 Zen/ │ └── A4/ ├── alex_black_races.yaml ├── styles.yaml └──
 create_maps.R
@@ -338,7 +338,7 @@ create_maps.R
 ### Missing Map Features
 
 **Problem**: Some streets/water aren't showing
-- The script caches OpenStreetMap data in `data/*.rds` files
+- The script caches OpenStreetMap data in `data-raw/*.rds` files
 - Delete these files to re-fetch fresh data
 - Ensure you have internet connection when first running
 
@@ -375,7 +375,7 @@ save_powerof10_to_yaml(
   event = c("HM", "Mar")
 )
 
-# 2. Add GPX files to data/ folder
+# 2. Add GPX files to data-raw/ folder
 # 3. Edit the generated YAML to add gpx_file paths
 
 # 4. Create maps with all styles

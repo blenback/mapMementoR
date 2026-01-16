@@ -692,7 +692,7 @@ This file contains your race information. Each race needs:
 #### Example Structure
 
 ```yaml
-  - gpx_file: &quot;data/london.gpx&quot;
+  - gpx_file: &quot;data-raw/london.gpx&quot;
     competitor_name: &quot;Alex Black&quot;
     event: &quot;Mar&quot;
     entries:
@@ -703,7 +703,7 @@ This file contains your race information. Each race needs:
       - race_year: &quot;2023&quot;
         race_time: &quot;2:35:48&quot;
   
-  - gpx_file: &quot;data/chicago.gpx&quot;
+  - gpx_file: &quot;data-raw/chicago.gpx&quot;
     competitor_name: &quot;Alex Black&quot;
     event: &quot;Mar&quot;
     location: &quot;Chicago&quot;
@@ -713,10 +713,10 @@ This file contains your race information. Each race needs:
 <h4 id="adding-new-races">Adding New Races</h4>
 <p>To add a new race:</p>
 <ol style="list-style-type: decimal">
-<li>Save your GPX file to the <code>data/</code> directory</li>
+<li>Save your GPX file to the <code>data-raw/</code> directory</li>
 <li>Add a new entry to your <code>*_races.yaml</code> file:</li>
 </ol>
-<div class="sourceCode" id="cb4"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">gpx_file</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;data/new_race.gpx&quot;</span></span>
+<div class="sourceCode" id="cb4"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">gpx_file</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;data-raw/new_race.gpx&quot;</span></span>
 <span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a><span class="at">    </span><span class="fu">competitor_name</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;Your Name&quot;</span></span>
 <span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a><span class="at">    </span><span class="fu">event</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;HM&quot;</span></span>
 <span id="cb4-4"><a href="#cb4-4" tabindex="-1"></a><span class="at">    </span><span class="fu">location</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;New Location&quot;</span></span>
@@ -822,9 +822,9 @@ or <a href="https://htmlcolorcodes.com/">HTML Color Codes</a></li>
 cycling tours), use the <code>create_multiday_map()</code> function:</p>
 <div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a><span class="fu">create_multiday_map</span>(</span>
 <span id="cb12-2"><a href="#cb12-2" tabindex="-1"></a>  <span class="at">segments =</span> <span class="fu">list</span>(</span>
-<span id="cb12-3"><a href="#cb12-3" tabindex="-1"></a>    <span class="fu">list</span>(<span class="at">gpx_file =</span> <span class="st">&quot;data/stage1.gpx&quot;</span>, <span class="at">segment_name =</span> <span class="st">&quot;Stage 1: Mountains&quot;</span>),</span>
-<span id="cb12-4"><a href="#cb12-4" tabindex="-1"></a>    <span class="fu">list</span>(<span class="at">gpx_file =</span> <span class="st">&quot;data/stage2.gpx&quot;</span>, <span class="at">segment_name =</span> <span class="st">&quot;Stage 2: Coast&quot;</span>),</span>
-<span id="cb12-5"><a href="#cb12-5" tabindex="-1"></a>    <span class="fu">list</span>(<span class="at">gpx_file =</span> <span class="st">&quot;data/stage3.gpx&quot;</span>, <span class="at">segment_name =</span> <span class="st">&quot;Stage 3: Finish&quot;</span>)</span>
+<span id="cb12-3"><a href="#cb12-3" tabindex="-1"></a>    <span class="fu">list</span>(<span class="at">gpx_file =</span> <span class="st">&quot;data-raw/stage1.gpx&quot;</span>, <span class="at">segment_name =</span> <span class="st">&quot;Stage 1: Mountains&quot;</span>),</span>
+<span id="cb12-4"><a href="#cb12-4" tabindex="-1"></a>    <span class="fu">list</span>(<span class="at">gpx_file =</span> <span class="st">&quot;data-raw/stage2.gpx&quot;</span>, <span class="at">segment_name =</span> <span class="st">&quot;Stage 2: Coast&quot;</span>),</span>
+<span id="cb12-5"><a href="#cb12-5" tabindex="-1"></a>    <span class="fu">list</span>(<span class="at">gpx_file =</span> <span class="st">&quot;data-raw/stage3.gpx&quot;</span>, <span class="at">segment_name =</span> <span class="st">&quot;Stage 3: Finish&quot;</span>)</span>
 <span id="cb12-6"><a href="#cb12-6" tabindex="-1"></a>  ),</span>
 <span id="cb12-7"><a href="#cb12-7" tabindex="-1"></a>  <span class="at">competitor_name =</span> <span class="st">&quot;Alex Black&quot;</span>,</span>
 <span id="cb12-8"><a href="#cb12-8" tabindex="-1"></a>  <span class="at">location =</span> <span class="st">&quot;Three Day Challenge&quot;</span>,</span>
@@ -856,7 +856,7 @@ backgrounds</li>
 <h2 id="file-organization">File Organization</h2>
 <p>Recommended folder structure:</p>
 <pre><code>project/
-├── data/
+├── data-raw/
 │   ├── london.gpx
 │   ├── chicago.gpx
 │   └── *.rds (cached OSM data)
@@ -876,7 +876,7 @@ Higher DPI values (300-600) are recommended for printing, while 150-200 DPI work
 ## File Organization
 
 Recommended folder structure:</code></pre>
-<p>project/ ├── data/ │ ├── london.gpx │ ├── chicago.gpx │ └── *.rds
+<p>project/ ├── data-raw/ │ ├── london.gpx │ ├── chicago.gpx │ └── *.rds
 (cached OSM data) ├── output/ │ ├── Dark/ │ │ ├── A5/ │ │ └── A3/ │ └──
 Zen/ │ └── A4/ ├── alex_black_races.yaml ├── styles.yaml └──
 create_maps.R</p>
@@ -892,7 +892,7 @@ create_maps.R</p>
 ### Missing Map Features
 
 **Problem**: Some streets/water aren&#39;t showing
-- The script caches OpenStreetMap data in `data/*.rds` files
+- The script caches OpenStreetMap data in `data-raw/*.rds` files
 - Delete these files to re-fetch fresh data
 - Ensure you have internet connection when first running
 
@@ -929,7 +929,7 @@ save_powerof10_to_yaml(
   event = c(&quot;HM&quot;, &quot;Mar&quot;)
 )
 
-# 2. Add GPX files to data/ folder
+# 2. Add GPX files to data-raw/ folder
 # 3. Edit the generated YAML to add gpx_file paths
 
 # 4. Create maps with all styles

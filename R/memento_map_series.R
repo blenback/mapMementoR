@@ -21,7 +21,7 @@
 #'   output_dir = "maps",
 #'   styles = c("Dark", "Emerald"),
 #'   custom_styles = list(MyStyle = list(route_color = "#123456", ...)),
-#'   races_path = "data/races.yaml",
+#'   races_path = "data-raw/races.yaml",
 #'   dpi = 300,
 #'   page_size = "A5",
 #'   base_size = 18,

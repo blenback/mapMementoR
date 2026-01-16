@@ -83,7 +83,7 @@ memento_map_series(
   output_dir = "maps",
   styles = c("Dark", "Emerald"),
   custom_styles = list(MyStyle = list(route_color = "#123456", ...)),
-  races_path = "data/races.yaml",
+  races_path = "data-raw/races.yaml",
   dpi = 300,
   page_size = "A5",
   base_size = 18,
@@ -93,5 +93,5 @@ memento_map_series(
   with_hillshade = FALSE,
   cache_data = TRUE
 )
-#> Error in memento_map_series(output_dir = "maps", styles = c("Dark", "Emerald"),     custom_styles = list(MyStyle = list(route_color = "#123456",         ...)), races_path = "data/races.yaml", dpi = 300, page_size = "A5",     base_size = 18, orientation = "portrait", with_elevation = TRUE,     with_OSM = TRUE, with_hillshade = FALSE, cache_data = TRUE): could not find function "memento_map_series"
+#> Error in memento_map_series(output_dir = "maps", styles = c("Dark", "Emerald"),     custom_styles = list(MyStyle = list(route_color = "#123456",         ...)), races_path = "data-raw/races.yaml", dpi = 300, page_size = "A5",     base_size = 18, orientation = "portrait", with_elevation = TRUE,     with_OSM = TRUE, with_hillshade = FALSE, cache_data = TRUE): could not find function "memento_map_series"
 ```

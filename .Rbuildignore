@@ -2,7 +2,7 @@
 ^\.Rproj\.user$
 ^LICENSE\.md$
 ^README\.Rmd$
-data/
+data-raw/
 ^create_maps\.R$
 ^create_multiday_map\.R$
 ^outputs/
@@ -16,3 +16,4 @@ data/
 ^TODO\.md$
 ^_extensions/
 
+^data-raw$

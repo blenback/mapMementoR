@@ -35,7 +35,7 @@
 ##' @export
 ##' @examples
 ##' create_multitrack_memento_map(
-##'   gpx_files = c("data/route1.gpx", "data/route2.gpx"),
+##'   gpx_files = c("data-raw/route1.gpx", "data-raw/route2.gpx"),
 ##'   track_labels = c("2023", "2024"),
 ##'   route_colors = c("#d1af82", "#82d1af"),
 ##'   with_labels = TRUE,
@@ -97,6 +97,18 @@ create_multitrack_memento_map <- function(
   # Set text color to first route color if not specified
   if (is.null(text_color)) {
     text_color <- route_colors[1]
+  }
+
+  # modify map title for file naming
+  file_title <- if (is.null(map_title)) {
+    "multitrack_map"
+  } else {
+    # replace whitespaces with _ and remove special characters such as \n etc.
+    base::gsub(
+      "[^A-Za-z0-9_]",
+      "",
+      base::gsub("[[:space:]]+", "-", base::tolower(map_title))
+    )
   }
 
   dims <- get_page_dimensions(page_size, orientation)
@@ -163,7 +175,7 @@ create_multitrack_memento_map <- function(
   if (with_OSM) {
     osm <- get_osm_components(
       bbox,
-      map_title,
+      file_title,
       cache_data = cache_data,
       components = components
     )
@@ -180,7 +192,7 @@ create_multitrack_memento_map <- function(
 
   # Get hillshade if requested
   if (with_hillshade) {
-    hillshade <- get_hillshade(bbox, map_title, cache_data = cache_data)
+    hillshade <- get_hillshade(bbox, file_title, cache_data = cache_data)
   } else {
     hillshade <- NULL
   }
@@ -662,17 +674,6 @@ create_multitrack_memento_map <- function(
   }
 
   # Save the plot
-  file_title <- if (is.null(map_title)) {
-    "multitrack_map"
-  } else {
-    # replace whitespaces with _ and remove special characters such as \n etc.
-    base::gsub(
-      "[^A-Za-z0-9_]",
-      "",
-      base::gsub("[[:space:]]+", "_", map_title)
-    )
-  }
-
   save_path <- base::file.path(
     output_dir,
     base::paste0(
