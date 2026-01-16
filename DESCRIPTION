@@ -28,7 +28,7 @@ Imports:
     data.table,
     quarto,
     scales,
-    geomtextpath
+    ggrepel
 Suggests: 
     testthat (>= 3.0.0)
 Config/testthat/edition: 3

@@ -10,7 +10,7 @@
 ##' @param with_labels Boolean to include text labels along routes using geomtextpath
 ##' @param label_spacing Spacing for labels along the path (default 0.3)
 ##' @param label_size Size of route labels (default 3)
-##' @param location Location string for map title
+##' @param map_title map_title string for map title
 ##' @param route_size Size of the route lines (overridden by page size)
 ##' @param bg_color Background color for the map
 ##' @param street_color Color for streets
@@ -31,7 +31,7 @@
 ##' @param fade_directions Character vector specifying fade directions
 ##' @param crop_shape Shape to crop the map to. Options: NULL, "circle", "ellipse"
 ##' @return Saves the map to the specified output directory (PNG file)
-##' @import ggplot2 sf dplyr xml2 grid osmdata geosphere patchwork geomtextpath
+##' @import ggplot2 sf dplyr xml2 grid osmdata geosphere patchwork ggrepel
 ##' @export
 ##' @examples
 ##' create_multitrack_memento_map(
@@ -39,7 +39,7 @@
 ##'   track_labels = c("2023", "2024"),
 ##'   route_colors = c("#d1af82", "#82d1af"),
 ##'   with_labels = TRUE,
-##'   location = "Marathon Comparison",
+##'   map_title = "Marathon Comparison",
 ##'   bg_color = "#0a0e27",
 ##'   output_dir = "maps",
 ##'   dpi = 300,
@@ -53,7 +53,7 @@ create_multitrack_memento_map <- function(
   with_labels = FALSE,
   label_spacing = 0.3,
   label_size = 3,
-  location = NULL,
+  map_title = NULL,
   route_size = 1.2,
   bg_color = "#0a0e27",
   street_color = "#1a1f3a",
@@ -163,7 +163,7 @@ create_multitrack_memento_map <- function(
   if (with_OSM) {
     osm <- get_osm_components(
       bbox,
-      location,
+      map_title,
       cache_data = cache_data,
       components = components
     )
@@ -180,52 +180,107 @@ create_multitrack_memento_map <- function(
 
   # Get hillshade if requested
   if (with_hillshade) {
-    hillshade <- get_hillshade(bbox, location, cache_data = cache_data)
+    hillshade <- get_hillshade(bbox, map_title, cache_data = cache_data)
   } else {
     hillshade <- NULL
   }
 
-  # Calculate elevation for first track if requested
+  # Calculate page scale for text sizing (needed for elevation plots and title)
+  page_scale <- page_width / 210
+
+  # Calculate elevation for all tracks if requested
   if (with_elevation && base::length(all_tracks) > 0) {
-    track_data <- all_tracks[[1]]
+    # Calculate distances and get min/max elevation across ALL tracks
+    all_elevations <- c()
 
-    # Calculate cumulative distance
-    track_data$dist <- c(
-      0,
-      base::cumsum(
-        geosphere::distHaversine(
-          base::cbind(
-            track_data$lon[-base::nrow(track_data)],
-            track_data$lat[-base::nrow(track_data)]
-          ),
-          base::cbind(track_data$lon[-1], track_data$lat[-1])
-        )
-      ) /
-        1000
-    )
+    for (i in 1:n_tracks) {
+      track_data <- all_tracks[[i]]
 
-    max_dist <- base::max(track_data$dist, na.rm = TRUE)
-    track_min_elev <- base::min(track_data$ele, na.rm = TRUE)
-    track_max_elev <- base::max(track_data$ele, na.rm = TRUE)
-    baseline <- track_min_elev * 0.95
-
-    p_elev <- ggplot2::ggplot(track_data, ggplot2::aes(x = dist, y = ele)) +
-      ggplot2::geom_ribbon(
-        ggplot2::aes(ymin = baseline, ymax = ele),
-        fill = route_colors[1],
-        alpha = 0.35
-      ) +
-      ggplot2::geom_line(color = route_colors[1], linewidth = 0.7) +
-      ggplot2::scale_x_continuous(limits = c(0, max_dist), expand = c(0, 0)) +
-      ggplot2::scale_y_continuous(
-        limits = c(baseline, track_max_elev),
-        expand = c(0, 0)
-      ) +
-      ggplot2::theme_void() +
-      ggplot2::theme(
-        plot.background = ggplot2::element_rect(fill = NA, color = NA),
-        panel.background = ggplot2::element_rect(fill = NA, color = NA)
+      # Calculate cumulative distance for this track
+      track_data$dist <- c(
+        0,
+        base::cumsum(
+          geosphere::distHaversine(
+            base::cbind(
+              track_data$lon[-base::nrow(track_data)],
+              track_data$lat[-base::nrow(track_data)]
+            ),
+            base::cbind(track_data$lon[-1], track_data$lat[-1])
+          )
+        ) /
+          1000
       )
+
+      all_tracks[[i]] <- track_data
+      all_elevations <- c(all_elevations, track_data$ele)
+    }
+
+    # Global min/max for consistent y-axis across all tracks
+    global_min_elev <- base::min(all_elevations, na.rm = TRUE)
+    global_max_elev <- base::max(all_elevations, na.rm = TRUE)
+    baseline <- global_min_elev * 0.95
+
+    # Calculate elevation plot title size scaled by page size
+    elev_title_size <- (base_size / 0.8) * page_scale * 0.65
+
+    # Create individual elevation plots for each track
+    elev_plots <- base::lapply(1:n_tracks, function(i) {
+      track_data <- all_tracks[[i]]
+      max_dist <- base::max(track_data$dist, na.rm = TRUE)
+
+      # Create elevation profile
+      p <- ggplot2::ggplot(track_data, ggplot2::aes(x = dist, y = ele)) +
+        ggplot2::geom_ribbon(
+          ggplot2::aes(ymin = baseline, ymax = ele),
+          fill = route_colors[i],
+          alpha = 0.35
+        ) +
+        ggplot2::geom_line(color = route_colors[i], linewidth = 0.7) +
+        ggplot2::scale_x_continuous(limits = c(0, max_dist), expand = c(0, 0)) +
+        ggplot2::scale_y_continuous(
+          limits = c(baseline, global_max_elev),
+          expand = c(0, 0)
+        ) +
+        ggplot2::theme_void(
+          base_size = base_size * 0.6,
+          base_family = font_family
+        ) +
+        ggplot2::theme(
+          plot.background = ggplot2::element_rect(fill = NA, color = NA),
+          panel.background = ggplot2::element_rect(fill = NA, color = NA),
+          plot.margin = ggplot2::margin(1, 2, 1, 2, unit = "pt"), # Add small margins
+          plot.title = ggplot2::element_text(
+            size = elev_title_size, # Use page-scaled size
+            hjust = 0.5,
+            angle = 0,
+            vjust = 0.2,
+            color = route_colors[i],
+            family = font_family,
+            margin = ggplot2::margin(0, 0, 1, 0, unit = "pt")
+          ),
+          plot.caption = ggplot2::element_text(
+            size = elev_title_size * 0.85, # Slightly smaller than title
+            hjust = 0.5,
+            color = route_colors[i],
+            family = font_family,
+            margin = ggplot2::margin(1, 0, 0, 0, unit = "pt")
+          )
+        ) +
+        ggplot2::labs(
+          title = track_labels[i],
+          caption = base::sprintf("%.1f km", max_dist)
+        )
+
+      p
+    })
+
+    # Combine all elevation plots horizontally with spacing
+    p_elev <- patchwork::wrap_plots(elev_plots, nrow = 1) +
+      patchwork::plot_layout(
+        widths = base::rep(1, n_tracks),
+        guides = "collect"
+      ) &
+      ggplot2::theme(plot.margin = ggplot2::margin(0, 1, 0, 1, unit = "pt")) # Add spacing between plots
   }
 
   # Calculate positioning and sizes
@@ -235,14 +290,14 @@ create_multitrack_memento_map <- function(
   title_y <- bbox[4] - (y_range * 0.04)
 
   # Font sizes
-  title_text <- if (base::is.null(location)) {
+  title_text <- if (base::is.null(map_title)) {
     "Multi-Track Map"
   } else {
-    base::toupper(location)
+    base::toupper(map_title)
   }
   n_title_words <- base::length(base::strsplit(title_text, "[[:space:]]+")[[1]])
   title_scale <- base::max(0.7, 1 - 0.1 * (n_title_words - 1))
-  page_scale <- page_width / 210
+  # page_scale already calculated above for use in elevation plots
 
   crop_text_scale <- if (use_circular_crop) {
     if (page_width > page_height) {
@@ -254,7 +309,8 @@ create_multitrack_memento_map <- function(
     1
   }
 
-  title_size <- (base_size / 0.8) * page_scale * title_scale * crop_text_scale
+  title_size <- (base_size / 0.8) * page_scale * crop_text_scale
+  #* title_scale
 
   # Adjust route and point sizes
   route_size <- page_width * 0.004
@@ -375,59 +431,114 @@ create_multitrack_memento_map <- function(
       )
   }
 
-  # Add all routes
+  # Add all routes with visual gaps
   for (i in 1:n_tracks) {
     track <- all_tracks[[i]]
 
-    if (with_labels) {
-      # Use geomtextpath for labeled routes
-      p_map <- p_map +
-        geomtextpath::geom_textpath(
-          data = track,
-          ggplot2::aes(x = lon, y = lat, label = track_label),
-          color = track$track_color[1],
-          size = label_size,
-          linewidth = route_size,
-          alpha = 0.95,
-          hjust = 0.5,
-          vjust = -0.5,
-          text_only = FALSE,
-          spacing = label_spacing,
-          family = font_family
+    # Create visual separation by trimming the last 75 meters from each track
+    # (except the last track which should show its full length)
+    gap_distance <- 0.075 # 75 meters in km
+
+    if (i < n_tracks && "dist" %in% names(track)) {
+      # Calculate cumulative distance if not already present
+      if (!("dist" %in% names(track)) || all(is.na(track$dist))) {
+        track$dist <- c(
+          0,
+          base::cumsum(
+            geosphere::distHaversine(
+              base::cbind(
+                track$lon[-base::nrow(track)],
+                track$lat[-base::nrow(track)]
+              ),
+              base::cbind(track$lon[-1], track$lat[-1])
+            )
+          ) /
+            1000
         )
+      }
+
+      max_dist <- base::max(track$dist, na.rm = TRUE)
+      cutoff_dist <- max_dist - gap_distance
+
+      # Only keep points before the cutoff distance
+      track_trimmed <- track[track$dist <= cutoff_dist, ]
     } else {
-      # Regular path without labels
-      p_map <- p_map +
-        ggplot2::geom_path(
-          data = track,
-          ggplot2::aes(x = lon, y = lat),
-          color = track$track_color[1],
-          linewidth = route_size,
-          alpha = 0.95,
-          lineend = "round"
-        )
+      # Last track or no distance data - use full track
+      track_trimmed <- track
     }
 
-    # Add start/finish points
+    # Draw the path (possibly trimmed)
+    p_map <- p_map +
+      ggplot2::geom_path(
+        data = track_trimmed,
+        ggplot2::aes(x = lon, y = lat),
+        color = track$track_color[1],
+        linewidth = route_size,
+        alpha = 0.95,
+        lineend = "round"
+      )
+
+    # Add start point (circle)
     p_map <- p_map +
       ggplot2::geom_point(
         data = track[1, ],
         ggplot2::aes(x = lon, y = lat),
         color = track$track_color[1],
         size = point_size,
-        shape = 21,
+        shape = 21, # Circle
         fill = track$track_color[1],
-        stroke = 2
-      ) +
-      ggplot2::geom_point(
-        data = track[base::nrow(track), ],
-        ggplot2::aes(x = lon, y = lat),
-        color = track$track_color[1],
-        size = point_size,
-        shape = 21,
-        fill = track$track_color[1],
-        stroke = 2
+        stroke = 1
       )
+
+    # Add end point for the last track only (square)
+    if (i == n_tracks) {
+      p_map <- p_map +
+        ggplot2::geom_point(
+          data = track[base::nrow(track), ],
+          ggplot2::aes(x = lon, y = lat),
+          color = track$track_color[1],
+          size = point_size,
+          shape = 21,
+          fill = track$track_color[1],
+          stroke = 1
+        )
+    }
+  }
+
+  # Add labels for all tracks in a single layer (allows ggrepel to avoid overlaps)
+  if (with_labels) {
+    # Collect all start points with their labels
+    all_label_points <- base::do.call(
+      rbind,
+      base::lapply(1:n_tracks, function(i) {
+        track <- all_tracks[[i]]
+        label_point <- track[1, ]
+        label_point
+      })
+    )
+
+    # Add labels with repelling to avoid overlaps
+    p_map <- p_map +
+      ggrepel::geom_label_repel(
+        data = all_label_points,
+        ggplot2::aes(
+          x = lon,
+          y = lat,
+          label = track_label,
+          color = track_color
+        ),
+        size = label_size,
+        fill = NA,
+        family = font_family,
+        fontface = "bold",
+        label.size = 0,
+        label.padding = ggplot2::unit(0.15, "lines"),
+        box.padding = ggplot2::unit(0.5, "lines"),
+        point.padding = ggplot2::unit(0.3, "lines"),
+        segment.color = "grey50", # No line connecting label to point
+        show.legend = FALSE
+      ) +
+      ggplot2::scale_color_identity() # Use the actual color values
   }
 
   # Add fades
@@ -506,7 +617,7 @@ create_multitrack_memento_map <- function(
         left = 0.05,
         bottom = 0.01,
         right = 0.95,
-        top = 0.06,
+        top = 0.15,
         align_to = 'full'
       )
   } else {
@@ -551,9 +662,23 @@ create_multitrack_memento_map <- function(
   }
 
   # Save the plot
+  file_title <- if (is.null(map_title)) {
+    "multitrack_map"
+  } else {
+    # replace whitespaces with _ and remove special characters such as \n etc.
+    base::gsub(
+      "[^A-Za-z0-9_]",
+      "",
+      base::gsub("[[:space:]]+", "_", map_title)
+    )
+  }
+
   save_path <- base::file.path(
     output_dir,
-    base::paste0(if (is.null(location)) "multitrack_map" else location, ".png")
+    base::paste0(
+      file_title,
+      ".png"
+    )
   )
 
   ggplot2::ggsave(
