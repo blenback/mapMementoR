@@ -142,7 +142,7 @@ Example race map with Nautical theme
 <span id="cb3-15"><a href="#cb3-15" tabindex="-1"></a><span class="do">#### Example Structure</span></span>
 <span id="cb3-16"><a href="#cb3-16" tabindex="-1"></a></span>
 <span id="cb3-17"><a href="#cb3-17" tabindex="-1"></a><span class="st">```</span><span class="at">yaml</span></span>
-<span id="cb3-18"><a href="#cb3-18" tabindex="-1"></a><span class="at">  - gpx_file: "data/london.gpx"</span></span>
+<span id="cb3-18"><a href="#cb3-18" tabindex="-1"></a><span class="at">  - gpx_file: "data-raw/london.gpx"</span></span>
 <span id="cb3-19"><a href="#cb3-19" tabindex="-1"></a><span class="at">    competitor_name: "Alex Black"</span></span>
 <span id="cb3-20"><a href="#cb3-20" tabindex="-1"></a><span class="at">    event: "Mar"</span></span>
 <span id="cb3-21"><a href="#cb3-21" tabindex="-1"></a><span class="at">    entries:</span></span>
@@ -153,7 +153,7 @@ Example race map with Nautical theme
 <span id="cb3-26"><a href="#cb3-26" tabindex="-1"></a><span class="at">      - race_year: "2023"</span></span>
 <span id="cb3-27"><a href="#cb3-27" tabindex="-1"></a><span class="at">        race_time: "2:35:48"</span></span>
 <span id="cb3-28"><a href="#cb3-28" tabindex="-1"></a><span class="at">  </span></span>
-<span id="cb3-29"><a href="#cb3-29" tabindex="-1"></a><span class="at">  - gpx_file: "data/chicago.gpx"</span></span>
+<span id="cb3-29"><a href="#cb3-29" tabindex="-1"></a><span class="at">  - gpx_file: "data-raw/chicago.gpx"</span></span>
 <span id="cb3-30"><a href="#cb3-30" tabindex="-1"></a><span class="at">    competitor_name: "Alex Black"</span></span>
 <span id="cb3-31"><a href="#cb3-31" tabindex="-1"></a><span class="at">    event: "Mar"</span></span>
 <span id="cb3-32"><a href="#cb3-32" tabindex="-1"></a><span class="at">    location: "Chicago"</span></span>
@@ -165,10 +165,10 @@ Example race map with Nautical theme
 </h4>
 <p>To add a new race:</p>
 <ol style="list-style-type: decimal">
-<li>Save your GPX file to the <code>data/</code> directory</li>
+<li>Save your GPX file to the <code>data-raw/</code> directory</li>
 <li>Add a new entry to your <code>*_races.yaml</code> file:</li>
 </ol>
-<div class="sourceCode" id="cb4"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">gpx_file</span><span class="kw">:</span><span class="at"> </span><span class="st">"data/new_race.gpx"</span></span>
+<div class="sourceCode" id="cb4"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">gpx_file</span><span class="kw">:</span><span class="at"> </span><span class="st">"data-raw/new_race.gpx"</span></span>
 <span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a><span class="at">    </span><span class="fu">competitor_name</span><span class="kw">:</span><span class="at"> </span><span class="st">"Your Name"</span></span>
 <span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a><span class="at">    </span><span class="fu">event</span><span class="kw">:</span><span class="at"> </span><span class="st">"HM"</span></span>
 <span id="cb4-4"><a href="#cb4-4" tabindex="-1"></a><span class="at">    </span><span class="fu">location</span><span class="kw">:</span><span class="at"> </span><span class="st">"New Location"</span></span>
@@ -293,9 +293,9 @@ Example race map with Nautical theme
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">create_multiday_map</span><span class="op">(</span></span>
 <span>  segments <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
-<span>    <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>gpx_file <span class="op">=</span> <span class="st">"data/stage1.gpx"</span>, segment_name <span class="op">=</span> <span class="st">"Stage 1: Mountains"</span><span class="op">)</span>,</span>
-<span>    <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>gpx_file <span class="op">=</span> <span class="st">"data/stage2.gpx"</span>, segment_name <span class="op">=</span> <span class="st">"Stage 2: Coast"</span><span class="op">)</span>,</span>
-<span>    <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>gpx_file <span class="op">=</span> <span class="st">"data/stage3.gpx"</span>, segment_name <span class="op">=</span> <span class="st">"Stage 3: Finish"</span><span class="op">)</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>gpx_file <span class="op">=</span> <span class="st">"data-raw/stage1.gpx"</span>, segment_name <span class="op">=</span> <span class="st">"Stage 1: Mountains"</span><span class="op">)</span>,</span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>gpx_file <span class="op">=</span> <span class="st">"data-raw/stage2.gpx"</span>, segment_name <span class="op">=</span> <span class="st">"Stage 2: Coast"</span><span class="op">)</span>,</span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>gpx_file <span class="op">=</span> <span class="st">"data-raw/stage3.gpx"</span>, segment_name <span class="op">=</span> <span class="st">"Stage 3: Finish"</span><span class="op">)</span></span>
 <span>  <span class="op">)</span>,</span>
 <span>  competitor_name <span class="op">=</span> <span class="st">"Alex Black"</span>,</span>
 <span>  location <span class="op">=</span> <span class="st">"Three Day Challenge"</span>,</span>
@@ -338,7 +338,7 @@ Example race map with Nautical theme
 </h2>
 <p>Recommended folder structure:</p>
 <div class="sourceCode" id="cb13"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" tabindex="-1"></a>project<span class="sc">/</span></span>
-<span id="cb13-2"><a href="#cb13-2" tabindex="-1"></a>├── data<span class="sc">/</span></span>
+<span id="cb13-2"><a href="#cb13-2" tabindex="-1"></a>├── data<span class="sc">-</span>raw<span class="sc">/</span></span>
 <span id="cb13-3"><a href="#cb13-3" tabindex="-1"></a>│   ├── london.gpx</span>
 <span id="cb13-4"><a href="#cb13-4" tabindex="-1"></a>│   ├── chicago.gpx</span>
 <span id="cb13-5"><a href="#cb13-5" tabindex="-1"></a>│   └── <span class="sc">*</span><span class="fu">.rds</span> (cached OSM data)</span>
@@ -358,7 +358,7 @@ Example race map with Nautical theme
 <span id="cb13-19"><a href="#cb13-19" tabindex="-1"></a><span class="do">## File Organization</span></span>
 <span id="cb13-20"><a href="#cb13-20" tabindex="-1"></a></span>
 <span id="cb13-21"><a href="#cb13-21" tabindex="-1"></a>Recommended folder structure<span class="sc">:</span></span></code></pre></div>
-<p>project/ ├── data/ │ ├── london.gpx │ ├── chicago.gpx │ └── *.rds (cached OSM data) ├── output/ │ ├── Dark/ │ │ ├── A5/ │ │ └── A3/ │ └── Zen/ │ └── A4/ ├── alex_black_races.yaml ├── styles.yaml └── create_maps.R</p>
+<p>project/ ├── data-raw/ │ ├── london.gpx │ ├── chicago.gpx │ └── *.rds (cached OSM data) ├── output/ │ ├── Dark/ │ │ ├── A5/ │ │ └── A3/ │ └── Zen/ │ └── A4/ ├── alex_black_races.yaml ├── styles.yaml └── create_maps.R</p>
 <div class="sourceCode" id="cb14"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" tabindex="-1"></a><span class="do">## Troubleshooting</span></span>
 <span id="cb14-2"><a href="#cb14-2" tabindex="-1"></a></span>
 <span id="cb14-3"><a href="#cb14-3" tabindex="-1"></a><span class="do">### GPX File Issues</span></span>
@@ -371,7 +371,7 @@ Example race map with Nautical theme
 <span id="cb14-10"><a href="#cb14-10" tabindex="-1"></a><span class="st">### Missing Map Features</span></span>
 <span id="cb14-11"><a href="#cb14-11" tabindex="-1"></a></span>
 <span id="cb14-12"><a href="#cb14-12" tabindex="-1"></a><span class="st">**Problem**: Some streets/water aren'</span>t showing</span>
-<span id="cb14-13"><a href="#cb14-13" tabindex="-1"></a><span class="sc">-</span> The script caches OpenStreetMap data <span class="cf">in</span> <span class="st">`</span><span class="at">data/*.rds</span><span class="st">`</span> files</span>
+<span id="cb14-13"><a href="#cb14-13" tabindex="-1"></a><span class="sc">-</span> The script caches OpenStreetMap data <span class="cf">in</span> <span class="st">`</span><span class="at">data-raw/*.rds</span><span class="st">`</span> files</span>
 <span id="cb14-14"><a href="#cb14-14" tabindex="-1"></a><span class="sc">-</span> Delete these files to re<span class="sc">-</span>fetch fresh data</span>
 <span id="cb14-15"><a href="#cb14-15" tabindex="-1"></a><span class="sc">-</span> Ensure you have internet connection when first running</span>
 <span id="cb14-16"><a href="#cb14-16" tabindex="-1"></a></span>
@@ -408,7 +408,7 @@ Example race map with Nautical theme
 <span id="cb14-47"><a href="#cb14-47" tabindex="-1"></a><span class="at">  event = c("HM", "Mar")</span></span>
 <span id="cb14-48"><a href="#cb14-48" tabindex="-1"></a><span class="at">)</span></span>
 <span id="cb14-49"><a href="#cb14-49" tabindex="-1"></a></span>
-<span id="cb14-50"><a href="#cb14-50" tabindex="-1"></a><span class="at"># 2. Add GPX files to data/ folder</span></span>
+<span id="cb14-50"><a href="#cb14-50" tabindex="-1"></a><span class="at"># 2. Add GPX files to data-raw/ folder</span></span>
 <span id="cb14-51"><a href="#cb14-51" tabindex="-1"></a><span class="at"># 3. Edit the generated YAML to add gpx_file paths</span></span>
 <span id="cb14-52"><a href="#cb14-52" tabindex="-1"></a></span>
 <span id="cb14-53"><a href="#cb14-53" tabindex="-1"></a><span class="at"># 4. Create maps with all styles</span></span>

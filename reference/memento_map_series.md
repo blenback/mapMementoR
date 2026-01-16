@@ -104,7 +104,7 @@ memento_map_series(
   output_dir = "maps",
   styles = c("Dark", "Emerald"),
   custom_styles = list(MyStyle = list(route_color = "#123456", ...)),
-  races_path = "data/races.yaml",
+  races_path = "data-raw/races.yaml",
   dpi = 300,
   page_size = "A5",
   base_size = 18,
@@ -115,6 +115,6 @@ memento_map_series(
   cache_data = TRUE,
   components = c("highways", "streets", "water", "coast")
 )
-#> Warning: cannot open file 'data/races.yaml': No such file or directory
+#> Warning: cannot open file 'data-raw/races.yaml': No such file or directory
 #> Error in file(file, "rt", encoding = fileEncoding): cannot open the connection
 ```
