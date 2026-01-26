@@ -8,11 +8,11 @@ Ben Black
 
 ## Introduction
 
-Create stunning, print-ready maps of your running routes, races, or
-multi-day adventures using GPX data. `mapMementoR` generates beautiful
-visualizations with customizable color schemes, elevation profiles,
-OpenStreetMap backgrounds, and support for tracking multiple
-performances at the same location.
+Create print-ready maps of your running routes, races, or multi-day
+adventures using GPX data. `mapMementoR` generates visualizations with
+customizable color schemes, elevation profiles, OpenStreetMap
+backgrounds, and support for tracking multiple performances at the same
+location.
 
 <div layout-ncol="3">
 

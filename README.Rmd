@@ -19,7 +19,7 @@ knitr::opts_chunk$set(
 
 ## Introduction
 
-Create stunning, print-ready maps of your running routes, races, or multi-day adventures using GPX data. `mapMementoR` generates beautiful visualizations with customizable color schemes, elevation profiles, OpenStreetMap backgrounds, and support for tracking multiple performances at the same location.
+Create print-ready maps of your running routes, races, or multi-day adventures using GPX data. `mapMementoR` generates visualizations with customizable color schemes, elevation profiles, OpenStreetMap backgrounds, and support for tracking multiple performances at the same location.
 
 ::: {layout-ncol=3}
 ![Example race map with Dark theme](man/figures/chicago.png){fig-alt="Example race map with Dark theme" group="my-gallery"}
