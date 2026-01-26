@@ -6,7 +6,12 @@ box and location
 ## Usage
 
 ``` r
-get_osm_components(bbox, location, cache_data = TRUE)
+get_osm_components(
+  bbox,
+  location,
+  cache_data = TRUE,
+  components = c("highways", "streets", "water", "coast")
+)
 ```
 
 ## Arguments
@@ -23,6 +28,12 @@ get_osm_components(bbox, location, cache_data = TRUE)
 
   Logical, whether to cache OSM data locally
 
+- components:
+
+  Character vector specifying which OSM components to include. Any
+  combination of 'highways', 'streets', 'water', 'coast'. Defaults to
+  all.
+
 ## Value
 
-List with OSM components
+List with selected OSM components

@@ -13,10 +13,14 @@ memento_map_series(
   cache_data = TRUE,
   dpi = 300,
   page_size = "A5",
+  base_size,
   orientation = "portrait",
   with_elevation = TRUE,
   with_OSM = TRUE,
-  with_hillshade = FALSE
+  with_hillshade = FALSE,
+  components = c("highways", "streets", "water", "coast"),
+  fade_directions = c("top", "bottom"),
+  crop_shape = NULL
 )
 ```
 
@@ -52,6 +56,10 @@ memento_map_series(
 
   Page size (e.g., "A5", "A4")
 
+- base_size:
+
+  Base font size for map text
+
 - orientation:
 
   Page orientation (e.g., "portrait", "landscape")
@@ -68,9 +76,22 @@ memento_map_series(
 
   Boolean to include hillshade (elevation relief) background
 
-- base_size:
+- components:
 
-  Base font size for map text
+  Character vector specifying which OSM components to include. Any
+  combination of 'highways', 'streets', 'water', 'coast'. Defaults to
+  all.
+
+- fade_directions:
+
+  Character vector specifying which sides to apply fade gradients to.
+  Any combination of 'top', 'bottom', 'left', 'right'. Defaults to
+  c('top', 'bottom').
+
+- crop_shape:
+
+  Optional shape to crop map to. Options: "circle", "ellipse". If NULL,
+  no cropping is applied.
 
 ## Value
 
@@ -91,7 +112,8 @@ memento_map_series(
   with_elevation = TRUE,
   with_OSM = TRUE,
   with_hillshade = FALSE,
-  cache_data = TRUE
+  cache_data = TRUE,
+  components = c("highways", "streets", "water", "coast")
 )
-#> Error in memento_map_series(output_dir = "maps", styles = c("Dark", "Emerald"),     custom_styles = list(MyStyle = list(route_color = "#123456",         ...)), races_path = "data-raw/races.yaml", dpi = 300, page_size = "A5",     base_size = 18, orientation = "portrait", with_elevation = TRUE,     with_OSM = TRUE, with_hillshade = FALSE, cache_data = TRUE): could not find function "memento_map_series"
+#> Error in memento_map_series(output_dir = "maps", styles = c("Dark", "Emerald"),     custom_styles = list(MyStyle = list(route_color = "#123456",         ...)), races_path = "data-raw/races.yaml", dpi = 300,     page_size = "A5", base_size = 18, orientation = "portrait",     with_elevation = TRUE, with_OSM = TRUE, with_hillshade = FALSE,     cache_data = TRUE, components = c("highways", "streets",         "water", "coast")): could not find function "memento_map_series"
 ```

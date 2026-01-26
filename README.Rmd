@@ -19,7 +19,7 @@ knitr::opts_chunk$set(
 
 ## Introduction
 
-This guide will help you create stunning, printable maps of your race routes using GPX data. The code lets you generate beautiful visualizations with customizable color schemes, elevation profiles, and multiple race times for the same location.
+Create stunning, print-ready maps of your running routes, races, or multi-day adventures using GPX data. `mapMementoR` generates beautiful visualizations with customizable color schemes, elevation profiles, OpenStreetMap backgrounds, and support for tracking multiple performances at the same location.
 
 ::: {layout-ncol=3}
 ![Example race map with Dark theme](man/figures/chicago.png){fig-alt="Example race map with Dark theme" group="my-gallery"}
@@ -35,254 +35,252 @@ This guide will help you create stunning, printable maps of your race routes usi
 ![Example race map with Nautical theme](man/figures/london.png){fig-alt="Example race map with Nautical theme" group="my-gallery"}
 :::
 
-## Getting Started
+## Features
 
-### Prerequisites
+- **Single Route Maps**: Create elegant maps showing individual races with performance details
+- **Multi-Track Maps**: Combine multiple GPX tracks on one map (perfect for multi-stage races or relay events)
+- **Built-in Styles**: Six professionally designed color schemes (Dark, Emerald, Ghost, Nautical, Zen, Obsidian)
+- **Customizable Appearance**: Full control over colors, fonts, page sizes, and map elements
+- **Elevation Profiles**: Automatic generation of elevation charts from GPS data
+- **OpenStreetMap Integration**: Beautiful background layers including streets, highways, water bodies, and coastlines
+- **Batch Processing**: Generate maps for multiple races and styles simultaneously
+- **Power of 10 Integration**: Automatically import UK running race data
 
-You'll need:
-
-- R (version 4.0+)
-- GPX files from your races (from Garmin, Strava, etc.)
-- The required R packages (see Installation)
-
+## Installation
 
 ``` r
 # install.packages("pak")
 pak::pak("blenback/mapMementoR")
 ```
 
-## Basic Usage
+## Quick Start
 
-The simplest way to create maps is:
+### Single Race Maps
 
 ```r
-source("create_maps.R")
+library(mapMementoR)
+
+# Create maps for all races in your YAML file
 memento_map_series(
-  races_path = "your_races.yaml",
-  styles_path = "styles.yaml",
-  output_dir = "my_maps"
+  output_dir = "my_maps",
+  races_path = "data-raw/my_races.yaml",
+  styles = c("Dark", "Emerald"),
+  page_size = "A4",
+  dpi = 300
 )
 ```
 
-For a comprehensive introduction, configuration, and advanced usage, see the vignette: [Introduction to mapMementoR](vignettes/mapMementoR.qmd).
-  races_path = "alex_black_races.yaml",
-  styles_path = "styles.yaml",
-  output_dir = "my_maps"
+### Multi-Track Maps
+
+```r
+# Create maps combining multiple tracks
+multitrack_map_series(
+  output_dir = "outputs",
+  track_sets_path = "data-raw/track_sets.yaml",
+  styles = c("Dark", "Zen"),
+  page_size = "A3",
+  with_labels = TRUE
 )
 ```
 
-This will process all races in your YAML file with all defined styles.
+## Configuration
 
-## Configuration Files
+### Race Data YAML
 
-### Race Data File (`*_races.yaml`)
-
-This file contains your race information. Each race needs:
-
-- **gpx_file**: Path to your GPX file
-- **competitor_name**: Your name
-- **event**: Race type (HM = half marathon, Mar = marathon, etc.)
-- **location**: Race location name
-- **entries**: List of race times for this location/course
-
-#### Example Structure
+The race data file defines your races and performance entries. Example `races.yaml`:
 
 ```yaml
-  - gpx_file: "data-raw/london.gpx"
-    competitor_name: "Alex Black"
-    event: "Mar"
+races:
+  - gpx_file: "inst/extdata/london.gpx"
+    competitor_name: "John Doe"
+    location: "London"
     entries:
       - race_year: "2025"
         race_time: "2:28:09"
       - race_year: "2024"
         race_time: "2:30:45"
-      - race_year: "2023"
-        race_time: "2:35:48"
-  
-  - gpx_file: "data-raw/chicago.gpx"
-    competitor_name: "Alex Black"
-    event: "Mar"
-    location: "Chicago"
-    entries:
-      - race_year: "2024"
-        race_time: "2:31:46"
 ```
 
-#### Adding New Races
+See `inst/extdata/races.yaml` for a complete example.
 
-To add a new race:
+**Required fields:**
+- `gpx_file`: Path to GPX file
+- `competitor_name`: Athlete name
+- `location`: Location label for the map
+- `entries`: List of race entries with `race_year` and `race_time`
 
-1. Save your GPX file to the `data-raw/` directory
-2. Add a new entry to your `*_races.yaml` file:
+**Optional fields:**
+- `event`: Event type (HM, Mar, 5K, etc.) for organization
+
+### Track Sets YAML (for Multi-Track Maps)
+
+For maps with multiple tracks (e.g., relay stages, multi-day events):
 
 ```yaml
-  - gpx_file: "data-raw/new_race.gpx"
-    competitor_name: "Your Name"
-    event: "HM"
-    location: "New Location"
-    entries:
-      - race_year: "2025"
-        race_time: "1:25:30"
+track_sets:
+  - map_title: "City Relay\n2024"
+    gpx_files:
+      - "inst/extdata/leg1.gpx"
+      - "inst/extdata/leg2.gpx"
+      - "inst/extdata/leg3.gpx"
+      - "inst/extdata/leg4.gpx"
+    track_labels:
+      - "Leg 1"
+      - "Leg 2"
+      - "Leg 3"
+      - "Leg 4"
+    elev_labels:
+      - "Sarah"
+      - "Mike"
+      - "Emma"
+      - "Tom"
+    font_family: "Outfit-VariableFont_wght"
 ```
 
-3. Run `memento_map_series()` again
+See `inst/extdata/track_sets.yaml` for a complete example.
 
-#### Automatic Data Import from Power of 10
+**Optional configuration:**
+- `route_colors`: Custom colors for each track (auto-generated if not specified)
+- `track_labels`: Labels placed on the map
+- `elev_labels`: Labels for elevation profiles
+- `font_family`: Custom font
 
-If your races are listed on Power of 10, you can automatically generate the YAML structure:
+### Automatic Import from Power of 10
+
+Automatically create race YAML from UK running data:
+
+```r
+save_powerof10_to_yaml(
   first_name = "Alex",
   surname = "Black",
   club = "North Shields Poly",
-  event = c("HM", "Mar"),  # Filter to half marathons and marathons
-  year = c(2023, 2024, 2025)  # Optional: filter by year
+  event = c("HM", "Mar"),
+  year = c(2023, 2024, 2025),
+  yaml_path = "my_races.yaml"
 )
 ```
 
-This creates a YAML file with all your race entries. You'll need to manually add the GPX file paths.
+This creates a YAML file with all your race entries. Add GPX file paths manually.
 
-### Styles File (`styles.yaml`)
+## Customization
 
-This file defines the visual appearance of your maps. You can create multiple styles to see which you prefer.
+### Built-in Styles
 
-#### Anatomy of a Style
-```yaml
-styling:
-  - name: "Dark"              # Style name (used for folder naming)
-    route_color: "#d1af82"    # Color of your route line
-    bg_color: "#0a0e27"       # Background/map color
-    street_color: "#1a1f3a"   # Minor streets color
-    highway_color: "#2d3250"  # Major roads color
-    water_color: "#1a2332"    # Water bodies color
-    with_elevation: true      # Include elevation profile
-    dpi: 300                  # Print quality (300 for high quality)
-    page_size: "A5"           # Output size (A5, A4, A3, A2, A1, A0)
+Six professionally designed styles are included:
+
+- **Dark**: Warm gold route on deep navy background
+- **Emerald**: Dark green route on cream background  
+- **Nautical**: Blue-grey route on warm cream background
+- **Zen**: Charcoal route on light grey background
+- **Ghost**: White route on dark background
+- **Obsidian**: Bright gold route on black background
+
+### Custom Styles
+
+Create custom color schemes:
+
+```r
+memento_map_series(
+  races_path = "my_races.yaml",
+  styles = c("Dark", "MyCustom"),
+  custom_styles = list(
+    MyCustom = list(
+      route_color = "#FF6B35",    # Coral
+      bg_color = "#004E89",        # Deep blue
+      street_color = "#1A659E",    # Medium blue
+      highway_color = "#2E86AB",   # Lighter blue
+      water_color = "#1A659E"      # Ocean blue
+    )
+  )
+)
 ```
 
-#### Understanding Color Codes
+### Map Components
 
-Colors are specified in **hexadecimal format** (`#RRGGBB`):
+Control which map elements to include:
 
-- `#000000` = Black
-- `#FFFFFF` = White
-- `#FF0000` = Red
-- `#00FF00` = Green
-- `#0000FF` = Blue
-
-**Finding Colors:**
-
-- Use online tools like [Coolors.co](https://coolors.co/) or [HTML Color Codes](https://htmlcolorcodes.com/)
-- Pick colors from images using browser color pickers
-- Use color palette generators for harmonious combinations
-
-#### Pre-defined Style Examples
-
-**Dark Theme** (default)
-```yaml
-  route_color: "#d1af82"    # Warm gold
-  bg_color: "#0a0e27"       # Deep navy
-  street_color: "#1a1f3a"   # Dark blue-grey
-  water_color: "#1a2332"    # Dark teal
+```r
+memento_map_series(
+  races_path = "my_races.yaml",
+  with_elevation = TRUE,          # Include elevation profile
+  with_OSM = TRUE,                # Include OpenStreetMap features
+  with_hillshade = FALSE,         # Include terrain shading
+  components = c(                 # Which OSM features to show
+    "highways",
+    "streets", 
+    "water",
+    "coast"
+  ),
+  fade_directions = c(            # Fade edges of map
+    "top",
+    "bottom"
+  ),
+  crop_shape = NULL               # Options: NULL, "circle", "ellipse"
+)
 ```
 
-**Light/Zen Theme**
-```yaml
-- name: "Zen"
-  route_color: "#2d2d2d"    # Charcoal
-  bg_color: "#fafafa"       # Off-white
-  street_color: "#eeeeee"   # Light grey
-  highway_color: "#d4d4d4"  # Medium grey
-  water_color: "#e8e8e8"    # Pale grey
-```
+### Page Formats
 
-**Bold/Obsidian Theme**
-```yaml
-- name: "Obsidian"
-  route_color: "#ffd60a"    # Bright gold
-  bg_color: "#000814"       # Pure black
-  street_color: "#001d3d"   # Deep navy
-  highway_color: "#003566"  # Medium navy
-  water_color: "#000814"    # Black water
-```
+Supported page sizes for printing:
 
-#### Creating Your Own Style
+- **A5** (148 × 210mm): Small prints, digital use
+- **A4** (210 × 297mm): Standard framing
+- **A3** (297 × 420mm): Large prints, posters
+- **A2, A1, A0**: Very large format printing
 
-1. Copy an existing style block
-2. Change the `name` to something unique
-3. Modify colors to your preference
-4. Test with a single race first
-
-**Tips for good color combinations:**
-
-- High contrast between `route_color` and `bg_color` for visibility
-- Keep streets subtle (similar to background)
-- Make highways slightly more visible than streets
-- Consider the printing medium (screen vs paper)
-
-#### Color Scheme Ideas
-
-**Warm & Earthy**
-```yaml
-route_color: "#d4a574"  # Tan
-bg_color: "#2d3142"     # Slate
-water_color: "#4f5d75"  # Blue-grey
-```
-
-**Cool & Fresh**
-```yaml
-route_color: "#06ffa5"  # Mint green
-bg_color: "#0d1321"     # Deep navy
-water_color: "#1d2d44"  # Navy blue
-```
-
-**Sunset Vibes**
-```yaml
-route_color: "#ff6b35"  # Coral
-bg_color: "#004e89"     # Deep blue
-water_color: "#1a659e"  # Ocean blue
+```r
+memento_map_series(
+  races_path = "my_races.yaml",
+  page_size = "A3",
+  orientation = "portrait",  # or "landscape"
+  dpi = 300,                 # 300 for print, 150 for screen
+  base_size = 12             # Base font size
+)
 ```
 
 ## Advanced Features
 
-### Multi-Day/Stage Races
+### Color Generation for Multi-Track Maps
 
-For races with multiple stages or days (like ultra-marathons or cycling tours), use the `create_multiday_map()` function:
+When creating multi-track maps, route colors can be automatically generated from the base style color:
 
 ```r
-create_multiday_map(
-  segments = list(
-    list(gpx_file = "data-raw/stage1.gpx", segment_name = "Stage 1: Mountains"),
-    list(gpx_file = "data-raw/stage2.gpx", segment_name = "Stage 2: Coast"),
-    list(gpx_file = "data-raw/stage3.gpx", segment_name = "Stage 3: Finish")
-  ),
-  competitor_name = "Alex Black",
-  location = "Three Day Challenge",
-  route_colors = c("#d1af82", "#82b4d1", "#d182a8"),
-  output_dir = "output",
-  dpi = 300,
-  page_size = "A3"
+multitrack_map_series(
+  track_sets_path = "track_sets.yaml",
+  styles = c("Dark"),
+  track_color_method = "hue_shift"  # Options: "hue_shift", "complementary", "gradient"
 )
 ```
 
-### Elevation Profiles
+- **hue_shift**: Creates colors by varying hue (default)
+- **complementary**: Generates complementary and analogous colors
+- **gradient**: Creates colors with varying lightness and saturation
 
-Elevation profiles are automatically included when `with_elevation: true` in your style. They show:
+### Caching OSM Data
 
-- Total elevation gain/loss
-- Elevation changes throughout the route
-- Relative difficulty of different sections
+OpenStreetMap data is cached by default to speed up regeneration:
 
-To disable elevation profiles: `with_elevation: false`
+```r
+memento_map_series(
+  races_path = "my_races.yaml",
+  cache_data = TRUE  # Set to FALSE to always fetch fresh data
+)
+```
 
-### Output Sizes
+Cached files are stored in `data_cache_tmp/` as `.rds` files. Delete these files to refresh OSM data for a location.
 
-Choose your output size based on intended use:
+### Circular and Ellipse Cropping
 
-- **A5** (148 × 210mm): Small prints, phone backgrounds
-- **A4** (210 × 297mm): Standard paper, framing
-- **A3** (297 × 420mm): Large prints, posters
-- **A2/A1/A0**: Very large format printing
+Create artistic cropped maps:
 
-Higher DPI values (300-600) are recommended for printing, while 150-200 DPI works for screen viewing.
+```r
+memento_map_series(
+  races_path = "my_races.yaml",
+  crop_shape = "circle"  # Options: NULL, "circle", "ellipse"
+)
+```
+
+When using circular cropping, text overlays are automatically repositioned for optimal appearance.
 
 ## File Organization
 
@@ -307,96 +305,135 @@ project/
 
 Higher DPI values (300-600) are recommended for printing, while 150-200 DPI works for screen viewing.
 
-## File Organization
+## Output Structure
 
-Recommended folder structure:
+Maps are organized by style, page size, and crop shape:
 
 ```
-project/
-├── data-raw/
-│   ├── london.gpx
-│   ├── chicago.gpx
-│   └── *.rds (cached OSM data)
-├── output/
-│   ├── Dark/
-│   │   ├── A5/
-│   │   └── A3/
-│   └── Zen/
-│       └── A4/
-├── alex_black_races.yaml
-├── styles.yaml
-└── create_maps.R
+output_dir/
+├── Dark/
+│   ├── A4/
+│   │   └── full_page/
+│   │       ├── London.png
+│   │       └── Chicago.png
+│   └── A3/
+│       └── circle/
+│           └── London.png
+└── Emerald/
+    └── A4/
+        └── full_page/
+            └── London.png
+```
+
+## Low-Level Functions
+
+For programmatic control, use the core functions directly:
+
+```r
+# Single race map
+create_memento_map(
+  gpx_file = system.file("extdata", "london.gpx", package = "mapMementoR"),
+  competitor_name = "John Doe",
+  location = "London",
+  entries = list(
+    list(race_year = "2025", race_time = "2:28:09"),
+    list(race_year = "2024", race_time = "2:30:45")
+  ),
+  route_color = "#d1af82",
+  bg_color = "#0a0e27",
+  street_color = "#1a1f3a",
+  highway_color = "#2d3250",
+  water_color = "#1a2332",
+  output_dir = "maps",
+  dpi = 300,
+  page_size = "A4",
+  orientation = "portrait"
+)
+
+# Multi-track map
+create_multitrack_memento_map(
+  gpx_files = system.file("extdata", c("leg1.gpx", "leg2.gpx", "leg3.gpx", "leg4.gpx"), 
+                         package = "mapMementoR"),
+  track_labels = c("Leg 1", "Leg 2", "Leg 3", "Leg 4"),
+  elev_labels = c("Sarah", "Mike", "Emma", "Tom"),
+  route_colors = c("#d1af82", "#82b4d1", "#d182a8", "#d1af82"),
+  map_title = "City Relay\n2024",
+  output_dir = "maps",
+  page_size = "A3",
+  with_labels = TRUE
+)
 ```
 
 ## Troubleshooting
 
-### GPX File Issues
+**GPX File Issues**
+- Ensure GPX files contain track points (`<trkpt>` elements)
+- Check files aren't corrupted by opening in a text editor
+- Try re-exporting from your GPS device or app (Garmin Connect, Strava, etc.)
 
-**Problem**: "No coordinates found"
-- Ensure your GPX file contains track points (`<trkpt>`)
-- Check file isn't corrupted
-- Try re-exporting from your GPS device/app
+**Missing Map Features**
+- OSM data is cached in `data_cache_tmp/*.rds` files
+- Delete cache files to fetch fresh OpenStreetMap data
+- Ensure internet connection when first running for each location
 
-### Missing Map Features
+**Color Issues**
+- Use hex format: `"#RRGGBB"` (6 characters after #)
+- Ensure adequate contrast between route and background colors
+- Test colors on screen before printing
 
-**Problem**: Some streets/water aren't showing
-- The script caches OpenStreetMap data in `data-raw/*.rds` files
-- Delete these files to re-fetch fresh data
-- Ensure you have internet connection when first running
+**Font Issues**
+- Default font is "Outfit-VariableFont_wght"
+- Place custom fonts in `fonts/` directory
+- Or use system fonts: "Arial", "Helvetica", "Times New Roman"
 
-### Color Not Appearing
-
-**Problem**: Route color looks wrong
-- Check hex code format (`#` followed by 6 characters)
-- Ensure code is in quotes: `"#d1af82"`
-- Try increasing contrast with background
-
-### Font Issues
-
-**Problem**: Text not appearing or wrong font
-- The default font is "Outfit-VariableFont_wght"
-- Ensure font files are in your `fonts/` directory
-- Or change `font_family` to a system font like "Arial" or "Helvetica"
+**Memory Issues with Large Maps**
+- Reduce `dpi` value (e.g., 150 instead of 300)
+- Limit number of map components
+- Process styles one at a time instead of all at once
 
 ## Tips for Best Results
 
-1. **GPX Quality**: Use tracks with good GPS signal for smooth routes
-2. **Test Styles**: Try 2-3 color schemes to see what works best
-3. **Print Tests**: Print at small size first to check colors
-4. **Location Names**: Use clear, short names for better layout
-5. **Multiple Entries**: The map beautifully shows progression over multiple years
+1. **GPX Quality**: Use tracks recorded with good GPS signal for smooth, accurate routes
+2. **Test First**: Generate one map with one style before batch processing
+3. **Print Tests**: Print at small size first to verify colors appear as expected
+4. **Multiple Performances**: The package beautifully displays progression across multiple years
+5. **Naming**: Use clear, concise location names for better layout
+6. **Caching**: Keep cache enabled (`cache_data = TRUE`) for faster regeneration
 
-## Example Workflow
+## Related Functions
 
 ```r
-# 1. Get your race data
-save_powerof10_to_yaml(
-  first_name = "Your",
-  surname = "Name",
-  club = "Your Club",
-  event = c("HM", "Mar")
+# Parse GPX files
+track_data <- parse_gpx("data-raw/race.gpx")
+
+# Get track statistics
+stats <- get_track_stats(track_data)
+
+# Generate color palettes
+colors <- generate_track_colors(
+  base_color = "#d1af82",
+  n_colors = 5,
+  method = "hue_shift"
 )
 
-# 2. Add GPX files to data-raw/ folder
-# 3. Edit the generated YAML to add gpx_file paths
-
-# 4. Create maps with all styles
-memento_map_series(
-  races_path = "your_name_races.yaml",
-  styles_path = "styles.yaml",
-  output_dir = "my_maps"
-)
-
-# 5. Check output/Dark/A5/ for your maps!
+# Get page dimensions
+dims <- get_page_dimensions(page_size = "A4", orientation = "portrait")
 ```
 
-## Next Steps
+## Examples
 
-- Experiment with different color schemes
-- Try different page sizes for various uses
-- Create multi-day maps for ultra races
-- Share your creations!
+See the package vignettes for detailed examples:
+
+- [Introduction to mapMementoR](articles/mapMementoR.html)
+- Single race maps
+- Multi-track maps
+- Custom styling
+- Batch processing workflows
+
+## License
+
+MIT + file LICENSE
 
 ---
 
-*For questions or issues, please refer to the source code comments in `create_maps.R`*
+*For questions, feature requests, or bug reports, please open an issue on GitHub.*

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<gpx creator="mapMementoR Demo" version="1.1" xmlns="http://www.topografix.com/GPX/1/1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd">
+  <metadata>
+    <name>Relay Leg 1</name>
+    <bounds maxlat="47.40874681793339" maxlon="8.52961480617332" minlat="47.399363882788656" minlon="8.511071091236554" />
+  </metadata>
+  <trk>
+    <name>Relay Leg 1</name>
+    <trkseg>
+      <trkpt lat="47.39956166777217" lon="8.52961012986442"><ele>512.2</ele></trkpt>
+      <trkpt lat="47.399725333630855" lon="8.52961480617332"><ele>512.2</ele></trkpt>
+      <trkpt lat="47.399811245281796" lon="8.52956622260427"><ele>512.7</ele></trkpt>
+      <trkpt lat="47.39978626807398" lon="8.528972195733013"><ele>515.2</ele></trkpt>
+      <trkpt lat="47.39962422164368" lon="8.528885250897305"><ele>515.1</ele></trkpt>
+      <trkpt lat="47.3995169065442" lon="8.528729543093819"><ele>514.6</ele></trkpt>
+      <trkpt lat="47.39943043204058" lon="8.528527894205558"><ele>514.4</ele></trkpt>
+      <trkpt lat="47.399363882788656" lon="8.528192517473894"><ele>514.3</ele></trkpt>
+      <trkpt lat="47.39940847060917" lon="8.527446241315271"><ele>514.8</ele></trkpt>
+      <trkpt lat="47.39962561969395" lon="8.526356388900735"><ele>517.5</ele></trkpt>
+      <trkpt lat="47.39972338750673" lon="8.526027513956961"><ele>518.0</ele></trkpt>
+      <trkpt lat="47.39995036376996" lon="8.525497977311176"><ele>518.6</ele></trkpt>
+      <trkpt lat="47.40048180092451" lon="8.52469829367748"><ele>522.1</ele></trkpt>
+      <trkpt lat="47.400656730248556" lon="8.524509427932278"><ele>523.0</ele></trkpt>
+      <trkpt lat="47.40090457392026" lon="8.524147147553506"><ele>524.1</ele></trkpt>
+      <trkpt lat="47.400973147055204" lon="8.524004985992239"><ele>523.9</ele></trkpt>
+      <trkpt lat="47.401064957334164" lon="8.523663225605041"><ele>523.4</ele></trkpt>
+      <trkpt lat="47.40110020233128" lon="8.522381475245057"><ele>524.9</ele></trkpt>
+      <trkpt lat="47.40107808839407" lon="8.522167746571782"><ele>525.2</ele></trkpt>
+      <trkpt lat="47.40090932767978" lon="8.52148301662101"><ele>526.4</ele></trkpt>
+    </trkseg>
+  </trk>
+</gpx>

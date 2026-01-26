@@ -1,0 +1,21 @@
+# Demo track sets for multitrack memento maps
+# This example shows a relay race with 4 legs
+
+track_sets:
+  - map_title: "City Relay\n2024"
+    gpx_files:
+      - "inst/extdata/leg1.gpx"
+      - "inst/extdata/leg2.gpx"
+      - "inst/extdata/leg3.gpx"
+      - "inst/extdata/leg4.gpx"
+    elev_labels:
+      - "Sarah"
+      - "Mike"
+      - "Emma"
+      - "Tom"
+    track_labels:
+      - "Leg 1"
+      - "Leg 2"
+      - "Leg 3"
+      - "Leg 4"
+    font_family: "Outfit-VariableFont_wght"

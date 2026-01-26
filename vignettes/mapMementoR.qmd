@@ -1,6 +1,0 @@
----
-title: "Introduction to mapMementoR"
-description: >
-  Learn how to get started with the basics of mapMementoR.
----
-

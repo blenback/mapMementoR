@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<gpx creator="mapMementoR Demo" version="1.1" xmlns="http://www.topografix.com/GPX/1/1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd">
+  <metadata>
+    <name>Relay Leg 2</name>
+  </metadata>
+  <trk>
+    <name>Relay Leg 2</name>
+    <trkseg>
+      <trkpt lat="47.40090932767978" lon="8.52148301662101"><ele>526.4</ele></trkpt>
+      <trkpt lat="47.400878667148554" lon="8.520951133991568"><ele>527.6</ele></trkpt>
+      <trkpt lat="47.400928489446656" lon="8.52012408125911"><ele>528.6</ele></trkpt>
+      <trkpt lat="47.40110854030669" lon="8.51957020556143"><ele>530.5</ele></trkpt>
+      <trkpt lat="47.40118188558606" lon="8.519004225924476"><ele>532.3</ele></trkpt>
+      <trkpt lat="47.40114949573818" lon="8.51886371538145"><ele>532.8</ele></trkpt>
+      <trkpt lat="47.40096006778762" lon="8.518478507472214"><ele>533.9</ele></trkpt>
+      <trkpt lat="47.40092238178592" lon="8.518333150074849"><ele>534.6</ele></trkpt>
+      <trkpt lat="47.40092014645458" lon="8.518127092642668"><ele>535.5</ele></trkpt>
+      <trkpt lat="47.40095111160904" lon="8.51806060876772"><ele>536.4</ele></trkpt>
+      <trkpt lat="47.40101055287492" lon="8.51804214753944"><ele>537.1</ele></trkpt>
+      <trkpt lat="47.401105778694074" lon="8.51809127437557"><ele>538.0</ele></trkpt>
+      <trkpt lat="47.40145093952218" lon="8.518815839949108"><ele>542.5</ele></trkpt>
+      <trkpt lat="47.40156595664829" lon="8.518960924910166"><ele>544.0</ele></trkpt>
+      <trkpt lat="47.40169192515061" lon="8.51895685506657"><ele>545.1</ele></trkpt>
+      <trkpt lat="47.401742558719256" lon="8.51902511834845"><ele>545.6</ele></trkpt>
+      <trkpt lat="47.40179553124088" lon="8.519468529867403"><ele>545.7</ele></trkpt>
+      <trkpt lat="47.40177936407922" lon="8.519802563047628"><ele>545.7</ele></trkpt>
+      <trkpt lat="47.40165672801748" lon="8.520776575672393"><ele>546.3</ele></trkpt>
+      <trkpt lat="47.40204573872756" lon="8.52305388967421"><ele>543.9</ele></trkpt>
+    </trkseg>
+  </trk>
+</gpx>

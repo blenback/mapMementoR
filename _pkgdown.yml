@@ -8,8 +8,9 @@ template:
     code_font: {google: "Fira Code"}
 navbar:
   structure:
-    left:  [reference, articles, gallery]
+    left:  [intro, reference, articles]
   components:
-    gallery:
-      text: Gallery
-      href: gallery.html
+    intro:
+      text: Get started
+      href: articles/mapMementoR.html
+

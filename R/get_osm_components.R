@@ -11,6 +11,43 @@ get_osm_components <- function(
   cache_data = TRUE,
   components = c("highways", "streets", "water", "coast")
 ) {
+  # Helper function to safely query OSM with retries
+  safe_osm_query <- function(query_pipeline, component_name, max_retries = 3) {
+    for (attempt in 1:max_retries) {
+      tryCatch(
+        {
+          result <- query_pipeline %>% osmdata::osmdata_sf()
+          return(result)
+        },
+        error = function(e) {
+          if (attempt < max_retries) {
+            message(
+              sprintf(
+                "OSM query for %s failed (attempt %d/%d): %s. Retrying in %d seconds...",
+                component_name,
+                attempt,
+                max_retries,
+                e$message,
+                attempt * 2
+              )
+            )
+            Sys.sleep(attempt * 2) # Exponential backoff
+          } else {
+            warning(
+              sprintf(
+                "OSM query for %s failed after %d attempts: %s. Skipping this component.",
+                component_name,
+                max_retries,
+                e$message
+              )
+            )
+            return(NULL)
+          }
+        }
+      )
+    }
+    return(NULL)
+  }
   location <- tolower(gsub(" ", "_", location))
   cache_dir <- base::file.path(base::getwd(), "data_cache_tmp")
   if (cache_data && !base::dir.exists(cache_dir)) {
@@ -56,7 +93,7 @@ get_osm_components <- function(
       if (base::file.exists(highways_path)) {
         highways <- base::readRDS(highways_path)
       } else {
-        highways <- bbox %>%
+        highways_query <- bbox %>%
           osmdata::opq() %>%
           osmdata::add_osm_feature(
             key = "highway",
@@ -72,9 +109,11 @@ get_osm_components <- function(
               "secondary_link",
               "tertiary_link"
             )
-          ) %>%
-          osmdata::osmdata_sf()
-        base::saveRDS(highways, highways_path)
+          )
+        highways <- safe_osm_query(highways_query, "highways")
+        if (!is.null(highways)) {
+          base::saveRDS(highways, highways_path)
+        }
       }
       out$highways <- highways
     }
@@ -82,7 +121,7 @@ get_osm_components <- function(
       if (base::file.exists(streets_path)) {
         streets <- base::readRDS(streets_path)
       } else {
-        streets <- bbox %>%
+        streets_query <- bbox %>%
           osmdata::opq() %>%
           osmdata::add_osm_feature(
             key = "highway",
@@ -96,9 +135,11 @@ get_osm_components <- function(
               "track",
               "path"
             )
-          ) %>%
-          osmdata::osmdata_sf()
-        base::saveRDS(streets, streets_path)
+          )
+        streets <- safe_osm_query(streets_query, "streets")
+        if (!is.null(streets)) {
+          base::saveRDS(streets, streets_path)
+        }
       }
       out$streets <- streets
     }
@@ -106,11 +147,13 @@ get_osm_components <- function(
       if (base::file.exists(water_path)) {
         water <- base::readRDS(water_path)
       } else {
-        water <- bbox %>%
+        water_query <- bbox %>%
           osmdata::opq() %>%
-          osmdata::add_osm_feature(key = "natural", value = "water") %>%
-          osmdata::osmdata_sf()
-        base::saveRDS(water, water_path)
+          osmdata::add_osm_feature(key = "natural", value = "water")
+        water <- safe_osm_query(water_query, "water")
+        if (!is.null(water)) {
+          base::saveRDS(water, water_path)
+        }
       }
       out$water <- water
     }
@@ -118,12 +161,14 @@ get_osm_components <- function(
       if (base::file.exists(coast_path)) {
         sea <- base::readRDS(coast_path)
       } else {
-        coastlines <- bbox %>%
+        coastlines_query <- bbox %>%
           osmdata::opq() %>%
-          osmdata::add_osm_feature(key = "natural", value = "coastline") %>%
-          osmdata::osmdata_sf()
+          osmdata::add_osm_feature(key = "natural", value = "coastline")
+        coastlines <- safe_osm_query(coastlines_query, "coastlines")
         if (
-          !is.null(coastlines$osm_lines) && base::nrow(coastlines$osm_lines) > 0
+          !is.null(coastlines) &&
+            !is.null(coastlines$osm_lines) &&
+            base::nrow(coastlines$osm_lines) > 0
         ) {
           coastline_lines <- coastlines$osm_lines %>% sf::st_cast("LINESTRING")
           bb_rect <- base::data.frame(
@@ -147,7 +192,7 @@ get_osm_components <- function(
   } else {
     # Always fetch OSM data, do not use cache
     if ("highways" %in% components) {
-      highways <- bbox %>%
+      highways_query <- bbox %>%
         osmdata::opq() %>%
         osmdata::add_osm_feature(
           key = "highway",
@@ -163,12 +208,12 @@ get_osm_components <- function(
             "secondary_link",
             "tertiary_link"
           )
-        ) %>%
-        osmdata::osmdata_sf()
+        )
+      highways <- safe_osm_query(highways_query, "highways")
       out$highways <- highways
     }
     if ("streets" %in% components) {
-      streets <- bbox %>%
+      streets_query <- bbox %>%
         osmdata::opq() %>%
         osmdata::add_osm_feature(
           key = "highway",
@@ -182,24 +227,26 @@ get_osm_components <- function(
             "track",
             "path"
           )
-        ) %>%
-        osmdata::osmdata_sf()
+        )
+      streets <- safe_osm_query(streets_query, "streets")
       out$streets <- streets
     }
     if ("water" %in% components) {
-      water <- bbox %>%
+      water_query <- bbox %>%
         osmdata::opq() %>%
-        osmdata::add_osm_feature(key = "natural", value = "water") %>%
-        osmdata::osmdata_sf()
+        osmdata::add_osm_feature(key = "natural", value = "water")
+      water <- safe_osm_query(water_query, "water")
       out$water <- water
     }
     if ("coast" %in% components) {
-      coastlines <- bbox %>%
+      coastlines_query <- bbox %>%
         osmdata::opq() %>%
-        osmdata::add_osm_feature(key = "natural", value = "coastline") %>%
-        osmdata::osmdata_sf()
+        osmdata::add_osm_feature(key = "natural", value = "coastline")
+      coastlines <- safe_osm_query(coastlines_query, "coastlines")
       if (
-        !is.null(coastlines$osm_lines) && base::nrow(coastlines$osm_lines) > 0
+        !is.null(coastlines) &&
+          !is.null(coastlines$osm_lines) &&
+          base::nrow(coastlines$osm_lines) > 0
       ) {
         coastline_lines <- coastlines$osm_lines %>% sf::st_cast("LINESTRING")
         bb_rect <- base::data.frame(

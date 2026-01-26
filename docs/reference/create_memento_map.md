@@ -29,7 +29,10 @@ create_memento_map(
   base_size = 12,
   with_OSM = TRUE,
   cache_data = TRUE,
-  with_hillshade = FALSE
+  with_hillshade = FALSE,
+  components = c("highways", "streets", "water", "coast"),
+  fade_directions = c("top", "bottom"),
+  crop_shape = NULL
 )
 ```
 
@@ -120,6 +123,17 @@ create_memento_map(
 - with_hillshade:
 
   Boolean to include hillshade (elevation relief) background
+
+- fade_directions:
+
+  Character vector specifying which sides to apply fade gradients to.
+  Any combination of 'top', 'bottom', 'left', 'right'. Defaults to
+  c('top', 'bottom').
+
+- crop_shape:
+
+  Shape to crop the map to. Options: NULL (no cropping, default),
+  "circle", "ellipse". Defaults to NULL.
 
 ## Value
 

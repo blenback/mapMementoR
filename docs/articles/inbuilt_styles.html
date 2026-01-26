@@ -5,7 +5,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>Using built-in Styles • mapMementoR</title>
+<title>Built-in Map Styles • mapMementoR</title>
 <!-- favicons --><link rel="icon" type="image/png" sizes="96x96" href="../favicon-96x96.png">
 <link rel="icon" type="”image/svg+xml”" href="../favicon.svg">
 <link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
@@ -21,7 +21,7 @@
 <link href="inbuilt_styles_files/libs/quarto-html/light-border.css" rel="stylesheet">
 <script src="inbuilt_styles_files/libs/quarto-contrib/glightbox/glightbox.min.js"></script><link href="inbuilt_styles_files/libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
 <link href="inbuilt_styles_files/libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
-<!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Using built-in Styles">
+<!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Built-in Map Styles">
 <meta property="og:image" content="blenback.github.io/mapMementoR/logo.svg">
 </head>
 <body>
@@ -41,14 +41,15 @@
 
     <div id="navbar" class="collapse navbar-collapse ms-3">
       <ul class="navbar-nav me-auto">
+<li class="nav-item"><a class="nav-link" href="../articles/mapMementoR.html">Get started</a></li>
 <li class="nav-item"><a class="nav-link" href="../reference/index.html">Reference</a></li>
 <li class="active nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
-<li><a class="dropdown-item" href="../articles/inbuilt_styles.html">Using built-in Styles</a></li>
+<li><a class="dropdown-item" href="../articles/inbuilt_styles.html">Built-in Map Styles</a></li>
+    <li><a class="dropdown-item" href="../articles/osm_components.html">OpenStreetMap Components and Features</a></li>
   </ul>
 </li>
-<li class="nav-item"><a class="nav-link" href="../gallery.html">Gallery</a></li>
       </ul>
 <ul class="navbar-nav">
 <li class="nav-item"><form class="form-inline" role="search">
@@ -70,7 +71,7 @@
 </nav><div class="container template-quarto">
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
-      <img src="../logo.svg" class="logo" alt=""><h1>Using built-in Styles</h1>
+      <img src="../logo.svg" class="logo" alt=""><h1>Built-in Map Styles</h1>
 
       <p class="author">Ben Black</p>
 
@@ -84,9 +85,10 @@
 
 
 
-    <section class="level2"><h2 id="built-in-styles">Built-in Styles<a class="anchor" aria-label="anchor" href="#built-in-styles"></a>
+    <section class="level2"><h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
 </h2>
-<p>The package includes several built-in map styles. Each style defines colors for the route, background, streets, highways, and water bodies.</p>
+<p><code>mapMementoR</code> includes six professionally designed map styles, each carefully crafted to create beautiful, print-ready visualizations of your routes. Each style defines a complete color palette including route color, background, streets, highways, and water bodies.</p>
+<p>This vignette demonstrates how to use built-in styles and create custom color schemes.</p>
 <div class="quarto-layout-panel" data-layout-ncol="3">
 <div class="quarto-layout-row">
 <div class="quarto-layout-cell" style="flex-basis: 33.3%;justify-content: flex-start;">
@@ -129,80 +131,19 @@
 </div>
 </div>
 </div>
+</section><section class="level2"><h2 id="style-specifications">Style Specifications<a class="anchor" aria-label="anchor" href="#style-specifications"></a>
+</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># List built-in styles</span></span>
-<span><span class="va">styles</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
-<span>  Dark <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
-<span>    route_color <span class="op">=</span> <span class="st">"#d1af82"</span>,</span>
-<span>    bg_color <span class="op">=</span> <span class="st">"#0a0e27"</span>,</span>
-<span>    street_color <span class="op">=</span> <span class="st">"#1a1f3a"</span>,</span>
-<span>    highway_color <span class="op">=</span> <span class="st">"#2d3250"</span>,</span>
-<span>    water_color <span class="op">=</span> <span class="st">"#1a2332"</span></span>
-<span>  <span class="op">)</span>,</span>
-<span>  Emerald <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
-<span>    route_color <span class="op">=</span> <span class="st">"#2d4a3e"</span>,</span>
-<span>    bg_color <span class="op">=</span> <span class="st">"#f5f3ed"</span>,</span>
-<span>    street_color <span class="op">=</span> <span class="st">"#e8e4d8"</span>,</span>
-<span>    highway_color <span class="op">=</span> <span class="st">"#d4cfc0"</span>,</span>
-<span>    water_color <span class="op">=</span> <span class="st">"#d4e3e8"</span></span>
-<span>  <span class="op">)</span>,</span>
-<span>  Nautical <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
-<span>    route_color <span class="op">=</span> <span class="st">"#2c3e50"</span>,</span>
-<span>    bg_color <span class="op">=</span> <span class="st">"#f7f4ed"</span>,</span>
-<span>    street_color <span class="op">=</span> <span class="st">"#e9e4d8"</span>,</span>
-<span>    highway_color <span class="op">=</span> <span class="st">"#d5cfc0"</span>,</span>
-<span>    water_color <span class="op">=</span> <span class="st">"#c8d8e3"</span></span>
-<span>  <span class="op">)</span>,</span>
-<span>  Zen <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
-<span>    route_color <span class="op">=</span> <span class="st">"#2d2d2d"</span>,</span>
-<span>    bg_color <span class="op">=</span> <span class="st">"#fafafa"</span>,</span>
-<span>    street_color <span class="op">=</span> <span class="st">"#eeeeee"</span>,</span>
-<span>    highway_color <span class="op">=</span> <span class="st">"#d4d4d4"</span>,</span>
-<span>    water_color <span class="op">=</span> <span class="st">"#e8e8e8"</span></span>
-<span>  <span class="op">)</span>,</span>
-<span>  Ghost <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
-<span>    route_color <span class="op">=</span> <span class="st">"#ffffff"</span>,</span>
-<span>    bg_color <span class="op">=</span> <span class="st">"#121212"</span>,</span>
-<span>    street_color <span class="op">=</span> <span class="st">"#1e1e1e"</span>,</span>
-<span>    highway_color <span class="op">=</span> <span class="st">"#2d2d2d"</span>,</span>
-<span>    water_color <span class="op">=</span> <span class="st">"#0a0a0a"</span></span>
-<span>  <span class="op">)</span>,</span>
-<span>  Obsidian <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
-<span>    route_color <span class="op">=</span> <span class="st">"#ffd60a"</span>,</span>
-<span>    bg_color <span class="op">=</span> <span class="st">"#000814"</span>,</span>
-<span>    street_color <span class="op">=</span> <span class="st">"#001d3d"</span>,</span>
-<span>    highway_color <span class="op">=</span> <span class="st">"#003566"</span>,</span>
-<span>    water_color <span class="op">=</span> <span class="st">"#000814"</span></span>
-<span>  <span class="op">)</span></span>
-<span><span class="op">)</span></span>
-<span><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/base/do.call.html" class="external-link">do.call</a></span><span class="op">(</span></span>
-<span>    <span class="va">rbind</span>,</span>
-<span>    <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">styles</span><span class="op">)</span>, <span class="kw">function</span><span class="op">(</span><span class="va">n</span><span class="op">)</span> <span class="op">{</span></span>
-<span>      <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind</a></span><span class="op">(</span>Style <span class="op">=</span> <span class="va">n</span>, <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="va">styles</span><span class="op">[[</span><span class="va">n</span><span class="op">]</span><span class="op">]</span>, stringsAsFactors <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span><span class="op">)</span></span>
-<span>    <span class="op">}</span><span class="op">)</span></span>
-<span>  <span class="op">)</span>,</span>
-<span>  caption <span class="op">=</span> <span class="st">"Built-in map styles"</span></span>
-<span><span class="op">)</span></span></code></pre></div>
 <div class="cell-output-display">
 <table class="table caption-top">
-<caption>Built-in map styles</caption>
-<colgroup>
-<col style="width: 13%">
-<col style="width: 17%">
-<col style="width: 13%">
-<col style="width: 18%">
-<col style="width: 20%">
-<col style="width: 17%">
-</colgroup>
+<caption>Built-in map style color specifications</caption>
 <thead><tr class="header">
 <th style="text-align: left;">Style</th>
-<th style="text-align: left;">route_color</th>
-<th style="text-align: left;">bg_color</th>
-<th style="text-align: left;">street_color</th>
-<th style="text-align: left;">highway_color</th>
-<th style="text-align: left;">water_color</th>
+<th style="text-align: left;">Route</th>
+<th style="text-align: left;">Background</th>
+<th style="text-align: left;">Streets</th>
+<th style="text-align: left;">Highways</th>
+<th style="text-align: left;">Water</th>
 </tr></thead>
 <tbody>
 <tr class="odd">
@@ -257,6 +198,359 @@
 </table>
 </div>
 </div>
+</section><section class="level2"><h2 id="style-descriptions">Style Descriptions<a class="anchor" aria-label="anchor" href="#style-descriptions"></a>
+</h2>
+<section class="level3"><h3 id="dark">Dark<a class="anchor" aria-label="anchor" href="#dark"></a>
+</h3>
+<p>A modern, sophisticated dark theme perfect for dramatic presentations.</p>
+<ul>
+<li>
+<strong>Best for</strong>: Marathon routes, urban races, dramatic wall art</li>
+<li>
+<strong>Route</strong>: Warm gold (#d1af82) stands out beautifully against dark background</li>
+<li>
+<strong>Vibe</strong>: Professional, modern, high-contrast</li>
+</ul></section><section class="level3"><h3 id="emerald">Emerald<a class="anchor" aria-label="anchor" href="#emerald"></a>
+</h3>
+<p>A fresh, natural theme with forest green tones.</p>
+<ul>
+<li>
+<strong>Best for</strong>: Trail runs, hiking routes, nature-focused maps</li>
+<li>
+<strong>Route</strong>: Forest green (#2d4a3e) on cream background</li>
+<li>
+<strong>Vibe</strong>: Organic, calm, vintage-inspired</li>
+</ul></section><section class="level3"><h3 id="nautical">Nautical<a class="anchor" aria-label="anchor" href="#nautical"></a>
+</h3>
+<p>Classic maritime-inspired colors reminiscent of nautical charts.</p>
+<ul>
+<li>
+<strong>Best for</strong>: Coastal routes, waterfront races, classic presentations</li>
+<li>
+<strong>Route</strong>: Blue-grey (#2c3e50) with warm cream background</li>
+<li>
+<strong>Vibe</strong>: Traditional, elegant, timeless</li>
+</ul></section><section class="level3"><h3 id="zen">Zen<a class="anchor" aria-label="anchor" href="#zen"></a>
+</h3>
+<p>Minimalist monochrome design for clean, modern aesthetics.</p>
+<ul>
+<li>
+<strong>Best for</strong>: Minimalist decor, professional presentations, clean design</li>
+<li>
+<strong>Route</strong>: Charcoal (#2d2d2d) on light grey background</li>
+<li>
+<strong>Vibe</strong>: Minimal, professional, versatile</li>
+</ul></section><section class="level3"><h3 id="ghost">Ghost<a class="anchor" aria-label="anchor" href="#ghost"></a>
+</h3>
+<p>High contrast reversed design with white routes.</p>
+<ul>
+<li>
+<strong>Best for</strong>: Modern interiors, night runs, striking visual impact</li>
+<li>
+<strong>Route</strong>: White (#ffffff) on near-black background</li>
+<li>
+<strong>Vibe</strong>: Bold, contemporary, dramatic</li>
+</ul></section><section class="level3"><h3 id="obsidian">Obsidian<a class="anchor" aria-label="anchor" href="#obsidian"></a>
+</h3>
+<p>Bold black background with brilliant gold routes.</p>
+<ul>
+<li>
+<strong>Best for</strong>: Trophy races, special achievements, luxury feel</li>
+<li>
+<strong>Route</strong>: Bright gold (#ffd60a) on pure black</li>
+<li>
+<strong>Vibe</strong>: Luxurious, celebratory, premium</li>
+</ul></section></section><section class="level2"><h2 id="using-built-in-styles">Using Built-in Styles<a class="anchor" aria-label="anchor" href="#using-built-in-styles"></a>
+</h2>
+<section class="level3"><h3 id="single-style">Single Style<a class="anchor" aria-label="anchor" href="#single-style"></a>
+</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">mapMementoR</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Use a single built-in style</span></span>
+<span><span class="fu"><a href="../reference/memento_map_series.html">memento_map_series</a></span><span class="op">(</span></span>
+<span>  races_path <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"races.yaml"</span>, package <span class="op">=</span> <span class="st">"mapMementoR"</span><span class="op">)</span>,</span>
+<span>  output_dir <span class="op">=</span> <span class="st">"maps"</span>,</span>
+<span>  styles <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Dark"</span><span class="op">)</span>,</span>
+<span>  page_size <span class="op">=</span> <span class="st">"A4"</span>,</span>
+<span>  dpi <span class="op">=</span> <span class="fl">300</span></span>
+<span><span class="op">)</span></span></code></pre></div>
+</div>
+</section><section class="level3"><h3 id="multiple-styles">Multiple Styles<a class="anchor" aria-label="anchor" href="#multiple-styles"></a>
+</h3>
+<p>Generate maps in all styles to compare:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Generate maps in all six built-in styles</span></span>
+<span><span class="fu"><a href="../reference/memento_map_series.html">memento_map_series</a></span><span class="op">(</span></span>
+<span>  races_path <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"races.yaml"</span>, package <span class="op">=</span> <span class="st">"mapMementoR"</span><span class="op">)</span>,</span>
+<span>  output_dir <span class="op">=</span> <span class="st">"maps"</span>,</span>
+<span>  styles <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Dark"</span>, <span class="st">"Emerald"</span>, <span class="st">"Nautical"</span>, <span class="st">"Zen"</span>, <span class="st">"Ghost"</span>, <span class="st">"Obsidian"</span><span class="op">)</span>,</span>
+<span>  page_size <span class="op">=</span> <span class="st">"A4"</span>,</span>
+<span>  dpi <span class="op">=</span> <span class="fl">300</span></span>
+<span><span class="op">)</span></span></code></pre></div>
+</div>
+</section><section class="level3"><h3 id="multi-track-maps">Multi-Track Maps<a class="anchor" aria-label="anchor" href="#multi-track-maps"></a>
+</h3>
+<p>Built-in styles work seamlessly with multi-track maps:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/multitrack_map_series.html">multitrack_map_series</a></span><span class="op">(</span></span>
+<span>  track_sets_path <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"track_sets.yaml"</span>, package <span class="op">=</span> <span class="st">"mapMementoR"</span><span class="op">)</span>,</span>
+<span>  output_dir <span class="op">=</span> <span class="st">"maps"</span>,</span>
+<span>  styles <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Dark"</span>, <span class="st">"Zen"</span><span class="op">)</span>,</span>
+<span>  page_size <span class="op">=</span> <span class="st">"A3"</span>,</span>
+<span>  with_labels <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  track_color_method <span class="op">=</span> <span class="st">"hue_shift"</span></span>
+<span><span class="op">)</span></span></code></pre></div>
+</div>
+</section></section><section class="level2"><h2 id="creating-custom-styles">Creating Custom Styles<a class="anchor" aria-label="anchor" href="#creating-custom-styles"></a>
+</h2>
+<section class="level3"><h3 id="basic-custom-style">Basic Custom Style<a class="anchor" aria-label="anchor" href="#basic-custom-style"></a>
+</h3>
+<p>You can create your own color schemes alongside built-in styles:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/memento_map_series.html">memento_map_series</a></span><span class="op">(</span></span>
+<span>  races_path <span class="op">=</span> <span class="st">"my_races.yaml"</span>,</span>
+<span>  styles <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Dark"</span>, <span class="st">"Sunset"</span><span class="op">)</span>,</span>
+<span>  custom_styles <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
+<span>    Sunset <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
+<span>      route_color <span class="op">=</span> <span class="st">"#FF6B35"</span>,    <span class="co"># Coral orange</span></span>
+<span>      bg_color <span class="op">=</span> <span class="st">"#004E89"</span>,        <span class="co"># Deep ocean blue</span></span>
+<span>      street_color <span class="op">=</span> <span class="st">"#1A659E"</span>,    <span class="co"># Medium blue</span></span>
+<span>      highway_color <span class="op">=</span> <span class="st">"#2E86AB"</span>,   <span class="co"># Sky blue</span></span>
+<span>      water_color <span class="op">=</span> <span class="st">"#1A659E"</span>      <span class="co"># Ocean blue</span></span>
+<span>    <span class="op">)</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="op">)</span></span></code></pre></div>
+</div>
+</section><section class="level3"><h3 id="multiple-custom-styles">Multiple Custom Styles<a class="anchor" aria-label="anchor" href="#multiple-custom-styles"></a>
+</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/memento_map_series.html">memento_map_series</a></span><span class="op">(</span></span>
+<span>  races_path <span class="op">=</span> <span class="st">"my_races.yaml"</span>,</span>
+<span>  styles <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Sunset"</span>, <span class="st">"Forest"</span>, <span class="st">"Arctic"</span><span class="op">)</span>,</span>
+<span>  custom_styles <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
+<span>    Sunset <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
+<span>      route_color <span class="op">=</span> <span class="st">"#FF6B35"</span>,</span>
+<span>      bg_color <span class="op">=</span> <span class="st">"#004E89"</span>,</span>
+<span>      street_color <span class="op">=</span> <span class="st">"#1A659E"</span>,</span>
+<span>      highway_color <span class="op">=</span> <span class="st">"#2E86AB"</span>,</span>
+<span>      water_color <span class="op">=</span> <span class="st">"#1A659E"</span></span>
+<span>    <span class="op">)</span>,</span>
+<span>    Forest <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
+<span>      route_color <span class="op">=</span> <span class="st">"#6B8E23"</span>,    <span class="co"># Olive green</span></span>
+<span>      bg_color <span class="op">=</span> <span class="st">"#F5F5DC"</span>,        <span class="co"># Beige</span></span>
+<span>      street_color <span class="op">=</span> <span class="st">"#E8E4D8"</span>,</span>
+<span>      highway_color <span class="op">=</span> <span class="st">"#D4CFC0"</span>,</span>
+<span>      water_color <span class="op">=</span> <span class="st">"#87CEEB"</span>      <span class="co"># Sky blue</span></span>
+<span>    <span class="op">)</span>,</span>
+<span>    Arctic <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
+<span>      route_color <span class="op">=</span> <span class="st">"#4A90E2"</span>,    <span class="co"># Ice blue</span></span>
+<span>      bg_color <span class="op">=</span> <span class="st">"#FFFFFF"</span>,        <span class="co"># White</span></span>
+<span>      street_color <span class="op">=</span> <span class="st">"#E8F4F8"</span>,</span>
+<span>      highway_color <span class="op">=</span> <span class="st">"#B8D4E8"</span>,</span>
+<span>      water_color <span class="op">=</span> <span class="st">"#C8E6F5"</span></span>
+<span>    <span class="op">)</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="op">)</span></span></code></pre></div>
+</div>
+</section></section><section class="level2"><h2 id="color-selection-tips">Color Selection Tips<a class="anchor" aria-label="anchor" href="#color-selection-tips"></a>
+</h2>
+<section class="level3"><h3 id="finding-color-palettes">Finding Color Palettes<a class="anchor" aria-label="anchor" href="#finding-color-palettes"></a>
+</h3>
+<ol type="1">
+<li>
+<strong>Online Tools</strong>:
+<ul>
+<li>
+<a href="https://coolors.co/" class="external-link">Coolors.co</a> - Generate color schemes</li>
+<li>
+<a href="https://color.adobe.com/" class="external-link">Adobe Color</a> - Color wheel and exploration</li>
+<li>
+<a href="https://paletton.com/" class="external-link">Paletton</a> - Advanced color scheme designer</li>
+</ul>
+</li>
+<li>
+<strong>Inspiration Sources</strong>:
+<ul>
+<li>Existing maps and posters</li>
+<li>Photography from your race location</li>
+<li>Brand guidelines (if creating branded maps)</li>
+</ul>
+</li>
+</ol></section><section class="level3"><h3 id="color-relationships">Color Relationships<a class="anchor" aria-label="anchor" href="#color-relationships"></a>
+</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Example: Create a cohesive palette from a base color</span></span>
+<span><span class="va">base_route</span> <span class="op">&lt;-</span> <span class="st">"#d1af82"</span>  <span class="co"># Starting with Dark theme's route color</span></span>
+<span></span>
+<span><span class="fu"><a href="../reference/memento_map_series.html">memento_map_series</a></span><span class="op">(</span></span>
+<span>  races_path <span class="op">=</span> <span class="st">"my_races.yaml"</span>,</span>
+<span>  styles <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"MyPalette"</span><span class="op">)</span>,</span>
+<span>  custom_styles <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
+<span>    MyPalette <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
+<span>      route_color <span class="op">=</span> <span class="va">base_route</span>,</span>
+<span>      bg_color <span class="op">=</span> <span class="st">"#0a0e27"</span>,        <span class="co"># Very dark, high contrast</span></span>
+<span>      street_color <span class="op">=</span> <span class="st">"#1a1f3a"</span>,    <span class="co"># Slightly lighter than background</span></span>
+<span>      highway_color <span class="op">=</span> <span class="st">"#2d3250"</span>,   <span class="co"># More prominent than streets</span></span>
+<span>      water_color <span class="op">=</span> <span class="st">"#1a2332"</span>      <span class="co"># Distinct but harmonious</span></span>
+<span>    <span class="op">)</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="op">)</span></span></code></pre></div>
+</div>
+</section><section class="level3"><h3 id="contrast-guidelines">Contrast Guidelines<a class="anchor" aria-label="anchor" href="#contrast-guidelines"></a>
+</h3>
+<ul>
+<li>
+<strong>Route vs Background</strong>: High contrast (&gt;4.5:1) for readability</li>
+<li>
+<strong>Streets vs Background</strong>: Subtle (low contrast) to avoid clutter</li>
+<li>
+<strong>Highways vs Streets</strong>: Moderate difference for hierarchy</li>
+<li>
+<strong>Water</strong>: Distinct but harmonious with overall palette</li>
+</ul></section></section><section class="level2"><h2 id="testing-styles">Testing Styles<a class="anchor" aria-label="anchor" href="#testing-styles"></a>
+</h2>
+<section class="level3"><h3 id="quick-test-workflow">Quick Test Workflow<a class="anchor" aria-label="anchor" href="#quick-test-workflow"></a>
+</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># 1. Test with low DPI and small size first</span></span>
+<span><span class="fu"><a href="../reference/memento_map_series.html">memento_map_series</a></span><span class="op">(</span></span>
+<span>  races_path <span class="op">=</span> <span class="st">"my_races.yaml"</span>,</span>
+<span>  styles <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"TestStyle"</span><span class="op">)</span>,</span>
+<span>  custom_styles <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
+<span>    TestStyle <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
+<span>      route_color <span class="op">=</span> <span class="st">"#FF6B35"</span>,</span>
+<span>      bg_color <span class="op">=</span> <span class="st">"#004E89"</span>,</span>
+<span>      street_color <span class="op">=</span> <span class="st">"#1A659E"</span>,</span>
+<span>      highway_color <span class="op">=</span> <span class="st">"#2E86AB"</span>,</span>
+<span>      water_color <span class="op">=</span> <span class="st">"#1A659E"</span></span>
+<span>    <span class="op">)</span></span>
+<span>  <span class="op">)</span>,</span>
+<span>  page_size <span class="op">=</span> <span class="st">"A5"</span>,</span>
+<span>  dpi <span class="op">=</span> <span class="fl">150</span>,</span>
+<span>  output_dir <span class="op">=</span> <span class="st">"test_maps"</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># 2. Review on screen</span></span>
+<span></span>
+<span><span class="co"># 3. If satisfied, generate final version</span></span>
+<span><span class="fu"><a href="../reference/memento_map_series.html">memento_map_series</a></span><span class="op">(</span></span>
+<span>  races_path <span class="op">=</span> <span class="st">"my_races.yaml"</span>,</span>
+<span>  styles <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"TestStyle"</span><span class="op">)</span>,</span>
+<span>  custom_styles <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
+<span>    TestStyle <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
+<span>      route_color <span class="op">=</span> <span class="st">"#FF6B35"</span>,</span>
+<span>      bg_color <span class="op">=</span> <span class="st">"#004E89"</span>,</span>
+<span>      street_color <span class="op">=</span> <span class="st">"#1A659E"</span>,</span>
+<span>      highway_color <span class="op">=</span> <span class="st">"#2E86AB"</span>,</span>
+<span>      water_color <span class="op">=</span> <span class="st">"#1A659E"</span></span>
+<span>    <span class="op">)</span></span>
+<span>  <span class="op">)</span>,</span>
+<span>  page_size <span class="op">=</span> <span class="st">"A3"</span>,</span>
+<span>  dpi <span class="op">=</span> <span class="fl">300</span>,</span>
+<span>  output_dir <span class="op">=</span> <span class="st">"final_maps"</span></span>
+<span><span class="op">)</span></span></code></pre></div>
+</div>
+</section></section><section class="level2"><h2 id="style-variations">Style Variations<a class="anchor" aria-label="anchor" href="#style-variations"></a>
+</h2>
+<section class="level3"><h3 id="light-vs-dark-themes">Light vs Dark Themes<a class="anchor" aria-label="anchor" href="#light-vs-dark-themes"></a>
+</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Light theme characteristics</span></span>
+<span><span class="va">light_theme</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
+<span>  route_color <span class="op">=</span> <span class="st">"#2d2d2d"</span>,    <span class="co"># Dark route on light background</span></span>
+<span>  bg_color <span class="op">=</span> <span class="st">"#fafafa"</span>,        <span class="co"># Very light background</span></span>
+<span>  street_color <span class="op">=</span> <span class="st">"#eeeeee"</span>,    <span class="co"># Slightly darker than background</span></span>
+<span>  highway_color <span class="op">=</span> <span class="st">"#d4d4d4"</span>,   <span class="co"># More prominent</span></span>
+<span>  water_color <span class="op">=</span> <span class="st">"#e8e8e8"</span>      <span class="co"># Subtle</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Dark theme characteristics</span></span>
+<span><span class="va">dark_theme</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
+<span>  route_color <span class="op">=</span> <span class="st">"#d1af82"</span>,    <span class="co"># Light route on dark background</span></span>
+<span>  bg_color <span class="op">=</span> <span class="st">"#0a0e27"</span>,        <span class="co"># Very dark background</span></span>
+<span>  street_color <span class="op">=</span> <span class="st">"#1a1f3a"</span>,    <span class="co"># Slightly lighter than background</span></span>
+<span>  highway_color <span class="op">=</span> <span class="st">"#2d3250"</span>,   <span class="co"># More prominent</span></span>
+<span>  water_color <span class="op">=</span> <span class="st">"#1a2332"</span>      <span class="co"># Subtle</span></span>
+<span><span class="op">)</span></span></code></pre></div>
+</div>
+</section></section><section class="level2"><h2 id="style-specific-features">Style-Specific Features<a class="anchor" aria-label="anchor" href="#style-specific-features"></a>
+</h2>
+<section class="level3"><h3 id="elevation-profiles">Elevation Profiles<a class="anchor" aria-label="anchor" href="#elevation-profiles"></a>
+</h3>
+<p>Elevation profiles automatically adapt to your chosen style:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Elevation chart uses route_color with transparency</span></span>
+<span><span class="fu"><a href="../reference/memento_map_series.html">memento_map_series</a></span><span class="op">(</span></span>
+<span>  races_path <span class="op">=</span> <span class="st">"my_races.yaml"</span>,</span>
+<span>  styles <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Dark"</span><span class="op">)</span>,</span>
+<span>  with_elevation <span class="op">=</span> <span class="cn">TRUE</span>,  <span class="co"># Route color will be used for elevation chart</span></span>
+<span>  page_size <span class="op">=</span> <span class="st">"A4"</span></span>
+<span><span class="op">)</span></span></code></pre></div>
+</div>
+</section><section class="level3"><h3 id="hillshade-rendering">Hillshade Rendering<a class="anchor" aria-label="anchor" href="#hillshade-rendering"></a>
+</h3>
+<p>Hillshade (terrain relief) adjusts based on background color:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Light backgrounds get darker hillshade</span></span>
+<span><span class="co"># Dark backgrounds get lighter hillshade</span></span>
+<span><span class="fu"><a href="../reference/memento_map_series.html">memento_map_series</a></span><span class="op">(</span></span>
+<span>  races_path <span class="op">=</span> <span class="st">"my_races.yaml"</span>,</span>
+<span>  styles <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Dark"</span>, <span class="st">"Zen"</span><span class="op">)</span>,</span>
+<span>  with_hillshade <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  page_size <span class="op">=</span> <span class="st">"A4"</span></span>
+<span><span class="op">)</span></span></code></pre></div>
+</div>
+</section></section><section class="level2"><h2 id="print-considerations">Print Considerations<a class="anchor" aria-label="anchor" href="#print-considerations"></a>
+</h2>
+<section class="level3"><h3 id="light-styles-for-printing">Light Styles for Printing<a class="anchor" aria-label="anchor" href="#light-styles-for-printing"></a>
+</h3>
+<p>Light background styles (Emerald, Nautical, Zen) are more economical for printing:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Economical printing option</span></span>
+<span><span class="fu"><a href="../reference/memento_map_series.html">memento_map_series</a></span><span class="op">(</span></span>
+<span>  races_path <span class="op">=</span> <span class="st">"my_races.yaml"</span>,</span>
+<span>  styles <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Zen"</span><span class="op">)</span>,  <span class="co"># Minimal ink usage</span></span>
+<span>  page_size <span class="op">=</span> <span class="st">"A4"</span>,</span>
+<span>  dpi <span class="op">=</span> <span class="fl">300</span></span>
+<span><span class="op">)</span></span></code></pre></div>
+</div>
+</section><section class="level3"><h3 id="dark-styles-for-digital">Dark Styles for Digital<a class="anchor" aria-label="anchor" href="#dark-styles-for-digital"></a>
+</h3>
+<p>Dark backgrounds (Dark, Ghost, Obsidian) work beautifully on screens:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Optimized for screen viewing</span></span>
+<span><span class="fu"><a href="../reference/memento_map_series.html">memento_map_series</a></span><span class="op">(</span></span>
+<span>  races_path <span class="op">=</span> <span class="st">"my_races.yaml"</span>,</span>
+<span>  styles <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Dark"</span>, <span class="st">"Ghost"</span><span class="op">)</span>,</span>
+<span>  page_size <span class="op">=</span> <span class="st">"A4"</span>,</span>
+<span>  dpi <span class="op">=</span> <span class="fl">150</span>  <span class="co"># Lower DPI sufficient for screens</span></span>
+<span><span class="op">)</span></span></code></pre></div>
+</div>
+</section></section><section class="level2"><h2 id="conclusion">Conclusion<a class="anchor" aria-label="anchor" href="#conclusion"></a>
+</h2>
+<p>Built-in styles provide professional, tested color combinations that work well for most use cases. Custom styles allow you to match specific branding, personal preferences, or thematic requirements.</p>
+<p><strong>Key Takeaways</strong>:</p>
+<ol type="1">
+<li>Start with built-in styles to understand what works</li>
+<li>Test custom styles at low resolution first</li>
+<li>Consider final medium (print vs screen) when choosing colors</li>
+<li>Maintain adequate contrast for readability</li>
+<li>Keep color palettes harmonious and cohesive</li>
+</ol>
+<p>For more advanced customization, see the <a href="osm_components.html">OSM Components</a> vignette.</p>
 </section><script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
       var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
@@ -371,7 +665,8 @@
   };
 
 })();
-          </script></main>
+          </script></main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
+    </nav></aside>
 </div>
 
 

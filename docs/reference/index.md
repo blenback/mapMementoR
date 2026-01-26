@@ -4,8 +4,14 @@
 
 - [`choose_relief_colors()`](blenback.github.io/mapMementoR/reference/choose_relief_colors.md)
   : Choose relief colors for hillshade based on map background color
+- [`create_crop_mask()`](blenback.github.io/mapMementoR/reference/create_crop_mask.md)
+  : Create a crop mask for map shapes
 - [`create_memento_map()`](blenback.github.io/mapMementoR/reference/create_memento_map.md)
   : Create a map of a race route with OSM background and elevation chart
+- [`create_multitrack_memento_map()`](blenback.github.io/mapMementoR/reference/create_multitrack_memento_map.md)
+  : Create a map with multiple race routes from GPX files
+- [`generate_track_colors()`](blenback.github.io/mapMementoR/reference/generate_track_colors.md)
+  : Generate visually distinct track colors from a base color
 - [`geom_relief()`](blenback.github.io/mapMementoR/reference/geom_relief.md)
   : Hillshade and shaded relief functions for ggplot2
 - [`get_hillshade()`](blenback.github.io/mapMementoR/reference/get_hillshade.md)
@@ -19,6 +25,8 @@
   : Get max/min distance and elevation from multiple GPX files
 - [`memento_map_series()`](blenback.github.io/mapMementoR/reference/memento_map_series.md)
   : Loop over multiple races and styles to create maps
+- [`multitrack_map_series()`](blenback.github.io/mapMementoR/reference/multitrack_map_series.md)
+  : Loop over multiple track sets and styles to create multitrack maps
 - [`parse_gpx()`](blenback.github.io/mapMementoR/reference/parse_gpx.md)
   : Parse GPX file and extract track points
 - [`save_powerof10_to_yaml()`](blenback.github.io/mapMementoR/reference/save_powerof10_to_yaml.md)

@@ -6,11 +6,13 @@
 ##'
 ##' @param gpx_files Character vector of paths to GPX files
 ##' @param track_labels Optional character vector of labels for each track (must match length of gpx_files)
+#'  @param elev_labels Optional character vector of labels for elevation plots (must match length of gpx_files)
 ##' @param route_colors Character vector of colors for each route (if single color, applied to all)
 ##' @param with_labels Boolean to include text labels along routes using geomtextpath
 ##' @param label_spacing Spacing for labels along the path (default 0.3)
 ##' @param label_size Size of route labels (default 3)
-##' @param map_title map_title string for map title
+##' @param map_title map_title string for map title,
+#'  @param cache_string used for caching OSM data
 ##' @param route_size Size of the route lines (overridden by page size)
 ##' @param bg_color Background color for the map
 ##' @param street_color Color for streets
@@ -49,11 +51,13 @@
 create_multitrack_memento_map <- function(
   gpx_files,
   track_labels = NULL,
+  elev_labels = NULL,
   route_colors = "#d1af82",
   with_labels = FALSE,
   label_spacing = 0.3,
   label_size = 3,
   map_title = NULL,
+  cache_string = NULL,
   route_size = 1.2,
   bg_color = "#0a0e27",
   street_color = "#1a1f3a",
@@ -175,7 +179,7 @@ create_multitrack_memento_map <- function(
   if (with_OSM) {
     osm <- get_osm_components(
       bbox,
-      file_title,
+      cache_string,
       cache_data = cache_data,
       components = components
     )
@@ -264,7 +268,7 @@ create_multitrack_memento_map <- function(
           plot.title = ggplot2::element_text(
             size = elev_title_size, # Use page-scaled size
             hjust = 0.5,
-            angle = 0,
+            angle = 35,
             vjust = 0.2,
             color = route_colors[i],
             family = font_family,
@@ -279,17 +283,23 @@ create_multitrack_memento_map <- function(
           )
         ) +
         ggplot2::labs(
-          title = track_labels[i],
+          title = elev_labels[i],
           caption = base::sprintf("%.1f km", max_dist)
         )
 
       p
     })
 
+    # Calculate relative widths based on track distances
+    track_distances <- base::sapply(all_tracks, function(track) {
+      base::max(track$dist, na.rm = TRUE)
+    })
+    relative_widths <- track_distances / base::sum(track_distances)
+
     # Combine all elevation plots horizontally with spacing
     p_elev <- patchwork::wrap_plots(elev_plots, nrow = 1) +
       patchwork::plot_layout(
-        widths = base::rep(1, n_tracks),
+        widths = relative_widths,
         guides = "collect"
       ) &
       ggplot2::theme(plot.margin = ggplot2::margin(0, 1, 0, 1, unit = "pt")) # Add spacing between plots
@@ -517,7 +527,7 @@ create_multitrack_memento_map <- function(
     }
   }
 
-  # Add labels for all tracks in a single layer (allows ggrepel to avoid overlaps)
+  # Add labels for all tracks with route awareness
   if (with_labels) {
     # Collect all start points with their labels
     all_label_points <- base::do.call(
@@ -529,10 +539,27 @@ create_multitrack_memento_map <- function(
       })
     )
 
-    # Add labels with repelling to avoid overlaps
+    # Collect ALL route points to use as repel obstacles
+    # Sample points along routes to reduce computational load
+    all_route_points <- base::do.call(
+      rbind,
+      base::lapply(1:n_tracks, function(i) {
+        track <- all_tracks[[i]]
+        # Sample every 5th point to reduce data while maintaining route shape
+        sampled_indices <- seq(1, nrow(track), by = 1)
+        sampled <- track[sampled_indices, ]
+        sampled$track_label <- "" # No label for these points
+        sampled
+      })
+    )
+
+    # Combine label points and route obstacle points
+    combined_points <- rbind(all_label_points, all_route_points)
+
+    # Add labels with repelling that avoids routes
     p_map <- p_map +
       ggrepel::geom_label_repel(
-        data = all_label_points,
+        data = combined_points,
         ggplot2::aes(
           x = lon,
           y = lat,
@@ -544,13 +571,17 @@ create_multitrack_memento_map <- function(
         family = font_family,
         fontface = "bold",
         label.size = 0,
+        force = 2,
+        direction = "both",
         label.padding = ggplot2::unit(0.15, "lines"),
         box.padding = ggplot2::unit(0.5, "lines"),
         point.padding = ggplot2::unit(0.3, "lines"),
-        segment.color = "grey50", # No line connecting label to point
-        show.legend = FALSE
+        segment.color = NA,
+        show.legend = FALSE,
+        min.segment.length = 0, # Show all segments
+        max.overlaps = Inf # Allow repositioning as needed
       ) +
-      ggplot2::scale_color_identity() # Use the actual color values
+      ggplot2::scale_color_identity()
   }
 
   # Add fades
