@@ -39,14 +39,15 @@
 
     <div id="navbar" class="collapse navbar-collapse ms-3">
       <ul class="navbar-nav me-auto">
+<li class="nav-item"><a class="nav-link" href="articles/mapMementoR.html">Get started</a></li>
 <li class="nav-item"><a class="nav-link" href="reference/index.html">Reference</a></li>
 <li class="nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
-<li><a class="dropdown-item" href="articles/inbuilt_styles.html">Using built-in Styles</a></li>
+<li><a class="dropdown-item" href="articles/inbuilt_styles.html">Built-in Map Styles</a></li>
+    <li><a class="dropdown-item" href="articles/osm_components.html">OpenStreetMap Components and Features</a></li>
   </ul>
 </li>
-<li class="nav-item"><a class="nav-link" href="gallery.html">Gallery</a></li>
       </ul>
 <ul class="navbar-nav">
 <li class="nav-item"><form class="form-inline" role="search">
@@ -79,7 +80,7 @@
 <div class="section level2">
 <h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
 </h2>
-<p>This guide will help you create stunning, printable maps of your race routes using GPX data. The code lets you generate beautiful visualizations with customizable color schemes, elevation profiles, and multiple race times for the same location.</p>
+<p>Create stunning, print-ready maps of your running routes, races, or multi-day adventures using GPX data. <code>mapMementoR</code> generates beautiful visualizations with customizable color schemes, elevation profiles, OpenStreetMap backgrounds, and support for tracking multiple performances at the same location.</p>
 <div layout-ncol="3">
 <figure><img src="reference/figures/chicago.png" data-fig-alt="Example race map with Dark theme" data-group="my-gallery" alt="Example race map with Dark theme"><figcaption aria-hidden="true">
 Example race map with Dark theme
@@ -97,240 +98,259 @@ Example race map with Nautical theme
 </div>
 </div>
 <div class="section level2">
-<h2 id="getting-started">Getting Started<a class="anchor" aria-label="anchor" href="#getting-started"></a>
+<h2 id="features">Features<a class="anchor" aria-label="anchor" href="#features"></a>
 </h2>
-<div class="section level3">
-<h3 id="prerequisites">Prerequisites<a class="anchor" aria-label="anchor" href="#prerequisites"></a>
-</h3>
-<p>You’ll need:</p>
 <ul>
-<li>R (version 4.0+)</li>
-<li>GPX files from your races (from Garmin, Strava, etc.)</li>
-<li>The required R packages (see Installation)</li>
+<li>
+<strong>Single Route Maps</strong>: Create elegant maps showing individual races with performance details</li>
+<li>
+<strong>Multi-Track Maps</strong>: Combine multiple GPX tracks on one map (perfect for multi-stage races or relay events)</li>
+<li>
+<strong>Built-in Styles</strong>: Six professionally designed color schemes (Dark, Emerald, Ghost, Nautical, Zen, Obsidian)</li>
+<li>
+<strong>Customizable Appearance</strong>: Full control over colors, fonts, page sizes, and map elements</li>
+<li>
+<strong>Elevation Profiles</strong>: Automatic generation of elevation charts from GPS data</li>
+<li>
+<strong>OpenStreetMap Integration</strong>: Beautiful background layers including streets, highways, water bodies, and coastlines</li>
+<li>
+<strong>Batch Processing</strong>: Generate maps for multiple races and styles simultaneously</li>
+<li>
+<strong>Power of 10 Integration</strong>: Automatically import UK running race data</li>
 </ul>
+</div>
+<div class="section level2">
+<h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
+</h2>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># install.packages("pak")</span></span>
 <span><span class="fu">pak</span><span class="fu">::</span><span class="fu"><a href="https://pak.r-lib.org/reference/pak.html" class="external-link">pak</a></span><span class="op">(</span><span class="st">"blenback/mapMementoR"</span><span class="op">)</span></span></code></pre></div>
 </div>
+<div class="section level2">
+<h2 id="quick-start">Quick Start<a class="anchor" aria-label="anchor" href="#quick-start"></a>
+</h2>
+<div class="section level3">
+<h3 id="single-race-maps">Single Race Maps<a class="anchor" aria-label="anchor" href="#single-race-maps"></a>
+</h3>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">mapMementoR</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Create maps for all races in your YAML file</span></span>
+<span><span class="fu"><a href="reference/memento_map_series.html">memento_map_series</a></span><span class="op">(</span></span>
+<span>  output_dir <span class="op">=</span> <span class="st">"my_maps"</span>,</span>
+<span>  races_path <span class="op">=</span> <span class="st">"data-raw/my_races.yaml"</span>,</span>
+<span>  styles <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Dark"</span>, <span class="st">"Emerald"</span><span class="op">)</span>,</span>
+<span>  page_size <span class="op">=</span> <span class="st">"A4"</span>,</span>
+<span>  dpi <span class="op">=</span> <span class="fl">300</span></span>
+<span><span class="op">)</span></span></code></pre></div>
+</div>
+<div class="section level3">
+<h3 id="multi-track-maps">Multi-Track Maps<a class="anchor" aria-label="anchor" href="#multi-track-maps"></a>
+</h3>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Create maps combining multiple tracks</span></span>
+<span><span class="fu"><a href="reference/multitrack_map_series.html">multitrack_map_series</a></span><span class="op">(</span></span>
+<span>  output_dir <span class="op">=</span> <span class="st">"outputs"</span>,</span>
+<span>  track_sets_path <span class="op">=</span> <span class="st">"data-raw/track_sets.yaml"</span>,</span>
+<span>  styles <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Dark"</span>, <span class="st">"Zen"</span><span class="op">)</span>,</span>
+<span>  page_size <span class="op">=</span> <span class="st">"A3"</span>,</span>
+<span>  with_labels <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span><span class="op">)</span></span></code></pre></div>
+</div>
 </div>
 <div class="section level2">
-<h2 id="basic-usage">Basic Usage<a class="anchor" aria-label="anchor" href="#basic-usage"></a>
+<h2 id="configuration">Configuration<a class="anchor" aria-label="anchor" href="#configuration"></a>
 </h2>
-<p>The simplest way to create maps is:</p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/source.html" class="external-link">source</a></span><span class="op">(</span><span class="st">"create_maps.R"</span><span class="op">)</span></span>
-<span><span class="fu"><a href="reference/memento_map_series.html">memento_map_series</a></span><span class="op">(</span></span>
-<span>  races_path <span class="op">=</span> <span class="st">"your_races.yaml"</span>,</span>
-<span>  styles_path <span class="op">=</span> <span class="st">"styles.yaml"</span>,</span>
-<span>  output_dir <span class="op">=</span> <span class="st">"my_maps"</span></span>
-<span><span class="op">)</span></span></code></pre></div>
-<p>For a comprehensive introduction, configuration, and advanced usage, see the vignette: <a href="vignettes/mapMementoR.qmd">Introduction to mapMementoR</a>. races_path = “alex_black_races.yaml”, styles_path = “styles.yaml”, output_dir = “my_maps” )</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a>This will process all races <span class="cf">in</span> your YAML file with all defined styles.</span>
-<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a></span>
-<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a><span class="do">## Configuration Files</span></span>
-<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a></span>
-<span id="cb3-5"><a href="#cb3-5" tabindex="-1"></a><span class="do">### Race Data File (`*_races.yaml`)</span></span>
-<span id="cb3-6"><a href="#cb3-6" tabindex="-1"></a></span>
-<span id="cb3-7"><a href="#cb3-7" tabindex="-1"></a>This file contains your race information. Each race needs<span class="sc">:</span></span>
-<span id="cb3-8"><a href="#cb3-8" tabindex="-1"></a></span>
-<span id="cb3-9"><a href="#cb3-9" tabindex="-1"></a><span class="sc">-</span> <span class="er">**</span>gpx_file<span class="sc">**</span><span class="er">:</span> Path to your GPX file</span>
-<span id="cb3-10"><a href="#cb3-10" tabindex="-1"></a><span class="sc">-</span> <span class="er">**</span>competitor_name<span class="sc">**</span><span class="er">:</span> Your name</span>
-<span id="cb3-11"><a href="#cb3-11" tabindex="-1"></a><span class="sc">-</span> <span class="er">**</span>event<span class="sc">**</span><span class="er">:</span> Race <span class="fu">type</span> (<span class="at">HM =</span> half marathon, <span class="at">Mar =</span> marathon, etc.)</span>
-<span id="cb3-12"><a href="#cb3-12" tabindex="-1"></a><span class="sc">-</span> <span class="er">**</span>location<span class="sc">**</span><span class="er">:</span> Race location name</span>
-<span id="cb3-13"><a href="#cb3-13" tabindex="-1"></a><span class="sc">-</span> <span class="er">**</span>entries<span class="sc">**</span><span class="er">:</span> List of race times <span class="cf">for</span> this location<span class="sc">/</span>course</span>
-<span id="cb3-14"><a href="#cb3-14" tabindex="-1"></a></span>
-<span id="cb3-15"><a href="#cb3-15" tabindex="-1"></a><span class="do">#### Example Structure</span></span>
-<span id="cb3-16"><a href="#cb3-16" tabindex="-1"></a></span>
-<span id="cb3-17"><a href="#cb3-17" tabindex="-1"></a><span class="st">```</span><span class="at">yaml</span></span>
-<span id="cb3-18"><a href="#cb3-18" tabindex="-1"></a><span class="at">  - gpx_file: "data-raw/london.gpx"</span></span>
-<span id="cb3-19"><a href="#cb3-19" tabindex="-1"></a><span class="at">    competitor_name: "Alex Black"</span></span>
-<span id="cb3-20"><a href="#cb3-20" tabindex="-1"></a><span class="at">    event: "Mar"</span></span>
-<span id="cb3-21"><a href="#cb3-21" tabindex="-1"></a><span class="at">    entries:</span></span>
-<span id="cb3-22"><a href="#cb3-22" tabindex="-1"></a><span class="at">      - race_year: "2025"</span></span>
-<span id="cb3-23"><a href="#cb3-23" tabindex="-1"></a><span class="at">        race_time: "2:28:09"</span></span>
-<span id="cb3-24"><a href="#cb3-24" tabindex="-1"></a><span class="at">      - race_year: "2024"</span></span>
-<span id="cb3-25"><a href="#cb3-25" tabindex="-1"></a><span class="at">        race_time: "2:30:45"</span></span>
-<span id="cb3-26"><a href="#cb3-26" tabindex="-1"></a><span class="at">      - race_year: "2023"</span></span>
-<span id="cb3-27"><a href="#cb3-27" tabindex="-1"></a><span class="at">        race_time: "2:35:48"</span></span>
-<span id="cb3-28"><a href="#cb3-28" tabindex="-1"></a><span class="at">  </span></span>
-<span id="cb3-29"><a href="#cb3-29" tabindex="-1"></a><span class="at">  - gpx_file: "data-raw/chicago.gpx"</span></span>
-<span id="cb3-30"><a href="#cb3-30" tabindex="-1"></a><span class="at">    competitor_name: "Alex Black"</span></span>
-<span id="cb3-31"><a href="#cb3-31" tabindex="-1"></a><span class="at">    event: "Mar"</span></span>
-<span id="cb3-32"><a href="#cb3-32" tabindex="-1"></a><span class="at">    location: "Chicago"</span></span>
-<span id="cb3-33"><a href="#cb3-33" tabindex="-1"></a><span class="at">    entries:</span></span>
-<span id="cb3-34"><a href="#cb3-34" tabindex="-1"></a><span class="at">      - race_year: "2024"</span></span>
-<span id="cb3-35"><a href="#cb3-35" tabindex="-1"></a><span class="at">        race_time: "2:31:46"</span></span></code></pre></div>
-<div class="section level4">
-<h4 id="adding-new-races">Adding New Races<a class="anchor" aria-label="anchor" href="#adding-new-races"></a>
-</h4>
-<p>To add a new race:</p>
-<ol style="list-style-type: decimal">
-<li>Save your GPX file to the <code>data-raw/</code> directory</li>
-<li>Add a new entry to your <code>*_races.yaml</code> file:</li>
-</ol>
-<div class="sourceCode" id="cb4"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">gpx_file</span><span class="kw">:</span><span class="at"> </span><span class="st">"data-raw/new_race.gpx"</span></span>
-<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a><span class="at">    </span><span class="fu">competitor_name</span><span class="kw">:</span><span class="at"> </span><span class="st">"Your Name"</span></span>
-<span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a><span class="at">    </span><span class="fu">event</span><span class="kw">:</span><span class="at"> </span><span class="st">"HM"</span></span>
-<span id="cb4-4"><a href="#cb4-4" tabindex="-1"></a><span class="at">    </span><span class="fu">location</span><span class="kw">:</span><span class="at"> </span><span class="st">"New Location"</span></span>
+<div class="section level3">
+<h3 id="race-data-yaml">Race Data YAML<a class="anchor" aria-label="anchor" href="#race-data-yaml"></a>
+</h3>
+<p>The race data file defines your races and performance entries. Example <code>races.yaml</code>:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="fu">races</span><span class="kw">:</span></span>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">gpx_file</span><span class="kw">:</span><span class="at"> </span><span class="st">"inst/extdata/london.gpx"</span></span>
+<span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a><span class="at">    </span><span class="fu">competitor_name</span><span class="kw">:</span><span class="at"> </span><span class="st">"John Doe"</span></span>
+<span id="cb4-4"><a href="#cb4-4" tabindex="-1"></a><span class="at">    </span><span class="fu">location</span><span class="kw">:</span><span class="at"> </span><span class="st">"London"</span></span>
 <span id="cb4-5"><a href="#cb4-5" tabindex="-1"></a><span class="at">    </span><span class="fu">entries</span><span class="kw">:</span></span>
 <span id="cb4-6"><a href="#cb4-6" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">race_year</span><span class="kw">:</span><span class="at"> </span><span class="st">"2025"</span></span>
-<span id="cb4-7"><a href="#cb4-7" tabindex="-1"></a><span class="at">        </span><span class="fu">race_time</span><span class="kw">:</span><span class="at"> </span><span class="st">"1:25:30"</span></span></code></pre></div>
-<ol start="3" style="list-style-type: decimal">
-<li>Run <code><a href="reference/memento_map_series.html">memento_map_series()</a></code> again</li>
-</ol>
+<span id="cb4-7"><a href="#cb4-7" tabindex="-1"></a><span class="at">        </span><span class="fu">race_time</span><span class="kw">:</span><span class="at"> </span><span class="st">"2:28:09"</span></span>
+<span id="cb4-8"><a href="#cb4-8" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">race_year</span><span class="kw">:</span><span class="at"> </span><span class="st">"2024"</span></span>
+<span id="cb4-9"><a href="#cb4-9" tabindex="-1"></a><span class="at">        </span><span class="fu">race_time</span><span class="kw">:</span><span class="at"> </span><span class="st">"2:30:45"</span></span></code></pre></div>
+<p>See <code>inst/extdata/races.yaml</code> for a complete example.</p>
+<p><strong>Required fields:</strong> - <code>gpx_file</code>: Path to GPX file - <code>competitor_name</code>: Athlete name - <code>location</code>: Location label for the map - <code>entries</code>: List of race entries with <code>race_year</code> and <code>race_time</code></p>
+<p><strong>Optional fields:</strong> - <code>event</code>: Event type (HM, Mar, 5K, etc.) for organization</p>
 </div>
-<div class="section level4">
-<h4 id="automatic-data-import-from-power-of-10">Automatic Data Import from Power of 10<a class="anchor" aria-label="anchor" href="#automatic-data-import-from-power-of-10"></a>
-</h4>
-<p>If your races are listed on Power of 10, you can automatically generate the YAML structure: first_name = “Alex”, surname = “Black”, club = “North Shields Poly”, event = c(“HM”, “Mar”), # Filter to half marathons and marathons year = c(2023, 2024, 2025) # Optional: filter by year )</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a>This creates a YAML file with all your race entries. You<span class="st">'ll need to manually add the GPX file paths.</span></span>
-<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a></span>
-<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a><span class="st">### Styles File (`styles.yaml`)</span></span>
-<span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a></span>
-<span id="cb5-5"><a href="#cb5-5" tabindex="-1"></a><span class="st">This file defines the visual appearance of your maps. You can create multiple styles to see which you prefer.</span></span>
-<span id="cb5-6"><a href="#cb5-6" tabindex="-1"></a></span>
-<span id="cb5-7"><a href="#cb5-7" tabindex="-1"></a><span class="st">#### Anatomy of a Style</span></span>
-<span id="cb5-8"><a href="#cb5-8" tabindex="-1"></a><span class="st">```yaml</span></span>
-<span id="cb5-9"><a href="#cb5-9" tabindex="-1"></a><span class="st">styling:</span></span>
-<span id="cb5-10"><a href="#cb5-10" tabindex="-1"></a><span class="st">  - name: "Dark"              # Style name (used for folder naming)</span></span>
-<span id="cb5-11"><a href="#cb5-11" tabindex="-1"></a><span class="st">    route_color: "#d1af82"    # Color of your route line</span></span>
-<span id="cb5-12"><a href="#cb5-12" tabindex="-1"></a><span class="st">    bg_color: "#0a0e27"       # Background/map color</span></span>
-<span id="cb5-13"><a href="#cb5-13" tabindex="-1"></a><span class="st">    street_color: "#1a1f3a"   # Minor streets color</span></span>
-<span id="cb5-14"><a href="#cb5-14" tabindex="-1"></a><span class="st">    highway_color: "#2d3250"  # Major roads color</span></span>
-<span id="cb5-15"><a href="#cb5-15" tabindex="-1"></a><span class="st">    water_color: "#1a2332"    # Water bodies color</span></span>
-<span id="cb5-16"><a href="#cb5-16" tabindex="-1"></a><span class="st">    with_elevation: true      # Include elevation profile</span></span>
-<span id="cb5-17"><a href="#cb5-17" tabindex="-1"></a><span class="st">    dpi: 300                  # Print quality (300 for high quality)</span></span>
-<span id="cb5-18"><a href="#cb5-18" tabindex="-1"></a><span class="st">    page_size: "A5"           # Output size (A5, A4, A3, A2, A1, A0)</span></span></code></pre></div>
+<div class="section level3">
+<h3 id="track-sets-yaml-for-multi-track-maps">Track Sets YAML (for Multi-Track Maps)<a class="anchor" aria-label="anchor" href="#track-sets-yaml-for-multi-track-maps"></a>
+</h3>
+<p>For maps with multiple tracks (e.g., relay stages, multi-day events):</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="fu">track_sets</span><span class="kw">:</span></span>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">map_title</span><span class="kw">:</span><span class="at"> </span><span class="st">"City Relay</span><span class="sc">\n</span><span class="st">2024"</span></span>
+<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a><span class="at">    </span><span class="fu">gpx_files</span><span class="kw">:</span></span>
+<span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="st">"inst/extdata/leg1.gpx"</span></span>
+<span id="cb5-5"><a href="#cb5-5" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="st">"inst/extdata/leg2.gpx"</span></span>
+<span id="cb5-6"><a href="#cb5-6" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="st">"inst/extdata/leg3.gpx"</span></span>
+<span id="cb5-7"><a href="#cb5-7" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="st">"inst/extdata/leg4.gpx"</span></span>
+<span id="cb5-8"><a href="#cb5-8" tabindex="-1"></a><span class="at">    </span><span class="fu">track_labels</span><span class="kw">:</span></span>
+<span id="cb5-9"><a href="#cb5-9" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="st">"Leg 1"</span></span>
+<span id="cb5-10"><a href="#cb5-10" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="st">"Leg 2"</span></span>
+<span id="cb5-11"><a href="#cb5-11" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="st">"Leg 3"</span></span>
+<span id="cb5-12"><a href="#cb5-12" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="st">"Leg 4"</span></span>
+<span id="cb5-13"><a href="#cb5-13" tabindex="-1"></a><span class="at">    </span><span class="fu">elev_labels</span><span class="kw">:</span></span>
+<span id="cb5-14"><a href="#cb5-14" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="st">"Sarah"</span></span>
+<span id="cb5-15"><a href="#cb5-15" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="st">"Mike"</span></span>
+<span id="cb5-16"><a href="#cb5-16" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="st">"Emma"</span></span>
+<span id="cb5-17"><a href="#cb5-17" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="st">"Tom"</span></span>
+<span id="cb5-18"><a href="#cb5-18" tabindex="-1"></a><span class="at">    </span><span class="fu">font_family</span><span class="kw">:</span><span class="at"> </span><span class="st">"Outfit-VariableFont_wght"</span></span></code></pre></div>
+<p>See <code>inst/extdata/track_sets.yaml</code> for a complete example.</p>
+<p><strong>Optional configuration:</strong> - <code>route_colors</code>: Custom colors for each track (auto-generated if not specified) - <code>track_labels</code>: Labels placed on the map - <code>elev_labels</code>: Labels for elevation profiles - <code>font_family</code>: Custom font</p>
 </div>
-<div class="section level4">
-<h4 id="understanding-color-codes">Understanding Color Codes<a class="anchor" aria-label="anchor" href="#understanding-color-codes"></a>
-</h4>
-<p>Colors are specified in <strong>hexadecimal format</strong> (<code>#RRGGBB</code>):</p>
+<div class="section level3">
+<h3 id="automatic-import-from-power-of-10">Automatic Import from Power of 10<a class="anchor" aria-label="anchor" href="#automatic-import-from-power-of-10"></a>
+</h3>
+<p>Automatically create race YAML from UK running data:</p>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="reference/save_powerof10_to_yaml.html">save_powerof10_to_yaml</a></span><span class="op">(</span></span>
+<span>  first_name <span class="op">=</span> <span class="st">"Alex"</span>,</span>
+<span>  surname <span class="op">=</span> <span class="st">"Black"</span>,</span>
+<span>  club <span class="op">=</span> <span class="st">"North Shields Poly"</span>,</span>
+<span>  event <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"HM"</span>, <span class="st">"Mar"</span><span class="op">)</span>,</span>
+<span>  year <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2023</span>, <span class="fl">2024</span>, <span class="fl">2025</span><span class="op">)</span>,</span>
+<span>  yaml_path <span class="op">=</span> <span class="st">"my_races.yaml"</span></span>
+<span><span class="op">)</span></span></code></pre></div>
+<p>This creates a YAML file with all your race entries. Add GPX file paths manually.</p>
+</div>
+</div>
+<div class="section level2">
+<h2 id="customization">Customization<a class="anchor" aria-label="anchor" href="#customization"></a>
+</h2>
+<div class="section level3">
+<h3 id="built-in-styles">Built-in Styles<a class="anchor" aria-label="anchor" href="#built-in-styles"></a>
+</h3>
+<p>Six professionally designed styles are included:</p>
 <ul>
 <li>
-<code>#000000</code> = Black</li>
+<strong>Dark</strong>: Warm gold route on deep navy background</li>
 <li>
-<code>#FFFFFF</code> = White</li>
-<li>
-<code>#FF0000</code> = Red</li>
-<li>
-<code>#00FF00</code> = Green</li>
-<li>
-<code>#0000FF</code> = Blue</li>
-</ul>
-<p><strong>Finding Colors:</strong></p>
-<ul>
-<li>Use online tools like <a href="https://coolors.co/" class="external-link">Coolors.co</a> or <a href="https://htmlcolorcodes.com/" class="external-link">HTML Color Codes</a>
+<strong>Emerald</strong>: Dark green route on cream background<br>
 </li>
-<li>Pick colors from images using browser color pickers</li>
-<li>Use color palette generators for harmonious combinations</li>
+<li>
+<strong>Nautical</strong>: Blue-grey route on warm cream background</li>
+<li>
+<strong>Zen</strong>: Charcoal route on light grey background</li>
+<li>
+<strong>Ghost</strong>: White route on dark background</li>
+<li>
+<strong>Obsidian</strong>: Bright gold route on black background</li>
 </ul>
 </div>
-<div class="section level4">
-<h4 id="pre-defined-style-examples">Pre-defined Style Examples<a class="anchor" aria-label="anchor" href="#pre-defined-style-examples"></a>
-</h4>
-<p><strong>Dark Theme</strong> (default)</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a><span class="at">  </span><span class="fu">route_color</span><span class="kw">:</span><span class="at"> </span><span class="st">"#d1af82"</span><span class="co">    # Warm gold</span></span>
-<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a><span class="at">  </span><span class="fu">bg_color</span><span class="kw">:</span><span class="at"> </span><span class="st">"#0a0e27"</span><span class="co">       # Deep navy</span></span>
-<span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a><span class="at">  </span><span class="fu">street_color</span><span class="kw">:</span><span class="at"> </span><span class="st">"#1a1f3a"</span><span class="co">   # Dark blue-grey</span></span>
-<span id="cb6-4"><a href="#cb6-4" tabindex="-1"></a><span class="at">  </span><span class="fu">water_color</span><span class="kw">:</span><span class="at"> </span><span class="st">"#1a2332"</span><span class="co">    # Dark teal</span></span></code></pre></div>
-<p><strong>Light/Zen Theme</strong></p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> </span><span class="st">"Zen"</span></span>
-<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a><span class="at">  </span><span class="fu">route_color</span><span class="kw">:</span><span class="at"> </span><span class="st">"#2d2d2d"</span><span class="co">    # Charcoal</span></span>
-<span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a><span class="at">  </span><span class="fu">bg_color</span><span class="kw">:</span><span class="at"> </span><span class="st">"#fafafa"</span><span class="co">       # Off-white</span></span>
-<span id="cb7-4"><a href="#cb7-4" tabindex="-1"></a><span class="at">  </span><span class="fu">street_color</span><span class="kw">:</span><span class="at"> </span><span class="st">"#eeeeee"</span><span class="co">   # Light grey</span></span>
-<span id="cb7-5"><a href="#cb7-5" tabindex="-1"></a><span class="at">  </span><span class="fu">highway_color</span><span class="kw">:</span><span class="at"> </span><span class="st">"#d4d4d4"</span><span class="co">  # Medium grey</span></span>
-<span id="cb7-6"><a href="#cb7-6" tabindex="-1"></a><span class="at">  </span><span class="fu">water_color</span><span class="kw">:</span><span class="at"> </span><span class="st">"#e8e8e8"</span><span class="co">    # Pale grey</span></span></code></pre></div>
-<p><strong>Bold/Obsidian Theme</strong></p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> </span><span class="st">"Obsidian"</span></span>
-<span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a><span class="at">  </span><span class="fu">route_color</span><span class="kw">:</span><span class="at"> </span><span class="st">"#ffd60a"</span><span class="co">    # Bright gold</span></span>
-<span id="cb8-3"><a href="#cb8-3" tabindex="-1"></a><span class="at">  </span><span class="fu">bg_color</span><span class="kw">:</span><span class="at"> </span><span class="st">"#000814"</span><span class="co">       # Pure black</span></span>
-<span id="cb8-4"><a href="#cb8-4" tabindex="-1"></a><span class="at">  </span><span class="fu">street_color</span><span class="kw">:</span><span class="at"> </span><span class="st">"#001d3d"</span><span class="co">   # Deep navy</span></span>
-<span id="cb8-5"><a href="#cb8-5" tabindex="-1"></a><span class="at">  </span><span class="fu">highway_color</span><span class="kw">:</span><span class="at"> </span><span class="st">"#003566"</span><span class="co">  # Medium navy</span></span>
-<span id="cb8-6"><a href="#cb8-6" tabindex="-1"></a><span class="at">  </span><span class="fu">water_color</span><span class="kw">:</span><span class="at"> </span><span class="st">"#000814"</span><span class="co">    # Black water</span></span></code></pre></div>
+<div class="section level3">
+<h3 id="custom-styles">Custom Styles<a class="anchor" aria-label="anchor" href="#custom-styles"></a>
+</h3>
+<p>Create custom color schemes:</p>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="reference/memento_map_series.html">memento_map_series</a></span><span class="op">(</span></span>
+<span>  races_path <span class="op">=</span> <span class="st">"my_races.yaml"</span>,</span>
+<span>  styles <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Dark"</span>, <span class="st">"MyCustom"</span><span class="op">)</span>,</span>
+<span>  custom_styles <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
+<span>    MyCustom <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
+<span>      route_color <span class="op">=</span> <span class="st">"#FF6B35"</span>,    <span class="co"># Coral</span></span>
+<span>      bg_color <span class="op">=</span> <span class="st">"#004E89"</span>,        <span class="co"># Deep blue</span></span>
+<span>      street_color <span class="op">=</span> <span class="st">"#1A659E"</span>,    <span class="co"># Medium blue</span></span>
+<span>      highway_color <span class="op">=</span> <span class="st">"#2E86AB"</span>,   <span class="co"># Lighter blue</span></span>
+<span>      water_color <span class="op">=</span> <span class="st">"#1A659E"</span>      <span class="co"># Ocean blue</span></span>
+<span>    <span class="op">)</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="op">)</span></span></code></pre></div>
 </div>
-<div class="section level4">
-<h4 id="creating-your-own-style">Creating Your Own Style<a class="anchor" aria-label="anchor" href="#creating-your-own-style"></a>
-</h4>
-<ol style="list-style-type: decimal">
-<li>Copy an existing style block</li>
-<li>Change the <code>name</code> to something unique</li>
-<li>Modify colors to your preference</li>
-<li>Test with a single race first</li>
-</ol>
-<p><strong>Tips for good color combinations:</strong></p>
+<div class="section level3">
+<h3 id="map-components">Map Components<a class="anchor" aria-label="anchor" href="#map-components"></a>
+</h3>
+<p>Control which map elements to include:</p>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="reference/memento_map_series.html">memento_map_series</a></span><span class="op">(</span></span>
+<span>  races_path <span class="op">=</span> <span class="st">"my_races.yaml"</span>,</span>
+<span>  with_elevation <span class="op">=</span> <span class="cn">TRUE</span>,          <span class="co"># Include elevation profile</span></span>
+<span>  with_OSM <span class="op">=</span> <span class="cn">TRUE</span>,                <span class="co"># Include OpenStreetMap features</span></span>
+<span>  with_hillshade <span class="op">=</span> <span class="cn">FALSE</span>,         <span class="co"># Include terrain shading</span></span>
+<span>  components <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>                 <span class="co"># Which OSM features to show</span></span>
+<span>    <span class="st">"highways"</span>,</span>
+<span>    <span class="st">"streets"</span>, </span>
+<span>    <span class="st">"water"</span>,</span>
+<span>    <span class="st">"coast"</span></span>
+<span>  <span class="op">)</span>,</span>
+<span>  fade_directions <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>            <span class="co"># Fade edges of map</span></span>
+<span>    <span class="st">"top"</span>,</span>
+<span>    <span class="st">"bottom"</span></span>
+<span>  <span class="op">)</span>,</span>
+<span>  crop_shape <span class="op">=</span> <span class="cn">NULL</span>               <span class="co"># Options: NULL, "circle", "ellipse"</span></span>
+<span><span class="op">)</span></span></code></pre></div>
+</div>
+<div class="section level3">
+<h3 id="page-formats">Page Formats<a class="anchor" aria-label="anchor" href="#page-formats"></a>
+</h3>
+<p>Supported page sizes for printing:</p>
 <ul>
-<li>High contrast between <code>route_color</code> and <code>bg_color</code> for visibility</li>
-<li>Keep streets subtle (similar to background)</li>
-<li>Make highways slightly more visible than streets</li>
-<li>Consider the printing medium (screen vs paper)</li>
+<li>
+<strong>A5</strong> (148 × 210mm): Small prints, digital use</li>
+<li>
+<strong>A4</strong> (210 × 297mm): Standard framing</li>
+<li>
+<strong>A3</strong> (297 × 420mm): Large prints, posters</li>
+<li>
+<strong>A2, A1, A0</strong>: Very large format printing</li>
 </ul>
-</div>
-<div class="section level4">
-<h4 id="color-scheme-ideas">Color Scheme Ideas<a class="anchor" aria-label="anchor" href="#color-scheme-ideas"></a>
-</h4>
-<p><strong>Warm &amp; Earthy</strong></p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a><span class="fu">route_color</span><span class="kw">:</span><span class="at"> </span><span class="st">"#d4a574"</span><span class="co">  # Tan</span></span>
-<span id="cb9-2"><a href="#cb9-2" tabindex="-1"></a><span class="fu">bg_color</span><span class="kw">:</span><span class="at"> </span><span class="st">"#2d3142"</span><span class="co">     # Slate</span></span>
-<span id="cb9-3"><a href="#cb9-3" tabindex="-1"></a><span class="fu">water_color</span><span class="kw">:</span><span class="at"> </span><span class="st">"#4f5d75"</span><span class="co">  # Blue-grey</span></span></code></pre></div>
-<p><strong>Cool &amp; Fresh</strong></p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a><span class="fu">route_color</span><span class="kw">:</span><span class="at"> </span><span class="st">"#06ffa5"</span><span class="co">  # Mint green</span></span>
-<span id="cb10-2"><a href="#cb10-2" tabindex="-1"></a><span class="fu">bg_color</span><span class="kw">:</span><span class="at"> </span><span class="st">"#0d1321"</span><span class="co">     # Deep navy</span></span>
-<span id="cb10-3"><a href="#cb10-3" tabindex="-1"></a><span class="fu">water_color</span><span class="kw">:</span><span class="at"> </span><span class="st">"#1d2d44"</span><span class="co">  # Navy blue</span></span></code></pre></div>
-<p><strong>Sunset Vibes</strong></p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a><span class="fu">route_color</span><span class="kw">:</span><span class="at"> </span><span class="st">"#ff6b35"</span><span class="co">  # Coral</span></span>
-<span id="cb11-2"><a href="#cb11-2" tabindex="-1"></a><span class="fu">bg_color</span><span class="kw">:</span><span class="at"> </span><span class="st">"#004e89"</span><span class="co">     # Deep blue</span></span>
-<span id="cb11-3"><a href="#cb11-3" tabindex="-1"></a><span class="fu">water_color</span><span class="kw">:</span><span class="at"> </span><span class="st">"#1a659e"</span><span class="co">  # Ocean blue</span></span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="reference/memento_map_series.html">memento_map_series</a></span><span class="op">(</span></span>
+<span>  races_path <span class="op">=</span> <span class="st">"my_races.yaml"</span>,</span>
+<span>  page_size <span class="op">=</span> <span class="st">"A3"</span>,</span>
+<span>  orientation <span class="op">=</span> <span class="st">"portrait"</span>,  <span class="co"># or "landscape"</span></span>
+<span>  dpi <span class="op">=</span> <span class="fl">300</span>,                 <span class="co"># 300 for print, 150 for screen</span></span>
+<span>  base_size <span class="op">=</span> <span class="fl">12</span>             <span class="co"># Base font size</span></span>
+<span><span class="op">)</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level2">
 <h2 id="advanced-features">Advanced Features<a class="anchor" aria-label="anchor" href="#advanced-features"></a>
 </h2>
 <div class="section level3">
-<h3 id="multi-daystage-races">Multi-Day/Stage Races<a class="anchor" aria-label="anchor" href="#multi-daystage-races"></a>
+<h3 id="color-generation-for-multi-track-maps">Color Generation for Multi-Track Maps<a class="anchor" aria-label="anchor" href="#color-generation-for-multi-track-maps"></a>
 </h3>
-<p>For races with multiple stages or days (like ultra-marathons or cycling tours), use the <code>create_multiday_map()</code> function:</p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">create_multiday_map</span><span class="op">(</span></span>
-<span>  segments <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
-<span>    <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>gpx_file <span class="op">=</span> <span class="st">"data-raw/stage1.gpx"</span>, segment_name <span class="op">=</span> <span class="st">"Stage 1: Mountains"</span><span class="op">)</span>,</span>
-<span>    <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>gpx_file <span class="op">=</span> <span class="st">"data-raw/stage2.gpx"</span>, segment_name <span class="op">=</span> <span class="st">"Stage 2: Coast"</span><span class="op">)</span>,</span>
-<span>    <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>gpx_file <span class="op">=</span> <span class="st">"data-raw/stage3.gpx"</span>, segment_name <span class="op">=</span> <span class="st">"Stage 3: Finish"</span><span class="op">)</span></span>
-<span>  <span class="op">)</span>,</span>
-<span>  competitor_name <span class="op">=</span> <span class="st">"Alex Black"</span>,</span>
-<span>  location <span class="op">=</span> <span class="st">"Three Day Challenge"</span>,</span>
-<span>  route_colors <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"#d1af82"</span>, <span class="st">"#82b4d1"</span>, <span class="st">"#d182a8"</span><span class="op">)</span>,</span>
-<span>  output_dir <span class="op">=</span> <span class="st">"output"</span>,</span>
-<span>  dpi <span class="op">=</span> <span class="fl">300</span>,</span>
-<span>  page_size <span class="op">=</span> <span class="st">"A3"</span></span>
+<p>When creating multi-track maps, route colors can be automatically generated from the base style color:</p>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="reference/multitrack_map_series.html">multitrack_map_series</a></span><span class="op">(</span></span>
+<span>  track_sets_path <span class="op">=</span> <span class="st">"track_sets.yaml"</span>,</span>
+<span>  styles <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Dark"</span><span class="op">)</span>,</span>
+<span>  track_color_method <span class="op">=</span> <span class="st">"hue_shift"</span>  <span class="co"># Options: "hue_shift", "complementary", "gradient"</span></span>
 <span><span class="op">)</span></span></code></pre></div>
-</div>
-<div class="section level3">
-<h3 id="elevation-profiles">Elevation Profiles<a class="anchor" aria-label="anchor" href="#elevation-profiles"></a>
-</h3>
-<p>Elevation profiles are automatically included when <code>with_elevation: true</code> in your style. They show:</p>
-<ul>
-<li>Total elevation gain/loss</li>
-<li>Elevation changes throughout the route</li>
-<li>Relative difficulty of different sections</li>
-</ul>
-<p>To disable elevation profiles: <code>with_elevation: false</code></p>
-</div>
-<div class="section level3">
-<h3 id="output-sizes">Output Sizes<a class="anchor" aria-label="anchor" href="#output-sizes"></a>
-</h3>
-<p>Choose your output size based on intended use:</p>
 <ul>
 <li>
-<strong>A5</strong> (148 × 210mm): Small prints, phone backgrounds</li>
+<strong>hue_shift</strong>: Creates colors by varying hue (default)</li>
 <li>
-<strong>A4</strong> (210 × 297mm): Standard paper, framing</li>
+<strong>complementary</strong>: Generates complementary and analogous colors</li>
 <li>
-<strong>A3</strong> (297 × 420mm): Large prints, posters</li>
-<li>
-<strong>A2/A1/A0</strong>: Very large format printing</li>
+<strong>gradient</strong>: Creates colors with varying lightness and saturation</li>
 </ul>
-<p>Higher DPI values (300-600) are recommended for printing, while 150-200 DPI works for screen viewing.</p>
+</div>
+<div class="section level3">
+<h3 id="caching-osm-data">Caching OSM Data<a class="anchor" aria-label="anchor" href="#caching-osm-data"></a>
+</h3>
+<p>OpenStreetMap data is cached by default to speed up regeneration:</p>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="reference/memento_map_series.html">memento_map_series</a></span><span class="op">(</span></span>
+<span>  races_path <span class="op">=</span> <span class="st">"my_races.yaml"</span>,</span>
+<span>  cache_data <span class="op">=</span> <span class="cn">TRUE</span>  <span class="co"># Set to FALSE to always fetch fresh data</span></span>
+<span><span class="op">)</span></span></code></pre></div>
+<p>Cached files are stored in <code>data_cache_tmp/</code> as <code>.rds</code> files. Delete these files to refresh OSM data for a location.</p>
+</div>
+<div class="section level3">
+<h3 id="circular-and-ellipse-cropping">Circular and Ellipse Cropping<a class="anchor" aria-label="anchor" href="#circular-and-ellipse-cropping"></a>
+</h3>
+<p>Create artistic cropped maps:</p>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="reference/memento_map_series.html">memento_map_series</a></span><span class="op">(</span></span>
+<span>  races_path <span class="op">=</span> <span class="st">"my_races.yaml"</span>,</span>
+<span>  crop_shape <span class="op">=</span> <span class="st">"circle"</span>  <span class="co"># Options: NULL, "circle", "ellipse"</span></span>
+<span><span class="op">)</span></span></code></pre></div>
+<p>When using circular cropping, text overlays are automatically repositioned for optimal appearance.</p>
 </div>
 </div>
 <div class="section level2">
@@ -355,82 +375,113 @@ Example race map with Nautical theme
 <span id="cb13-16"><a href="#cb13-16" tabindex="-1"></a></span>
 <span id="cb13-17"><a href="#cb13-17" tabindex="-1"></a>Higher DPI <span class="fu">values</span> (<span class="dv">300-600</span>) are recommended <span class="cf">for</span> printing, <span class="cf">while</span> <span class="dv">150-200</span> DPI works <span class="cf">for</span> screen viewing.</span>
 <span id="cb13-18"><a href="#cb13-18" tabindex="-1"></a></span>
-<span id="cb13-19"><a href="#cb13-19" tabindex="-1"></a><span class="do">## File Organization</span></span>
+<span id="cb13-19"><a href="#cb13-19" tabindex="-1"></a><span class="do">## Output Structure</span></span>
 <span id="cb13-20"><a href="#cb13-20" tabindex="-1"></a></span>
-<span id="cb13-21"><a href="#cb13-21" tabindex="-1"></a>Recommended folder structure<span class="sc">:</span></span></code></pre></div>
-<p>project/ ├── data-raw/ │ ├── london.gpx │ ├── chicago.gpx │ └── *.rds (cached OSM data) ├── output/ │ ├── Dark/ │ │ ├── A5/ │ │ └── A3/ │ └── Zen/ │ └── A4/ ├── alex_black_races.yaml ├── styles.yaml └── create_maps.R</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" tabindex="-1"></a><span class="do">## Troubleshooting</span></span>
+<span id="cb13-21"><a href="#cb13-21" tabindex="-1"></a>Maps are organized by style, page size, and crop shape<span class="sc">:</span></span></code></pre></div>
+<p>output_dir/ ├── Dark/ │ ├── A4/ │ │ └── full_page/ │ │ ├── London.png │ │ └── Chicago.png │ └── A3/ │ └── circle/ │ └── London.png └── Emerald/ └── A4/ └── full_page/ └── London.png</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" tabindex="-1"></a><span class="do">## Low-Level Functions</span></span>
 <span id="cb14-2"><a href="#cb14-2" tabindex="-1"></a></span>
-<span id="cb14-3"><a href="#cb14-3" tabindex="-1"></a><span class="do">### GPX File Issues</span></span>
+<span id="cb14-3"><a href="#cb14-3" tabindex="-1"></a>For programmatic control, use the core functions directly<span class="sc">:</span></span>
 <span id="cb14-4"><a href="#cb14-4" tabindex="-1"></a></span>
-<span id="cb14-5"><a href="#cb14-5" tabindex="-1"></a><span class="sc">**</span>Problem<span class="sc">**</span><span class="er">:</span> <span class="st">"No coordinates found"</span></span>
-<span id="cb14-6"><a href="#cb14-6" tabindex="-1"></a><span class="sc">-</span> Ensure your GPX file contains track <span class="fu">points</span> (<span class="st">`</span><span class="at">&lt;trkpt&gt;</span><span class="st">`</span>)</span>
-<span id="cb14-7"><a href="#cb14-7" tabindex="-1"></a><span class="sc">-</span> Check file isn<span class="st">'t corrupted</span></span>
-<span id="cb14-8"><a href="#cb14-8" tabindex="-1"></a><span class="st">- Try re-exporting from your GPS device/app</span></span>
-<span id="cb14-9"><a href="#cb14-9" tabindex="-1"></a></span>
-<span id="cb14-10"><a href="#cb14-10" tabindex="-1"></a><span class="st">### Missing Map Features</span></span>
-<span id="cb14-11"><a href="#cb14-11" tabindex="-1"></a></span>
-<span id="cb14-12"><a href="#cb14-12" tabindex="-1"></a><span class="st">**Problem**: Some streets/water aren'</span>t showing</span>
-<span id="cb14-13"><a href="#cb14-13" tabindex="-1"></a><span class="sc">-</span> The script caches OpenStreetMap data <span class="cf">in</span> <span class="st">`</span><span class="at">data-raw/*.rds</span><span class="st">`</span> files</span>
-<span id="cb14-14"><a href="#cb14-14" tabindex="-1"></a><span class="sc">-</span> Delete these files to re<span class="sc">-</span>fetch fresh data</span>
-<span id="cb14-15"><a href="#cb14-15" tabindex="-1"></a><span class="sc">-</span> Ensure you have internet connection when first running</span>
-<span id="cb14-16"><a href="#cb14-16" tabindex="-1"></a></span>
-<span id="cb14-17"><a href="#cb14-17" tabindex="-1"></a><span class="do">### Color Not Appearing</span></span>
-<span id="cb14-18"><a href="#cb14-18" tabindex="-1"></a></span>
-<span id="cb14-19"><a href="#cb14-19" tabindex="-1"></a><span class="sc">**</span>Problem<span class="sc">**</span><span class="er">:</span> Route color looks wrong</span>
-<span id="cb14-20"><a href="#cb14-20" tabindex="-1"></a><span class="sc">-</span> Check hex code <span class="fu">format</span> (<span class="st">`</span><span class="at">#</span><span class="st">`</span> followed by <span class="dv">6</span> characters)</span>
-<span id="cb14-21"><a href="#cb14-21" tabindex="-1"></a><span class="sc">-</span> Ensure code is <span class="cf">in</span> quotes<span class="sc">:</span> <span class="st">`</span><span class="at">"#d1af82"</span><span class="st">`</span></span>
-<span id="cb14-22"><a href="#cb14-22" tabindex="-1"></a><span class="sc">-</span> Try increasing contrast with background</span>
-<span id="cb14-23"><a href="#cb14-23" tabindex="-1"></a></span>
-<span id="cb14-24"><a href="#cb14-24" tabindex="-1"></a><span class="do">### Font Issues</span></span>
+<span id="cb14-5"><a href="#cb14-5" tabindex="-1"></a><span class="st">```</span><span class="at">r</span></span>
+<span id="cb14-6"><a href="#cb14-6" tabindex="-1"></a><span class="at"># Single race map</span></span>
+<span id="cb14-7"><a href="#cb14-7" tabindex="-1"></a><span class="at">create_memento_map(</span></span>
+<span id="cb14-8"><a href="#cb14-8" tabindex="-1"></a><span class="at">  gpx_file = system.file("extdata", "london.gpx", package = "mapMementoR"),</span></span>
+<span id="cb14-9"><a href="#cb14-9" tabindex="-1"></a><span class="at">  competitor_name = "John Doe",</span></span>
+<span id="cb14-10"><a href="#cb14-10" tabindex="-1"></a><span class="at">  location = "London",</span></span>
+<span id="cb14-11"><a href="#cb14-11" tabindex="-1"></a><span class="at">  entries = list(</span></span>
+<span id="cb14-12"><a href="#cb14-12" tabindex="-1"></a><span class="at">    list(race_year = "2025", race_time = "2:28:09"),</span></span>
+<span id="cb14-13"><a href="#cb14-13" tabindex="-1"></a><span class="at">    list(race_year = "2024", race_time = "2:30:45")</span></span>
+<span id="cb14-14"><a href="#cb14-14" tabindex="-1"></a><span class="at">  ),</span></span>
+<span id="cb14-15"><a href="#cb14-15" tabindex="-1"></a><span class="at">  route_color = "#d1af82",</span></span>
+<span id="cb14-16"><a href="#cb14-16" tabindex="-1"></a><span class="at">  bg_color = "#0a0e27",</span></span>
+<span id="cb14-17"><a href="#cb14-17" tabindex="-1"></a><span class="at">  street_color = "#1a1f3a",</span></span>
+<span id="cb14-18"><a href="#cb14-18" tabindex="-1"></a><span class="at">  highway_color = "#2d3250",</span></span>
+<span id="cb14-19"><a href="#cb14-19" tabindex="-1"></a><span class="at">  water_color = "#1a2332",</span></span>
+<span id="cb14-20"><a href="#cb14-20" tabindex="-1"></a><span class="at">  output_dir = "maps",</span></span>
+<span id="cb14-21"><a href="#cb14-21" tabindex="-1"></a><span class="at">  dpi = 300,</span></span>
+<span id="cb14-22"><a href="#cb14-22" tabindex="-1"></a><span class="at">  page_size = "A4",</span></span>
+<span id="cb14-23"><a href="#cb14-23" tabindex="-1"></a><span class="at">  orientation = "portrait"</span></span>
+<span id="cb14-24"><a href="#cb14-24" tabindex="-1"></a><span class="at">)</span></span>
 <span id="cb14-25"><a href="#cb14-25" tabindex="-1"></a></span>
-<span id="cb14-26"><a href="#cb14-26" tabindex="-1"></a><span class="sc">**</span>Problem<span class="sc">**</span><span class="er">:</span> Text not appearing or wrong font</span>
-<span id="cb14-27"><a href="#cb14-27" tabindex="-1"></a><span class="sc">-</span> The default font is <span class="st">"Outfit-VariableFont_wght"</span></span>
-<span id="cb14-28"><a href="#cb14-28" tabindex="-1"></a><span class="sc">-</span> Ensure font files are <span class="cf">in</span> your <span class="st">`</span><span class="at">fonts/</span><span class="st">`</span> directory</span>
-<span id="cb14-29"><a href="#cb14-29" tabindex="-1"></a><span class="sc">-</span> Or change <span class="st">`</span><span class="at">font_family</span><span class="st">`</span> to a system font like <span class="st">"Arial"</span> or <span class="st">"Helvetica"</span></span>
-<span id="cb14-30"><a href="#cb14-30" tabindex="-1"></a></span>
-<span id="cb14-31"><a href="#cb14-31" tabindex="-1"></a><span class="do">## Tips for Best Results</span></span>
-<span id="cb14-32"><a href="#cb14-32" tabindex="-1"></a></span>
-<span id="cb14-33"><a href="#cb14-33" tabindex="-1"></a><span class="fl">1.</span> <span class="sc">**</span>GPX Quality<span class="sc">**</span><span class="er">:</span> Use tracks with good GPS signal <span class="cf">for</span> smooth routes</span>
-<span id="cb14-34"><a href="#cb14-34" tabindex="-1"></a><span class="fl">2.</span> <span class="sc">**</span>Test Styles<span class="sc">**</span><span class="er">:</span> Try <span class="dv">2-3</span> color schemes to see what works best</span>
-<span id="cb14-35"><a href="#cb14-35" tabindex="-1"></a><span class="fl">3.</span> <span class="sc">**</span>Print Tests<span class="sc">**</span><span class="er">:</span> Print at small size first to check colors</span>
-<span id="cb14-36"><a href="#cb14-36" tabindex="-1"></a><span class="fl">4.</span> <span class="sc">**</span>Location Names<span class="sc">**</span><span class="er">:</span> Use clear, short names <span class="cf">for</span> better layout</span>
-<span id="cb14-37"><a href="#cb14-37" tabindex="-1"></a><span class="fl">5.</span> <span class="sc">**</span>Multiple Entries<span class="sc">**</span><span class="er">:</span> The map beautifully shows progression over multiple years</span>
-<span id="cb14-38"><a href="#cb14-38" tabindex="-1"></a></span>
-<span id="cb14-39"><a href="#cb14-39" tabindex="-1"></a><span class="do">## Example Workflow</span></span>
-<span id="cb14-40"><a href="#cb14-40" tabindex="-1"></a></span>
-<span id="cb14-41"><a href="#cb14-41" tabindex="-1"></a><span class="st">```</span><span class="at">r</span></span>
-<span id="cb14-42"><a href="#cb14-42" tabindex="-1"></a><span class="at"># 1. Get your race data</span></span>
-<span id="cb14-43"><a href="#cb14-43" tabindex="-1"></a><span class="at">save_powerof10_to_yaml(</span></span>
-<span id="cb14-44"><a href="#cb14-44" tabindex="-1"></a><span class="at">  first_name = "Your",</span></span>
-<span id="cb14-45"><a href="#cb14-45" tabindex="-1"></a><span class="at">  surname = "Name",</span></span>
-<span id="cb14-46"><a href="#cb14-46" tabindex="-1"></a><span class="at">  club = "Your Club",</span></span>
-<span id="cb14-47"><a href="#cb14-47" tabindex="-1"></a><span class="at">  event = c("HM", "Mar")</span></span>
-<span id="cb14-48"><a href="#cb14-48" tabindex="-1"></a><span class="at">)</span></span>
-<span id="cb14-49"><a href="#cb14-49" tabindex="-1"></a></span>
-<span id="cb14-50"><a href="#cb14-50" tabindex="-1"></a><span class="at"># 2. Add GPX files to data-raw/ folder</span></span>
-<span id="cb14-51"><a href="#cb14-51" tabindex="-1"></a><span class="at"># 3. Edit the generated YAML to add gpx_file paths</span></span>
-<span id="cb14-52"><a href="#cb14-52" tabindex="-1"></a></span>
-<span id="cb14-53"><a href="#cb14-53" tabindex="-1"></a><span class="at"># 4. Create maps with all styles</span></span>
-<span id="cb14-54"><a href="#cb14-54" tabindex="-1"></a><span class="at">memento_map_series(</span></span>
-<span id="cb14-55"><a href="#cb14-55" tabindex="-1"></a><span class="at">  races_path = "your_name_races.yaml",</span></span>
-<span id="cb14-56"><a href="#cb14-56" tabindex="-1"></a><span class="at">  styles_path = "styles.yaml",</span></span>
-<span id="cb14-57"><a href="#cb14-57" tabindex="-1"></a><span class="at">  output_dir = "my_maps"</span></span>
-<span id="cb14-58"><a href="#cb14-58" tabindex="-1"></a><span class="at">)</span></span>
-<span id="cb14-59"><a href="#cb14-59" tabindex="-1"></a></span>
-<span id="cb14-60"><a href="#cb14-60" tabindex="-1"></a><span class="at"># 5. Check output/Dark/A5/ for your maps!</span></span></code></pre></div>
+<span id="cb14-26"><a href="#cb14-26" tabindex="-1"></a><span class="at"># Multi-track map</span></span>
+<span id="cb14-27"><a href="#cb14-27" tabindex="-1"></a><span class="at">create_multitrack_memento_map(</span></span>
+<span id="cb14-28"><a href="#cb14-28" tabindex="-1"></a><span class="at">  gpx_files = system.file("extdata", c("leg1.gpx", "leg2.gpx", "leg3.gpx", "leg4.gpx"), </span></span>
+<span id="cb14-29"><a href="#cb14-29" tabindex="-1"></a><span class="at">                         package = "mapMementoR"),</span></span>
+<span id="cb14-30"><a href="#cb14-30" tabindex="-1"></a><span class="at">  track_labels = c("Leg 1", "Leg 2", "Leg 3", "Leg 4"),</span></span>
+<span id="cb14-31"><a href="#cb14-31" tabindex="-1"></a><span class="at">  elev_labels = c("Sarah", "Mike", "Emma", "Tom"),</span></span>
+<span id="cb14-32"><a href="#cb14-32" tabindex="-1"></a><span class="at">  route_colors = c("#d1af82", "#82b4d1", "#d182a8", "#d1af82"),</span></span>
+<span id="cb14-33"><a href="#cb14-33" tabindex="-1"></a><span class="at">  map_title = "City Relay</span><span class="sc">\n</span><span class="at">2024",</span></span>
+<span id="cb14-34"><a href="#cb14-34" tabindex="-1"></a><span class="at">  output_dir = "maps",</span></span>
+<span id="cb14-35"><a href="#cb14-35" tabindex="-1"></a><span class="at">  page_size = "A3",</span></span>
+<span id="cb14-36"><a href="#cb14-36" tabindex="-1"></a><span class="at">  with_labels = TRUE</span></span>
+<span id="cb14-37"><a href="#cb14-37" tabindex="-1"></a><span class="at">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
-<h2 id="next-steps">Next Steps<a class="anchor" aria-label="anchor" href="#next-steps"></a>
+<h2 id="troubleshooting">Troubleshooting<a class="anchor" aria-label="anchor" href="#troubleshooting"></a>
 </h2>
+<p><strong>GPX File Issues</strong> - Ensure GPX files contain track points (<code>&lt;trkpt&gt;</code> elements) - Check files aren’t corrupted by opening in a text editor - Try re-exporting from your GPS device or app (Garmin Connect, Strava, etc.)</p>
+<p><strong>Missing Map Features</strong> - OSM data is cached in <code>data_cache_tmp/*.rds</code> files - Delete cache files to fetch fresh OpenStreetMap data - Ensure internet connection when first running for each location</p>
+<p><strong>Color Issues</strong> - Use hex format: <code>"#RRGGBB"</code> (6 characters after #) - Ensure adequate contrast between route and background colors - Test colors on screen before printing</p>
+<p><strong>Font Issues</strong> - Default font is “Outfit-VariableFont_wght” - Place custom fonts in <code>fonts/</code> directory - Or use system fonts: “Arial”, “Helvetica”, “Times New Roman”</p>
+<p><strong>Memory Issues with Large Maps</strong> - Reduce <code>dpi</code> value (e.g., 150 instead of 300) - Limit number of map components - Process styles one at a time instead of all at once</p>
+</div>
+<div class="section level2">
+<h2 id="tips-for-best-results">Tips for Best Results<a class="anchor" aria-label="anchor" href="#tips-for-best-results"></a>
+</h2>
+<ol style="list-style-type: decimal">
+<li>
+<strong>GPX Quality</strong>: Use tracks recorded with good GPS signal for smooth, accurate routes</li>
+<li>
+<strong>Test First</strong>: Generate one map with one style before batch processing</li>
+<li>
+<strong>Print Tests</strong>: Print at small size first to verify colors appear as expected</li>
+<li>
+<strong>Multiple Performances</strong>: The package beautifully displays progression across multiple years</li>
+<li>
+<strong>Naming</strong>: Use clear, concise location names for better layout</li>
+<li>
+<strong>Caching</strong>: Keep cache enabled (<code>cache_data = TRUE</code>) for faster regeneration</li>
+</ol>
+</div>
+<div class="section level2">
+<h2 id="related-functions">Related Functions<a class="anchor" aria-label="anchor" href="#related-functions"></a>
+</h2>
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Parse GPX files</span></span>
+<span><span class="va">track_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/parse_gpx.html">parse_gpx</a></span><span class="op">(</span><span class="st">"data-raw/race.gpx"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Get track statistics</span></span>
+<span><span class="va">stats</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/get_track_stats.html">get_track_stats</a></span><span class="op">(</span><span class="va">track_data</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Generate color palettes</span></span>
+<span><span class="va">colors</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/generate_track_colors.html">generate_track_colors</a></span><span class="op">(</span></span>
+<span>  base_color <span class="op">=</span> <span class="st">"#d1af82"</span>,</span>
+<span>  n_colors <span class="op">=</span> <span class="fl">5</span>,</span>
+<span>  method <span class="op">=</span> <span class="st">"hue_shift"</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Get page dimensions</span></span>
+<span><span class="va">dims</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/get_page_dimensions.html">get_page_dimensions</a></span><span class="op">(</span>page_size <span class="op">=</span> <span class="st">"A4"</span>, orientation <span class="op">=</span> <span class="st">"portrait"</span><span class="op">)</span></span></code></pre></div>
+</div>
+<div class="section level2">
+<h2 id="examples">Examples<a class="anchor" aria-label="anchor" href="#examples"></a>
+</h2>
+<p>See the package vignettes for detailed examples:</p>
 <ul>
-<li>Experiment with different color schemes</li>
-<li>Try different page sizes for various uses</li>
-<li>Create multi-day maps for ultra races</li>
-<li>Share your creations!</li>
+<li><a href="articles/mapMementoR.html">Introduction to mapMementoR</a></li>
+<li>Single race maps</li>
+<li>Multi-track maps</li>
+<li>Custom styling</li>
+<li>Batch processing workflows</li>
 </ul>
+</div>
+<div class="section level2">
+<h2 id="license">License<a class="anchor" aria-label="anchor" href="#license"></a>
+</h2>
+<p>MIT + file LICENSE</p>
 <hr>
-<p><em>For questions or issues, please refer to the source code comments in <code>create_maps.R</code></em></p>
+<p><em>For questions, feature requests, or bug reports, please open an issue on GitHub.</em></p>
 </div>
 </div>
 
